@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { registerUser } from "../../actions/authActions";
 
 class Register extends Component {
   state = {
@@ -7,13 +10,23 @@ class Register extends Component {
     email: '',
     password: '',
     password2: '',
-    locale: 'ru'
+    locale: 'ru',
+    errors: {}
   }
 
   onSubmitHandler = e => {
     e.preventDefault();
+
+    const newUser = {
+      nickname: this.state.nickname,
+      email: this.state.email,
+      password: this.state.password,
+      locale: this.state.locale
+    }
     
     if(this.state.password !== this.state.password2) console.log('Пароли не совпадают');
+
+    this.props.registerUser(newUser, this.props.history);
   }
 
   onChangeHandler = e => {
@@ -21,11 +34,13 @@ class Register extends Component {
   }
 
   render() {
+    const { errors } = this.state;
+
     return (
       <div>
         <h1>Зарегистрироваться</h1>
         <p>Создать свой аккаунт</p>
-        <form onSubmit={this.onSubmitHandler}>
+        <form noValidate onSubmit={this.onSubmitHandler}>
           <input 
             type="text" 
             name="nickname" 
@@ -61,10 +76,18 @@ class Register extends Component {
           <input type="submit" value="Войти"/>
         </form>
 
-        <Link to='/register'>Создать свой аккаунт</Link>
+        <Link to='/login'>Войти</Link>
       </div>
     )
   }
 }
 
-export default Register;
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
+
+export default connect(
+  mapStateToProps,
+  { registerUser }
+)(withRouter(Register));
