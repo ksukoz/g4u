@@ -1,17 +1,16 @@
-import { GET_USER } from "../actions/types";
+import { GET_ERRORS } from "../actions/types";
 
 const initialState = {
-  isAuthenticated: false,
-  user: {}
+  errors: null
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case GET_USER:
+    case GET_ERRORS:
       return {
         ...state,
-        isAuthenticated: !state.isAuthenticated
-      }
+        errors: action.payload
+      };
     default:
       return state;
   }
