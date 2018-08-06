@@ -1,5 +1,6 @@
 import axios from "axios";
 import { GET_ERRORS, GET_USER, SET_USER } from "./types";
+import { Redirect } from "react-router-dom";
 
 // Register User
 export const registerUser = (userData, history) => dispatch => {
@@ -26,8 +27,6 @@ export const loginUser = (userData, history) => dispatch => {
       localStorage.setItem("user", JSON.stringify(res.data.answer));
       if (res.data.answer.league === 0) {
         history.push("/choose-league");
-      } else {
-        history.push("/");
       }
       dispatch({
         type: GET_USER,

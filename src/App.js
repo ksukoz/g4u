@@ -1,10 +1,12 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store";
 
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
+
+import PrivateRoute from "./components/common/PrivateRoute";
 
 import { setUser } from "./actions/authActions";
 
@@ -24,11 +26,15 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <div className="App">
-            <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
-            <Route exact path="/" component={News} />
-            <Route exact path="/add-news" component={AddNews} />
+            <Route exact path="/login" component={Login} />
             <Route exact path="/choose-league" component={ChooseLeague} />
+            <Switch>
+              <PrivateRoute exact path="/" component={News} />
+            </Switch>
+            <Switch>
+              <PrivateRoute exact path="/add-news" component={AddNews} />
+            </Switch>
           </div>
         </Router>
       </Provider>

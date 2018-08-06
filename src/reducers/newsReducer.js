@@ -1,7 +1,8 @@
-import { GET_ERRORS } from "../actions/types";
+import { GET_ERRORS, GET_NEWS } from "../actions/types";
 
 const initialState = {
-  errors: null
+  errors: null,
+  news: null
 };
 
 export default function(state = initialState, action) {
@@ -10,6 +11,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         errors: action.payload
+      };
+    case GET_NEWS:
+      return {
+        ...state,
+        news: action.payload
       };
     default:
       return state;
