@@ -5,7 +5,7 @@ import { addNews } from "../../actions/newsActions";
 class AddNews extends Component {
   state = {
     title: "",
-    desc: "",
+    text: "",
     tags: ""
   };
   onClick = () => {};
@@ -22,8 +22,8 @@ class AddNews extends Component {
 
     const addNews = {
       title: this.state.title,
-      desc: this.state.desc,
-      tags: this.state.tags.split(",")
+      text: this.state.text,
+      tags: this.state.tags.split(",") || []
     };
 
     this.props.addNews(addNews);
@@ -47,10 +47,10 @@ class AddNews extends Component {
             </div>
             <div>
               <textarea
-                name="desc"
+                name="text"
                 onChange={this.onChange}
                 placeholder="Текст новости"
-                value={this.state.desc}
+                value={this.state.text}
               />
             </div>
             <div>
