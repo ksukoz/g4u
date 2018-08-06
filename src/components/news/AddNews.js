@@ -8,7 +8,6 @@ class AddNews extends Component {
     text: "",
     tags: ""
   };
-  onClick = () => {};
 
   onChange = e => {
     this.setState({
@@ -32,8 +31,6 @@ class AddNews extends Component {
   render() {
     return (
       <div>
-        <button onClick={this.onClick}>Добавить новость</button>
-        <div />
         <div className="news-form">
           <form onSubmit={this.onSubmit}>
             <div>

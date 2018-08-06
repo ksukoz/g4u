@@ -9,6 +9,7 @@ import Register from "./components/auth/Register";
 import { setUser } from "./actions/authActions";
 
 import "./App.css";
+import News from "./components/news/News";
 import AddNews from "./components/news/AddNews";
 import ChooseLeague from "./components/auth/ChooseLeague";
 
@@ -25,7 +26,8 @@ class App extends Component {
           <div className="App">
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
-            <Route exact path="/" component={AddNews} />
+            <Route exact path="/" component={News} />
+            <Route exact path="/add-news" component={AddNews} />
             <Route exact path="/choose-league" component={ChooseLeague} />
           </div>
         </Router>
