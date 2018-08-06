@@ -4,3 +4,4 @@ export const SET_USER = "SET_USER";
 export const GET_LEAGUES = "GET_LEAGUES";
 export const ADD_NEWS = "ADD_NEWS";
 export const GET_NEWS = "GET_NEWS";
+export const GET_POSITIONS = "GET_POSITIONS";

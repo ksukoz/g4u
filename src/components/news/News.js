@@ -13,12 +13,21 @@ class News extends Component {
     const { news } = this.props.news;
     let newsList;
     if (news !== null) {
-      newsList = news.map(newsItem => console.log(newsItem));
+      newsList = news.map(newsItem => (
+        <li key={newsItem.news_id}>
+          <div>
+            {newsItem.name} <br />
+            {newsItem.title} <br />
+            {newsItem.text}
+          </div>
+        </li>
+      ));
     }
     return (
       <div>
         <Link to="/add-news">Добавить новость</Link>
         <h1>Новости</h1>
+        <ul>{newsList}</ul>
       </div>
     );
   }
