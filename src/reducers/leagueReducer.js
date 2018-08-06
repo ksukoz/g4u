@@ -1,4 +1,4 @@
-import { GET_ERRORS } from "../actions/types";
+import { GET_ERRORS, GET_LEAGUES } from "../actions/types";
 
 const initialState = {
   errors: null,
@@ -8,6 +8,11 @@ const initialState = {
 
 export default function(state = initialState, action) {
   switch (action.type) {
+    case GET_LEAGUES:
+      return {
+        ...state,
+        leaguesList: action.payload
+      };
     case GET_ERRORS:
       return {
         ...state,

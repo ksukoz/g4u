@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { getLeagues, setLeagues } from "../../actions/leagueActions";
 
 class ChooseLeague extends Component {
   state = {
@@ -12,14 +14,30 @@ class ChooseLeague extends Component {
   onSubmitHandler = e => {
     e.preventDefault();
 
-    const setLeague = {
-      league_id: this.state.league
-    };
+    if (this.state.league.length > 0) {
+      const leagueId = {
+        league_id: this.state.league
+      };
 
-    console.log(setLeague);
+      this.props.setLeagues(leagueId, this.props.history);
+    }
   };
 
+  componentWillMount() {
+    this.props.getLeagues();
+  }
+
   render() {
+    const { leaguesList } = this.props.leagues;
+    let leaguesOptions;
+    if (leaguesList !== null) {
+      leaguesOptions = leaguesList.map(league => (
+        <option key={league.id} value={league.id}>
+          {league.title}
+        </option>
+      ));
+    }
+
     return (
       <div>
         <form onSubmit={this.onSubmitHandler}>
@@ -29,7 +47,10 @@ class ChooseLeague extends Component {
             </option>
           </select>
           <select name="league" onChange={this.onChangeHandler}>
-            {leagueOptions}
+            <option selected disabled>
+              Выбрать лигу
+            </option>
+            {leaguesOptions}
           </select>
           <button type="submit">Сохранить</button>
         </form>
@@ -38,4 +59,11 @@ class ChooseLeague extends Component {
   }
 }
 
-export default ChooseLeague;
+const mapStateToProps = state => ({
+  leagues: state.leagues
+});
+
+export default connect(
+  mapStateToProps,
+  { getLeagues, setLeagues }
+)(ChooseLeague);

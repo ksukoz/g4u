@@ -23,7 +23,7 @@ export const loginUser = (userData, history) => dispatch => {
         payload: res.data.message
       });
     } else {
-      localStorage.setItem("user", res.data.answer);
+      localStorage.setItem("user", JSON.stringify(res.data.answer));
       if (res.data.answer.league === 0) {
         history.push("/choose-league");
       } else {
