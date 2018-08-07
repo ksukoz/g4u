@@ -1,25 +1,33 @@
 import React from "react";
 import PropTypes from "prop-types";
+
+import { Link } from "react-router-dom";
 import classNames from "classnames";
 import compose from "recompose/compose";
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
-import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import { handleDrawerClose } from "../../actions/commonActions";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import Divider from "@material-ui/core/Divider";
+import Newspaper from "./navigation-icons/newspaper.svg";
+import FootballCup from "./navigation-icons/american-football-cup.svg";
+import FootballClub from "./navigation-icons/football-club.svg";
+import FootballPlayers from "./navigation-icons/football-shirt.svg";
+import Football from "./navigation-icons/player.svg";
+import Questions from "./navigation-icons/question.svg";
+import Info from "./navigation-icons/info.svg";
+import Settings from "./navigation-icons/settings.svg";
+import Contacts from "./navigation-icons/agenda.svg";
 
-const drawerWidth = 240;
+const drawerWidth = 300;
 
 const styles = theme => ({
-  hide: {
-    display: "none"
-  },
   drawerPaper: {
     position: "relative",
     whiteSpace: "nowrap",
@@ -37,7 +45,7 @@ const styles = theme => ({
     }),
     width: theme.spacing.unit * 7,
     [theme.breakpoints.up("sm")]: {
-      width: theme.spacing.unit * 9
+      width: theme.spacing.unit * 10.3
     }
   },
   toolbar: {
@@ -51,6 +59,15 @@ const styles = theme => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit * 3
+  },
+  nav_link: {
+    display: "flex",
+    alignItems: "center",
+    textDecoration: "none"
+  },
+  nav_icon: {
+    width: 40,
+    paddingRight: 10
   }
 });
 
@@ -71,7 +88,6 @@ class Navigation extends React.Component {
             !this.props.common.open && classes.drawerPaperClose
           )
         }}
-        open={this.state.open}
       >
         <div className={classes.toolbar}>
           <IconButton onClick={this.props.handleDrawerClose}>
@@ -83,9 +99,67 @@ class Navigation extends React.Component {
           </IconButton>
         </div>
         <Divider />
-        {/* <List>{mailFolderListItems}</List>
-          <Divider />
-          <List>{otherMailFolderListItems}</List> */}
+        <List>
+          <ListItem button>
+            <Link className={classes.nav_link} to="/">
+              <img className={classes.nav_icon} src={Newspaper} alt="" />
+              <ListItemText primary="Новости" />
+            </Link>
+          </ListItem>
+          <ListItem button>
+            <Link className={classes.nav_link} to="/">
+              <img className={classes.nav_icon} src={FootballCup} alt="" />
+              <ListItemText primary="Турниры" />
+            </Link>
+          </ListItem>
+          <ListItem button>
+            <Link className={classes.nav_link} to="/">
+              <img className={classes.nav_icon} src={FootballClub} alt="" />
+              <ListItemText primary="Команды" />
+            </Link>
+          </ListItem>
+          <ListItem button>
+            <Link className={classes.nav_link} to="/add-player">
+              <img className={classes.nav_icon} src={FootballPlayers} alt="" />
+              <ListItemText primary="Игроки" />
+            </Link>
+          </ListItem>
+
+          <ListItem button>
+            <Link className={classes.nav_link} to="/">
+              <img className={classes.nav_icon} src={Football} alt="" />
+              <ListItemText primary="Мои назначения" />
+            </Link>
+          </ListItem>
+
+          <ListItem button>
+            <Link className={classes.nav_link} to="/">
+              <img className={classes.nav_icon} src={Questions} alt="" />
+              <ListItemText primary="Мои запросы" />
+            </Link>
+          </ListItem>
+        </List>
+        <Divider />
+        <List>
+          <ListItem button>
+            <Link className={classes.nav_link} to="/">
+              <img className={classes.nav_icon} src={Info} alt="" />
+              <ListItemText primary="Правила использования" />
+            </Link>
+          </ListItem>
+          <ListItem button>
+            <Link className={classes.nav_link} to="/">
+              <img className={classes.nav_icon} src={Settings} alt="" />
+              <ListItemText primary="Настройки" />
+            </Link>
+          </ListItem>
+          <ListItem button>
+            <Link className={classes.nav_link} to="/">
+              <img className={classes.nav_icon} src={Contacts} alt="" />
+              <ListItemText primary="Контакты" />
+            </Link>
+          </ListItem>
+        </List>
       </Drawer>
     );
   }

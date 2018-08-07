@@ -31,7 +31,7 @@ const theme = createMuiTheme({
   }
 });
 
-const drawerWidth = 240;
+const drawerWidth = 300;
 
 const styles = {
   root: {

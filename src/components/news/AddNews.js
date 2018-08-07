@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { addNews } from "../../actions/newsActions";
+import Input from "@material-ui/core/Input";
+import TextField from "@material-ui/core/TextField";
 
 class AddNews extends Component {
   state = {
@@ -34,7 +36,7 @@ class AddNews extends Component {
         <div className="news-form">
           <form onSubmit={this.onSubmit}>
             <div>
-              <input
+              <Input
                 type="text"
                 name="title"
                 value={this.state.title}
@@ -43,6 +45,12 @@ class AddNews extends Component {
               />
             </div>
             <div>
+              <TextField
+                type="textarea"
+                multiline={true}
+                rows={2}
+                rowsMax={4}
+              />
               <textarea
                 name="text"
                 onChange={this.onChange}
