@@ -15,6 +15,7 @@ import News from "./components/news/News";
 import AddNews from "./components/news/AddNews";
 import ChooseLeague from "./components/auth/ChooseLeague";
 import AddPlayer from "./components/players/AddPlayer";
+import Header from "./components/layout/Header";
 
 if (localStorage.user) {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -30,6 +31,7 @@ class App extends Component {
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/choose-league" component={ChooseLeague} />
+            <PrivateRoute path="/" component={Header} />
             <Switch>
               <PrivateRoute exact path="/" component={News} />
             </Switch>
