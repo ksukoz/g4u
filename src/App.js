@@ -16,6 +16,7 @@ import AddNews from "./components/news/AddNews";
 import ChooseLeague from "./components/auth/ChooseLeague";
 import AddPlayer from "./components/players/AddPlayer";
 import Header from "./components/layout/Header";
+import Navigation from "./components/layout/Navigation";
 
 if (localStorage.user) {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -23,6 +24,10 @@ if (localStorage.user) {
 }
 
 class App extends Component {
+  handleDrawerClose = () => {
+    this.setState({ open: false });
+  };
+
   render() {
     return (
       <Provider store={store}>
@@ -32,15 +37,24 @@ class App extends Component {
             <Route exact path="/login" component={Login} />
             <Route exact path="/choose-league" component={ChooseLeague} />
             <PrivateRoute path="/" component={Header} />
-            <Switch>
-              <PrivateRoute exact path="/" component={News} />
-            </Switch>
-            <Switch>
-              <PrivateRoute exact path="/add-news" component={AddNews} />
-            </Switch>
-            <Switch>
-              <PrivateRoute exact path="/add-player" component={AddPlayer} />
-            </Switch>
+            <main className="main">
+              <Navigation className="Navigation" />
+              <div className="container">
+                <Switch>
+                  <PrivateRoute exact path="/" component={News} />
+                </Switch>
+                <Switch>
+                  <PrivateRoute exact path="/add-news" component={AddNews} />
+                </Switch>
+                <Switch>
+                  <PrivateRoute
+                    exact
+                    path="/add-player"
+                    component={AddPlayer}
+                  />
+                </Switch>
+              </div>
+            </main>
           </div>
         </Router>
       </Provider>

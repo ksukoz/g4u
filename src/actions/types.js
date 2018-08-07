@@ -5,3 +5,5 @@ export const GET_LEAGUES = "GET_LEAGUES";
 export const ADD_NEWS = "ADD_NEWS";
 export const GET_NEWS = "GET_NEWS";
 export const GET_POSITIONS = "GET_POSITIONS";
+export const OPEN_NAV = "OPEN_NAV";
+export const CLOSE_NAV = "CLOSE_NAV";
