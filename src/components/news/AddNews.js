@@ -1,8 +1,32 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
+import compose from "recompose/compose";
 import { connect } from "react-redux";
 import { addNews } from "../../actions/newsActions";
+import { withStyles } from "@material-ui/core/styles";
 import Input from "@material-ui/core/Input";
 import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import AddIcon from "@material-ui/icons/Add";
+
+const styles = theme => ({
+  form: {
+    width: "50%"
+  },
+  input: {
+    width: "100%"
+  },
+  button: {
+    margin: theme.spacing.unit,
+    background: "transparent",
+    color: "rgba(0,0,0,.5)"
+  },
+  submit: {
+    backgroundColor: "#43A047",
+    borderRadius: 40,
+    color: "#fff"
+  }
+});
 
 class AddNews extends Component {
   state = {
@@ -31,12 +55,14 @@ class AddNews extends Component {
   };
 
   render() {
+    const { classes } = this.props;
     return (
-      <div>
+      <div className={classes.form}>
         <div className="news-form">
           <form onSubmit={this.onSubmit}>
             <div>
               <Input
+                className={classes.input}
                 type="text"
                 name="title"
                 value={this.state.title}
@@ -46,29 +72,46 @@ class AddNews extends Component {
             </div>
             <div>
               <TextField
-                type="textarea"
-                multiline={true}
-                rows={2}
-                rowsMax={4}
-              />
-              <textarea
+                className={classes.input}
+                id="multiline-flexible"
+                label="Multiline"
+                multiline
+                rows="10"
                 name="text"
-                onChange={this.onChange}
-                placeholder="Текст новости"
                 value={this.state.text}
+                onChange={this.onChange}
+                margin="normal"
               />
             </div>
             <div>
-              <input
+              <Input
                 type="text"
-                name="tags"
-                value={this.state.tags}
+                name="title"
+                value={this.state.title}
                 onChange={this.onChange}
-                placeholder="Тэг 1,Тэг 2,Тэг 3"
+                placeholder="Заголовок новости"
               />
+              <Button
+                variant="fab"
+                mini
+                color="secondary"
+                aria-label="Add"
+                className={classes.button}
+              >
+                <AddIcon />
+              </Button>
             </div>
             <small>Тэги вводите через запятую, как в примере</small>
-            <input type="submit" value="Сохранить новость" />
+            <div>
+              <Button
+                variant="contained"
+                type="submit"
+                className={classes.submit}
+              >
+                Сохранить новость
+              </Button>
+              {/* <input value="" /> */}
+            </div>
           </form>
         </div>
       </div>
@@ -76,7 +119,10 @@ class AddNews extends Component {
   }
 }
 
-export default connect(
-  null,
-  { addNews }
+export default compose(
+  withStyles(styles),
+  connect(
+    null,
+    { addNews }
+  )
 )(AddNews);

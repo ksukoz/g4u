@@ -45,6 +45,7 @@ const styles = {
     marginRight: 36
   },
   appBar: {
+    backgroundColor: "#43A047",
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
