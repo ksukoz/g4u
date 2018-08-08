@@ -65,13 +65,10 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit * 3
   },
-  // listItem: {
-  //   width: "auto",
-  //   opacity: 1,
-  //   padding: "12px 18px",
-  //   paddingRight: 15,
-  //   transition: "1s"
-  // },
+  listItem: {
+    padding: "12px 18px",
+    paddingRight: 15
+  },
   nav_link: {
     display: "flex",
     alignItems: "center",
@@ -80,12 +77,10 @@ const styles = theme => ({
   nav_icon: {
     width: 40,
     paddingRight: 10
+  },
+  hide: {
+    display: "none"
   }
-  // hide: {
-  //   display: "none",
-  //   width: 0,
-  //   opacity: 0
-  // }
 });
 
 class Navigation extends React.Component {
