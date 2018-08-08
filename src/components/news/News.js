@@ -13,6 +13,7 @@ const styles = theme => ({
   button: {
     display: "block",
     marginLeft: "auto",
+    marginBottom: "2rem",
     padding: "1rem 5rem",
     background: "#fff",
     border: "1px solid #55a462",
@@ -55,7 +56,7 @@ class News extends Component {
       ));
     }
     return (
-      <div>
+      <div className="News">
         <Button
           variant="extendedFab"
           aria-label="Delete"

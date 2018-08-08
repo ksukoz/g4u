@@ -25,7 +25,7 @@ import Info from "./navigation-icons/info.svg";
 import Settings from "./navigation-icons/settings.svg";
 import Contacts from "./navigation-icons/agenda.svg";
 
-const drawerWidth = 300;
+const drawerWidth = 295;
 
 const styles = theme => ({
   drawerPaper: {
@@ -48,6 +48,11 @@ const styles = theme => ({
       width: theme.spacing.unit * 10.3
     }
   },
+  wrapper: {
+    position: "fixed",
+    height: "100vh",
+    boxShadow: "inset 0 0 1px rgba(0, 0, 0, 0.8)"
+  },
   toolbar: {
     display: "flex",
     alignItems: "center",
@@ -60,6 +65,13 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit * 3
   },
+  // listItem: {
+  //   width: "auto",
+  //   opacity: 1,
+  //   padding: "12px 18px",
+  //   paddingRight: 15,
+  //   transition: "1s"
+  // },
   nav_link: {
     display: "flex",
     alignItems: "center",
@@ -69,6 +81,11 @@ const styles = theme => ({
     width: 40,
     paddingRight: 10
   }
+  // hide: {
+  //   display: "none",
+  //   width: 0,
+  //   opacity: 0
+  // }
 });
 
 class Navigation extends React.Component {
@@ -89,77 +106,110 @@ class Navigation extends React.Component {
           )
         }}
       >
-        <div className={classes.toolbar}>
-          <IconButton onClick={this.props.handleDrawerClose}>
-            {theme.direction === "rtl" ? (
-              <ChevronRightIcon />
-            ) : (
-              <ChevronLeftIcon />
-            )}
-          </IconButton>
+        <div className={classes.wrapper}>
+          <div className={classes.toolbar}>
+            <IconButton onClick={this.props.handleDrawerClose}>
+              {theme.direction === "rtl" ? (
+                <ChevronRightIcon />
+              ) : (
+                <ChevronLeftIcon />
+              )}
+            </IconButton>
+          </div>
+          <Divider />
+          <List>
+            <ListItem button className={classes.listItem}>
+              <Link className={classes.nav_link} to="/">
+                <img className={classes.nav_icon} src={Newspaper} alt="" />
+                <ListItemText
+                  className={!this.props.common.open ? classes.hide : ""}
+                  primary="Новости"
+                />
+              </Link>
+            </ListItem>
+            <ListItem button className={classes.listItem}>
+              <Link className={classes.nav_link} to="/">
+                <img className={classes.nav_icon} src={FootballCup} alt="" />
+                <ListItemText
+                  className={!this.props.common.open ? classes.hide : ""}
+                  primary="Турниры"
+                />
+              </Link>
+            </ListItem>
+            <ListItem button className={classes.listItem}>
+              <Link className={classes.nav_link} to="/">
+                <img className={classes.nav_icon} src={FootballClub} alt="" />
+                <ListItemText
+                  className={!this.props.common.open ? classes.hide : ""}
+                  primary="Команды"
+                />
+              </Link>
+            </ListItem>
+            <ListItem button className={classes.listItem}>
+              <Link className={classes.nav_link} to="/add-player">
+                <img
+                  className={classes.nav_icon}
+                  src={FootballPlayers}
+                  alt=""
+                />
+                <ListItemText
+                  className={!this.props.common.open ? classes.hide : ""}
+                  primary="Игроки"
+                />
+              </Link>
+            </ListItem>
+
+            <ListItem button className={classes.listItem}>
+              <Link className={classes.nav_link} to="/">
+                <img className={classes.nav_icon} src={Football} alt="" />
+                <ListItemText
+                  className={!this.props.common.open ? classes.hide : ""}
+                  primary="Мои назначения"
+                />
+              </Link>
+            </ListItem>
+
+            <ListItem button className={classes.listItem}>
+              <Link className={classes.nav_link} to="/">
+                <img className={classes.nav_icon} src={Questions} alt="" />
+                <ListItemText
+                  className={!this.props.common.open ? classes.hide : ""}
+                  primary="Мои запросы"
+                />
+              </Link>
+            </ListItem>
+          </List>
+          <Divider />
+          <List>
+            <ListItem button className={classes.listItem}>
+              <Link className={classes.nav_link} to="/">
+                <img className={classes.nav_icon} src={Info} alt="" />
+                <ListItemText
+                  className={!this.props.common.open ? classes.hide : ""}
+                  primary="Правила использования"
+                />
+              </Link>
+            </ListItem>
+            <ListItem button className={classes.listItem}>
+              <Link className={classes.nav_link} to="/">
+                <img className={classes.nav_icon} src={Settings} alt="" />
+                <ListItemText
+                  className={!this.props.common.open ? classes.hide : ""}
+                  primary="Настройки"
+                />
+              </Link>
+            </ListItem>
+            <ListItem button className={classes.listItem}>
+              <Link className={classes.nav_link} to="/">
+                <img className={classes.nav_icon} src={Contacts} alt="" />
+                <ListItemText
+                  className={!this.props.common.open ? classes.hide : ""}
+                  primary="Контакты"
+                />
+              </Link>
+            </ListItem>
+          </List>
         </div>
-        <Divider />
-        <List>
-          <ListItem button>
-            <Link className={classes.nav_link} to="/">
-              <img className={classes.nav_icon} src={Newspaper} alt="" />
-              <ListItemText primary="Новости" />
-            </Link>
-          </ListItem>
-          <ListItem button>
-            <Link className={classes.nav_link} to="/">
-              <img className={classes.nav_icon} src={FootballCup} alt="" />
-              <ListItemText primary="Турниры" />
-            </Link>
-          </ListItem>
-          <ListItem button>
-            <Link className={classes.nav_link} to="/">
-              <img className={classes.nav_icon} src={FootballClub} alt="" />
-              <ListItemText primary="Команды" />
-            </Link>
-          </ListItem>
-          <ListItem button>
-            <Link className={classes.nav_link} to="/add-player">
-              <img className={classes.nav_icon} src={FootballPlayers} alt="" />
-              <ListItemText primary="Игроки" />
-            </Link>
-          </ListItem>
-
-          <ListItem button>
-            <Link className={classes.nav_link} to="/">
-              <img className={classes.nav_icon} src={Football} alt="" />
-              <ListItemText primary="Мои назначения" />
-            </Link>
-          </ListItem>
-
-          <ListItem button>
-            <Link className={classes.nav_link} to="/">
-              <img className={classes.nav_icon} src={Questions} alt="" />
-              <ListItemText primary="Мои запросы" />
-            </Link>
-          </ListItem>
-        </List>
-        <Divider />
-        <List>
-          <ListItem button>
-            <Link className={classes.nav_link} to="/">
-              <img className={classes.nav_icon} src={Info} alt="" />
-              <ListItemText primary="Правила использования" />
-            </Link>
-          </ListItem>
-          <ListItem button>
-            <Link className={classes.nav_link} to="/">
-              <img className={classes.nav_icon} src={Settings} alt="" />
-              <ListItemText primary="Настройки" />
-            </Link>
-          </ListItem>
-          <ListItem button>
-            <Link className={classes.nav_link} to="/">
-              <img className={classes.nav_icon} src={Contacts} alt="" />
-              <ListItemText primary="Контакты" />
-            </Link>
-          </ListItem>
-        </List>
       </Drawer>
     );
   }

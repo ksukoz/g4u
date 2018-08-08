@@ -31,7 +31,7 @@ const theme = createMuiTheme({
   }
 });
 
-const drawerWidth = 300;
+const drawerWidth = 295;
 
 const styles = {
   root: {
@@ -72,13 +72,16 @@ class Header extends React.Component {
       <MuiThemeProvider theme={theme}>
         <div className={classes.root}>
           <AppBar
-            position="absolute"
+            position="fixed"
             className={classNames(
               classes.appBar,
               this.props.common.open && classes.appBarShift
             )}
           >
-            <Toolbar disableGutters={!this.props.common.open}>
+            <Toolbar
+              className={classes.tollbar}
+              disableGutters={!this.props.common.open}
+            >
               <IconButton
                 color="inherit"
                 aria-label="Open drawer"
