@@ -8,10 +8,22 @@ import Input from "@material-ui/core/Input";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
+import Chip from "@material-ui/core/Chip";
+import InputFile from "../common/InputFile";
 
 const styles = theme => ({
+  root: {
+    display: "flex",
+    justifyContent: "space-between"
+  },
   form: {
-    width: "50%"
+    width: "49%"
+  },
+  media: {
+    width: "49%"
+  },
+  img: {
+    width: "100%"
   },
   input: {
     width: "100%"
@@ -19,12 +31,24 @@ const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
     background: "transparent",
-    color: "rgba(0,0,0,.5)"
+    color: "rgba(0,0,0,.5)",
+    transition: ".3s",
+    "&:hover, &:active": {
+      backgroundColor: "#43A047",
+      color: "#fff"
+    }
   },
   submit: {
     backgroundColor: "#43A047",
     borderRadius: 40,
     color: "#fff"
+  },
+  chip: {
+    backgroundColor: "#effcf1",
+    marginLeft: "1rem",
+    "&:focus": {
+      backgroundColor: "#effcf1"
+    }
   }
 });
 
@@ -32,7 +56,9 @@ class AddNews extends Component {
   state = {
     title: "",
     text: "",
-    tags: ""
+    photo: "",
+    tag: "",
+    tags: []
   };
 
   onChange = e => {
@@ -42,13 +68,48 @@ class AddNews extends Component {
     });
   };
 
+  onChangeFileHandler = e => {
+    const reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.addEventListener(
+      "load",
+      () => {
+        this.setState({
+          photo: reader.result
+        });
+      },
+      false
+    );
+  };
+
+  onClickHandler = () => {
+    const tagItem = this.state.tag;
+    const tagList = this.state.tags;
+    tagList.push(tagItem);
+
+    this.setState({
+      ...this.state,
+      tags: tagList,
+      tag: ""
+    });
+  };
+
+  onDeleteHandle = data => () => {
+    const tagsList = [...this.state.tags];
+    tagsList.splice(data, 1);
+    this.setState({
+      ...this.state,
+      tags: tagsList
+    });
+  };
+
   onSubmit = e => {
     e.preventDefault();
 
     const addNews = {
       title: this.state.title,
       text: this.state.text,
-      tags: this.state.tags.split(",") || []
+      tags: this.state.tags
     };
 
     this.props.addNews(addNews);
@@ -56,9 +117,24 @@ class AddNews extends Component {
 
   render() {
     const { classes } = this.props;
+    const { tags } = this.state;
+    let tagList;
+    if (tags.length > 0) {
+      tagList = tags.map((tag, i) => {
+        return (
+          <Chip
+            key={i}
+            label={tag}
+            onDelete={this.onDeleteHandle(i)}
+            className={classes.chip}
+          />
+        );
+      });
+    }
+
     return (
-      <div className={classes.form}>
-        <div className="news-form">
+      <div className={classes.root}>
+        <div className={classes.form}>
           <form onSubmit={this.onSubmit}>
             <div>
               <Input
@@ -83,13 +159,18 @@ class AddNews extends Component {
                 margin="normal"
               />
             </div>
+            <InputFile
+              type="image"
+              name={this.state.photo}
+              onChange={this.onChangeFileHandler}
+            />
             <div>
               <Input
                 type="text"
-                name="title"
-                value={this.state.title}
+                name="tag"
+                value={this.state.tag}
                 onChange={this.onChange}
-                placeholder="Заголовок новости"
+                placeholder="Тэги"
               />
               <Button
                 variant="fab"
@@ -97,11 +178,12 @@ class AddNews extends Component {
                 color="secondary"
                 aria-label="Add"
                 className={classes.button}
+                onClick={this.onClickHandler}
               >
                 <AddIcon />
               </Button>
+              {tagList}
             </div>
-            <small>Тэги вводите через запятую, как в примере</small>
             <div>
               <Button
                 variant="contained"
@@ -114,10 +196,17 @@ class AddNews extends Component {
             </div>
           </form>
         </div>
+        <div className={classes.media}>
+          <img src={this.state.photo} className={classes.img} alt="" />
+        </div>
       </div>
     );
   }
 }
+
+AddNews.propTypes = {
+  classes: PropTypes.object
+};
 
 export default compose(
   withStyles(styles),
