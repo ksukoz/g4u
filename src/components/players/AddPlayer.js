@@ -51,7 +51,8 @@ const styles = theme => ({
   submit: {
     backgroundColor: "#43A047",
     borderRadius: 40,
-    color: "#fff"
+    color: "#fff",
+    marginBottom: "1rem"
   },
   chip: {
     backgroundColor: "#effcf1",
@@ -77,10 +78,10 @@ class AddPlayer extends Component {
     image: null,
     readyImage: "",
     crop: {
-      x: 20,
-      y: 10,
+      x: 30,
+      y: 30,
       width: 30,
-      height: 10,
+      height: 30,
       aspect: 1 / 1
     }
   };
@@ -316,11 +317,7 @@ class AddPlayer extends Component {
         </div>
         <div className={classes.media}>
           {this.state.readyImage !== null ? (
-            <img
-              src={this.state.readyImage}
-              className={classes.img}
-              alt="Обрезанное изображение"
-            />
+            <img src={this.state.readyImage} className={classes.img} />
           ) : (
             ""
           )}
