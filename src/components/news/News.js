@@ -51,6 +51,7 @@ class News extends Component {
           name={newsItem.name}
           title={newsItem.title}
           text={newsItem.text}
+          date={newsItem.date}
           image={newsItem.photo ? newsItem.photo : ""}
         />
       ));

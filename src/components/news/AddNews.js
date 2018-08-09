@@ -109,6 +109,7 @@ class AddNews extends Component {
     const addNews = {
       title: this.state.title,
       text: this.state.text,
+      photo: this.state.photo,
       tags: this.state.tags
     };
 

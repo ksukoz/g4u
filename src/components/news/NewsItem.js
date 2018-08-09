@@ -33,6 +33,7 @@ const styles = theme => ({
   },
   actions: {
     display: "flex",
+    justifyContent: "space-between",
     width: "100%",
     position: "absolute",
     bottom: "0",
@@ -69,6 +70,9 @@ const styles = theme => ({
   //   transform: "translateY(-1000%)"
   // },
   icon: {
+    color: "#fff"
+  },
+  date: {
     color: "#fff"
   }
 });
@@ -154,15 +158,18 @@ class NewsItem extends React.Component {
           <CardMedia
             className={classes.media}
             image={this.props.image ? this.props.image : Test}
-            title="Contemplative Reptile"
           />
           <CardActions className={classes.actions} disableActionSpacing>
-            <IconButton aria-label="Add to favorites">
-              <FavoriteBorder className={classes.icon} />
-            </IconButton>
-            <IconButton aria-label="Share">
-              <ShareIcon className={classes.icon} />
-            </IconButton>
+            <div>
+              <IconButton aria-label="Add to favorites">
+                <FavoriteBorder className={classes.icon} />
+              </IconButton>
+              <IconButton aria-label="Share">
+                <ShareIcon className={classes.icon} />
+              </IconButton>
+            </div>
+
+            <div className={classes.date}>{this.props.date}</div>
           </CardActions>
         </Card>
       </div>
