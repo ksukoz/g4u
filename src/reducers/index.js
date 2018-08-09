@@ -5,6 +5,7 @@ import newsReducer from "./newsReducer";
 import leagueReducer from "./leagueReducer";
 import playerReducer from "./playerReducer";
 import commonReducer from "./commonReducer";
+import userReducer from "./userReducer";
 
 export default combineReducers({
   auth: authReducer,
@@ -12,5 +13,6 @@ export default combineReducers({
   errors: errorReducer,
   news: newsReducer,
   players: playerReducer,
-  common: commonReducer
+  common: commonReducer,
+  users: userReducer
 });

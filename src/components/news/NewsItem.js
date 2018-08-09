@@ -93,10 +93,6 @@ class NewsItem extends React.Component {
     this.props.setLike(id);
   };
 
-  componentWillReceiveProps(nextProps) {
-    this.props.getNews();
-  }
-
   render() {
     const { classes } = this.props;
 

@@ -186,7 +186,7 @@ class Navigation extends React.Component {
               </Link>
             </ListItem>
             <ListItem button className={classes.listItem}>
-              <Link className={classes.nav_link} to="/">
+              <Link className={classes.nav_link} to="/edit-user">
                 <img className={classes.nav_icon} src={Settings} alt="" />
                 <ListItemText
                   className={!this.props.common.open ? classes.hide : ""}
