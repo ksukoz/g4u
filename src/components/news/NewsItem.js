@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
+import compose from "recompose/compose";
+import { connect } from "react-redux";
 import classnames from "classnames";
 import Card from "@material-ui/core/Card";
 // import CardHeader from "@material-ui/core/CardHeader";
@@ -13,10 +15,12 @@ import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import red from "@material-ui/core/colors/red";
+import Favorite from "@material-ui/icons/Favorite";
 import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
 import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 // import MoreVertIcon from "@material-ui/icons/MoreVert";
+import { getNews, setLike } from "../../actions/newsActions";
 
 import Test from "./img/test_bg.png";
 
@@ -83,6 +87,15 @@ class NewsItem extends React.Component {
   handleExpandClick = () => {
     this.setState(state => ({ expanded: !state.expanded }));
   };
+
+  onClickHandler = e => {
+    const id = { id: e.target.id };
+    this.props.setLike(id);
+  };
+
+  componentWillReceiveProps(nextProps) {
+    this.props.getNews();
+  }
 
   render() {
     const { classes } = this.props;
@@ -162,7 +175,19 @@ class NewsItem extends React.Component {
           <CardActions className={classes.actions} disableActionSpacing>
             <div>
               <IconButton aria-label="Add to favorites">
-                <FavoriteBorder className={classes.icon} />
+                {this.props.liked === "0" ? (
+                  <FavoriteBorder
+                    className={classes.icon}
+                    onClick={this.onClickHandler}
+                    id={this.props.id}
+                  />
+                ) : (
+                  <Favorite
+                    className={classes.icon}
+                    onClick={this.onClickHandler}
+                    id={this.props.id}
+                  />
+                )}
               </IconButton>
               <IconButton aria-label="Share">
                 <ShareIcon className={classes.icon} />
@@ -181,4 +206,10 @@ NewsItem.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(NewsItem);
+export default compose(
+  withStyles(styles),
+  connect(
+    null,
+    { getNews, setLike }
+  )
+)(NewsItem);

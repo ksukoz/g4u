@@ -48,11 +48,13 @@ class News extends Component {
       newsList = news.map(newsItem => (
         <NewsItem
           key={newsItem.news_id}
+          id={newsItem.news_id}
           name={newsItem.name}
           title={newsItem.title}
           text={newsItem.text}
           date={newsItem.date}
           image={newsItem.photo ? newsItem.photo : ""}
+          liked={newsItem.liked}
         />
       ));
     }
