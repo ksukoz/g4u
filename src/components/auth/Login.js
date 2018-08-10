@@ -1,12 +1,52 @@
 import React, { Component } from "react";
 import { Link, withRouter, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+import compose from "recompose/compose";
+import { withStyles } from "@material-ui/core/styles";
 import { loginUser } from "../../actions/authActions";
+
+import Button from "@material-ui/core/Button";
+import { TextField } from "@material-ui/core";
+import Paper from "@material-ui/core/Paper";
+
+const styles = {
+  root: {
+    width: "max-content",
+    margin: "0 auto",
+    textAlign: "center",
+    marginTop: "25vh",
+    padding: "2rem 5rem"
+  },
+  input: {
+    width: 300,
+    marginBottom: "1rem"
+  },
+  submit: {
+    backgroundColor: "#43A047",
+    borderRadius: 40,
+    width: 300,
+    color: "#fff",
+    marginBottom: "2rem"
+  },
+  link: {
+    textDecoration: "none",
+    color: "#000",
+    transition: ".3s",
+    "&:hover": {
+      color: "rgba(0,0,0,.8)"
+    }
+  },
+  error: {
+    color: "#ff5e5e",
+    paddingBottom: "2rem"
+  }
+};
 
 class Login extends Component {
   state = {
     email: "",
-    password: ""
+    password: "",
+    errors: ""
   };
 
   onSubmitHandler = e => {
@@ -24,7 +64,17 @@ class Login extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors.length > 0) {
+      this.setState({
+        ...this.state,
+        error: nextProps.errors
+      });
+    }
+  }
+
   render() {
+    const { classes } = this.props;
     const { isAuthenticated } = this.props.auth;
 
     if (isAuthenticated === true) {
@@ -32,29 +82,44 @@ class Login extends Component {
     }
 
     return (
-      <div>
+      <Paper className={classes.root}>
         <h1>Войти</h1>
         <p>Войти в свой аккаунт</p>
         <form onSubmit={this.onSubmitHandler}>
-          <input
-            type="email"
-            name="email"
-            placeholder="Ваш email"
-            value={this.state.email}
-            onChange={this.onChangeHandler}
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="Ваш пароль"
-            value={this.state.password}
-            onChange={this.onChangeHandler}
-          />
-          <input type="submit" value="Войти" />
+          <div>
+            <TextField
+              className={classes.input}
+              type="email"
+              name="email"
+              value={this.state.email}
+              onChange={this.onChangeHandler}
+              label="Ваш email"
+            />
+          </div>
+          <div>
+            <TextField
+              className={classes.input}
+              type="password"
+              name="password"
+              label="Ваш пароль"
+              value={this.state.password}
+              onChange={this.onChangeHandler}
+            />
+          </div>
+          <Button variant="contained" type="submit" className={classes.submit}>
+            Войти
+          </Button>
+          <div className={classes.error}>
+            <small variant="caption" component="small">
+              {this.state.error}
+            </small>
+          </div>
         </form>
 
-        <Link to="/register">Создать свой аккаунт</Link>
-      </div>
+        <Link to="/register" className={classes.link}>
+          Создать свой аккаунт
+        </Link>
+      </Paper>
     );
   }
 }
@@ -64,7 +129,10 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(
-  mapStateToProps,
-  { loginUser }
+export default compose(
+  withStyles(styles),
+  connect(
+    mapStateToProps,
+    { loginUser }
+  )
 )(withRouter(Login));
