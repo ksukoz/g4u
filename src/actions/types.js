@@ -10,4 +10,5 @@ export const SET_LIKE = "SET_LIKE";
 export const GET_POSITIONS = "GET_POSITIONS";
 export const OPEN_NAV = "OPEN_NAV";
 export const CLOSE_NAV = "CLOSE_NAV";
+export const SET_ACTIVE_LINK = "SET_ACTIVE_LINK";
 export const GET_COUNTRIES = "GET_COUNTRIES";

@@ -76,6 +76,10 @@ class Header extends React.Component {
     this.props.logoutUser();
   };
 
+  componentDidMount() {
+    // this.setState({activeLink: })
+  }
+
   render() {
     const { classes } = this.props;
 
@@ -105,7 +109,10 @@ class Header extends React.Component {
                 <MenuIcon />
               </IconButton>
               <Typography variant="title" color="inherit" noWrap>
-                Mini variant drawer
+                {/* {Mini variant drawer} */}
+                {this.props.common.activeLink
+                  ? this.props.common.activeLink
+                  : "Новости"}
               </Typography>
               <Button className={classes.logout} onClick={this.onClickHandler}>
                 Выйти

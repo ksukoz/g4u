@@ -1,5 +1,5 @@
 import axios from "axios";
-import { OPEN_NAV, CLOSE_NAV, GET_COUNTRIES } from "./types";
+import { OPEN_NAV, CLOSE_NAV, GET_COUNTRIES, SET_ACTIVE_LINK } from "./types";
 
 export const handleDrawerOpen = () => {
   return {
@@ -21,5 +21,12 @@ export const getCountries = () => dispatch => {
       type: GET_COUNTRIES,
       payload: res.data.answer
     });
+  });
+};
+
+export const setActiveLink = activeLink => dispatch => {
+  dispatch({
+    type: SET_ACTIVE_LINK,
+    payload: activeLink
   });
 };

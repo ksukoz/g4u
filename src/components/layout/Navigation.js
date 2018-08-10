@@ -11,7 +11,7 @@ import List from "@material-ui/core/List";
 import IconButton from "@material-ui/core/IconButton";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import { handleDrawerClose } from "../../actions/commonActions";
+import { handleDrawerClose, setActiveLink } from "../../actions/commonActions";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
@@ -88,6 +88,10 @@ class Navigation extends React.Component {
     open: false
   };
 
+  onClickHandler = text => {
+    this.props.setActiveLink(text);
+  };
+
   render() {
     const { classes, theme } = this.props;
 
@@ -114,7 +118,11 @@ class Navigation extends React.Component {
           <Divider />
           <List>
             <ListItem button className={classes.listItem}>
-              <Link className={classes.nav_link} to="/">
+              <Link
+                className={classes.nav_link}
+                to="/"
+                onClick={this.onClickHandler.bind(this, "Новости")}
+              >
                 <img className={classes.nav_icon} src={Newspaper} alt="" />
                 <ListItemText
                   className={!this.props.common.open ? classes.hide : ""}
@@ -123,7 +131,11 @@ class Navigation extends React.Component {
               </Link>
             </ListItem>
             <ListItem button className={classes.listItem}>
-              <Link className={classes.nav_link} to="/">
+              <Link
+                className={classes.nav_link}
+                to="/"
+                onClick={this.onClickHandler.bind(this, "Турниры")}
+              >
                 <img className={classes.nav_icon} src={FootballCup} alt="" />
                 <ListItemText
                   className={!this.props.common.open ? classes.hide : ""}
@@ -132,7 +144,11 @@ class Navigation extends React.Component {
               </Link>
             </ListItem>
             <ListItem button className={classes.listItem}>
-              <Link className={classes.nav_link} to="/">
+              <Link
+                className={classes.nav_link}
+                to="/"
+                onClick={this.onClickHandler.bind(this, "Команды")}
+              >
                 <img className={classes.nav_icon} src={FootballClub} alt="" />
                 <ListItemText
                   className={!this.props.common.open ? classes.hide : ""}
@@ -141,7 +157,11 @@ class Navigation extends React.Component {
               </Link>
             </ListItem>
             <ListItem button className={classes.listItem}>
-              <Link className={classes.nav_link} to="/add-player">
+              <Link
+                className={classes.nav_link}
+                to="/add-player"
+                onClick={this.onClickHandler.bind(this, "Игроки")}
+              >
                 <img
                   className={classes.nav_icon}
                   src={FootballPlayers}
@@ -155,7 +175,11 @@ class Navigation extends React.Component {
             </ListItem>
 
             <ListItem button className={classes.listItem}>
-              <Link className={classes.nav_link} to="/">
+              <Link
+                className={classes.nav_link}
+                to="/"
+                onClick={this.onClickHandler.bind(this, "Мои назначения")}
+              >
                 <img className={classes.nav_icon} src={Football} alt="" />
                 <ListItemText
                   className={!this.props.common.open ? classes.hide : ""}
@@ -165,7 +189,11 @@ class Navigation extends React.Component {
             </ListItem>
 
             <ListItem button className={classes.listItem}>
-              <Link className={classes.nav_link} to="/">
+              <Link
+                className={classes.nav_link}
+                to="/"
+                onClick={this.onClickHandler.bind(this, "Мои запросы")}
+              >
                 <img className={classes.nav_icon} src={Questions} alt="" />
                 <ListItemText
                   className={!this.props.common.open ? classes.hide : ""}
@@ -177,7 +205,14 @@ class Navigation extends React.Component {
           <Divider />
           <List>
             <ListItem button className={classes.listItem}>
-              <Link className={classes.nav_link} to="/">
+              <Link
+                className={classes.nav_link}
+                to="/"
+                onClick={this.onClickHandler.bind(
+                  this,
+                  "Правила использования"
+                )}
+              >
                 <img className={classes.nav_icon} src={Info} alt="" />
                 <ListItemText
                   className={!this.props.common.open ? classes.hide : ""}
@@ -186,7 +221,11 @@ class Navigation extends React.Component {
               </Link>
             </ListItem>
             <ListItem button className={classes.listItem}>
-              <Link className={classes.nav_link} to="/edit-user">
+              <Link
+                className={classes.nav_link}
+                to="/edit-user"
+                onClick={this.onClickHandler.bind(this, "Настройки")}
+              >
                 <img className={classes.nav_icon} src={Settings} alt="" />
                 <ListItemText
                   className={!this.props.common.open ? classes.hide : ""}
@@ -195,7 +234,11 @@ class Navigation extends React.Component {
               </Link>
             </ListItem>
             <ListItem button className={classes.listItem}>
-              <Link className={classes.nav_link} to="/">
+              <Link
+                className={classes.nav_link}
+                to="/"
+                onClick={this.onClickHandler.bind(this, "Контакты")}
+              >
                 <img className={classes.nav_icon} src={Contacts} alt="" />
                 <ListItemText
                   className={!this.props.common.open ? classes.hide : ""}
@@ -224,6 +267,6 @@ export default compose(
   withStyles(styles, { withTheme: true }),
   connect(
     mapStateToProps,
-    { handleDrawerClose }
+    { handleDrawerClose, setActiveLink }
   )
 )(Navigation);
