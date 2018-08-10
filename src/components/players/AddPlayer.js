@@ -210,7 +210,7 @@ class AddPlayer extends Component {
               <InputFile
                 type="image"
                 className={classes.input}
-                name={this.state.image}
+                name="photo"
                 onChange={this.onChangeFileHandler}
               />
 
