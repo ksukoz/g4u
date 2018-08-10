@@ -55,12 +55,6 @@ export const setLike = newsId => dispatch => {
       }
     })
     .then(res => {
-      if (res.data.error) {
-        dispatch({
-          type: GET_ERRORS,
-          payload: res.data.message
-        });
-      }
-      console.log(res.data.answer);
+      dispatch(getNews());
     });
 };

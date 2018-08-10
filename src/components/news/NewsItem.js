@@ -89,8 +89,12 @@ class NewsItem extends React.Component {
   };
 
   onClickHandler = e => {
-    const id = { id: e.target.id };
+    let id = { id: e.target.id };
+    if (e.target.tagName === "path") {
+      id.id = e.target.parentNode.id;
+    }
     this.props.setLike(id);
+    console.log(id);
   };
 
   render() {
