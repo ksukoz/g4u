@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_ERRORS, GET_USER, SET_USER } from "./types";
+import { GET_ERRORS, GET_USER, SET_USER, LOGOUT_USER } from "./types";
 
 // Register User
 export const registerUser = (userData, history) => dispatch => {
@@ -40,4 +40,12 @@ export const setUser = user => {
     type: SET_USER,
     payload: user
   };
+};
+
+export const logoutUser = () => dispatch => {
+  localStorage.removeItem("user");
+  dispatch({
+    type: LOGOUT_USER,
+    payload: false
+  });
 };

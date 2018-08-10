@@ -12,6 +12,8 @@ import MenuIcon from "@material-ui/icons/Menu";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
 import { handleDrawerOpen } from "../../actions/commonActions";
+import { logoutUser } from "../../actions/authActions";
+import { Button } from "@material-ui/core";
 
 const theme = createMuiTheme({
   palette: {
@@ -62,10 +64,18 @@ const styles = {
   },
   hide: {
     display: "none"
+  },
+  logout: {
+    marginLeft: "auto",
+    color: "#fff"
   }
 };
 
 class Header extends React.Component {
+  onClickHandler = e => {
+    this.props.logoutUser();
+  };
+
   render() {
     const { classes } = this.props;
 
@@ -97,6 +107,9 @@ class Header extends React.Component {
               <Typography variant="title" color="inherit" noWrap>
                 Mini variant drawer
               </Typography>
+              <Button className={classes.logout} onClick={this.onClickHandler}>
+                Выйти
+              </Button>
             </Toolbar>
           </AppBar>
         </div>
@@ -118,6 +131,6 @@ export default compose(
   withStyles(styles),
   connect(
     mapStateToProps,
-    { handleDrawerOpen }
+    { handleDrawerOpen, logoutUser }
   )
 )(Header);

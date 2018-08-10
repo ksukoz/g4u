@@ -1,10 +1,53 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import compose from "recompose/compose";
+import { withStyles } from "@material-ui/core/styles";
 import { getLeagues, setLeagues } from "../../actions/leagueActions";
 
+import Button from "@material-ui/core/Button";
+import { TextField } from "@material-ui/core";
+import Paper from "@material-ui/core/Paper";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+
+const styles = {
+  root: {
+    width: "max-content",
+    margin: "0 auto",
+    textAlign: "center",
+    marginTop: "15vh",
+    padding: "2rem 5rem"
+  },
+  input: {
+    width: 300,
+    marginBottom: "1rem"
+  },
+  submit: {
+    backgroundColor: "#43A047",
+    borderRadius: 40,
+    width: 300,
+    color: "#fff",
+    marginBottom: "2rem"
+  },
+  link: {
+    textDecoration: "none",
+    color: "#000",
+    transition: ".3s",
+    "&:hover": {
+      color: "rgba(0,0,0,.8)"
+    }
+  },
+  error: {
+    color: "#ff5e5e",
+    paddingBottom: "2rem"
+  }
+};
 class ChooseLeague extends Component {
   state = {
-    league: ""
+    league: "",
+    error: ""
   };
 
   onChangeHandler = e => {
@@ -20,6 +63,11 @@ class ChooseLeague extends Component {
       };
 
       this.props.setLeagues(leagueId, this.props.history);
+    } else {
+      this.setState({
+        ...this.state,
+        error: "Необходимо выбрать лигу"
+      });
     }
   };
 
@@ -28,31 +76,65 @@ class ChooseLeague extends Component {
   }
 
   render() {
+    const { classes } = this.props;
     const { leaguesList } = this.props.leagues;
     let leaguesOptions;
     if (leaguesList !== null) {
       leaguesOptions = leaguesList.map(league => (
-        <option key={league.id} value={league.id}>
+        <MenuItem key={league.id} value={league.id}>
           {league.title}
-        </option>
+        </MenuItem>
       ));
     }
 
     return (
-      <div>
+      <div className={classes.root}>
         <form onSubmit={this.onSubmitHandler}>
-          <select name="sport-type" disabled="disabled">
-            <option value="football" selected>
-              Футбол
-            </option>
-          </select>
-          <select name="league" onChange={this.onChangeHandler}>
-            <option selected disabled>
-              Выбрать лигу
-            </option>
-            {leaguesOptions}
-          </select>
-          <button type="submit">Сохранить</button>
+          <div>
+            <FormControl className={classes.input}>
+              <InputLabel htmlFor="sport-type" className={classes.select}>
+                Выбрать вид спорта
+              </InputLabel>
+              <Select
+                className={classes.select}
+                disabled
+                value="football"
+                onChange={this.onChangeHandler}
+                displayEmpty
+                inputProps={{
+                  name: "sport-type",
+                  id: "sport-type"
+                }}
+              >
+                <MenuItem value="football">Футбол</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl className={classes.input}>
+              <InputLabel htmlFor="league" className={classes.select}>
+                Выбрать лигу
+              </InputLabel>
+              <Select
+                className={classes.select}
+                value={this.state.league}
+                onChange={this.onChangeHandler}
+                displayEmpty
+                inputProps={{
+                  name: "league",
+                  id: "league"
+                }}
+              >
+                {leaguesOptions}
+              </Select>
+            </FormControl>
+          </div>
+          <Button variant="contained" type="submit" className={classes.submit}>
+            Сохранить
+          </Button>
+          <div className={classes.error}>
+            <small variant="caption" component="small">
+              {this.state.error}
+            </small>
+          </div>
         </form>
       </div>
     );
@@ -60,10 +142,14 @@ class ChooseLeague extends Component {
 }
 
 const mapStateToProps = state => ({
-  leagues: state.leagues
+  leagues: state.leagues,
+  errors: state.errors
 });
 
-export default connect(
-  mapStateToProps,
-  { getLeagues, setLeagues }
+export default compose(
+  withStyles(styles),
+  connect(
+    mapStateToProps,
+    { getLeagues, setLeagues }
+  )
 )(ChooseLeague);
