@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_ERRORS, GET_USER } from "./types";
+import { GET_ERRORS, GET_CURRENT_USER } from "./types";
 
 // Register User
 export const editUser = userData => dispatch => {
@@ -34,7 +34,7 @@ export const getUser = () => dispatch => {
     })
     .then(res => {
       dispatch({
-        type: GET_USER,
+        type: GET_CURRENT_USER,
         payload: res.data.answer
       });
     });

@@ -1,16 +1,15 @@
 import React, { Component } from "react";
 import compose from "recompose/compose";
 import { connect } from "react-redux";
-import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 import { editUser, getUser } from "../../actions/userActions";
+import { getCountries } from "../../actions/commonActions";
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import InputFile from "../common/InputFile";
 
 import Button from "@material-ui/core/Button";
 
@@ -31,14 +30,16 @@ const styles = theme => ({
     width: "100%"
   },
   input: {
-    width: "32%"
+    width: "24%"
   },
   input_wrap: {
     display: "flex",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    marginBottom: "1rem"
   },
   select: {
-    width: "100%"
+    width: "100%",
+    paddingTop: "1rem"
   },
   button: {
     margin: theme.spacing.unit,
@@ -55,13 +56,6 @@ const styles = theme => ({
     borderRadius: 40,
     color: "#fff",
     marginBottom: "1rem"
-  },
-  chip: {
-    backgroundColor: "#effcf1",
-    marginLeft: "1rem",
-    "&:focus": {
-      backgroundColor: "#effcf1"
-    }
   }
 });
 
@@ -69,9 +63,10 @@ class EditUser extends Component {
   state = {
     nickname: "",
     email: "",
-    // locale: "",
     league_id: "",
-    league: ""
+    league: "",
+    locale: "",
+    country: ""
   };
 
   onChangeHandler = e => {
@@ -84,8 +79,8 @@ class EditUser extends Component {
     const editUser = {
       nickname: this.state.nickname,
       email: this.state.email,
-      // locale: this.state.locale,
-      league_id: this.state.league_id
+      league_id: this.state.league_id,
+      locale: this.state.locale
     };
 
     this.props.editUser(editUser);
@@ -97,6 +92,8 @@ class EditUser extends Component {
 
   componentDidMount() {
     this.props.getUser();
+    this.props.getCountries();
+
     const league = JSON.parse(localStorage.getItem("user")).league;
     this.setState({
       ...this.state,
@@ -104,10 +101,33 @@ class EditUser extends Component {
     });
   }
 
+  componentWillReceiveProps(nextProps) {
+    let user;
+    let countries;
+    if (nextProps.users.user !== null && nextProps.common.countries !== null) {
+      user = nextProps.users.user;
+      countries = nextProps.common.countries;
+      this.setState({
+        ...this.state,
+        nickname: user.nickname,
+        email: user.email,
+        league: user.league,
+        locale: user.locale,
+        country: countries.filter(
+          countryItem => countryItem.iso === user.locale.toUpperCase()
+        )[0].name
+      });
+    }
+  }
+
   render() {
     const { classes } = this.props;
     const { leaguesList } = this.props.leagues;
+    const { countries } = this.props.common;
     let leaguesOptions;
+    let countriesOptions;
+    let countryName;
+
     if (leaguesList !== null) {
       leaguesOptions = leaguesList.map(league => {
         return (
@@ -116,6 +136,19 @@ class EditUser extends Component {
           </MenuItem>
         );
       });
+    }
+
+    if (countries !== null) {
+      countriesOptions = countries.map(country => {
+        return (
+          <MenuItem key={country.iso} value={country.iso}>
+            {country.name}
+          </MenuItem>
+        );
+      });
+      countryName = countries.filter(
+        country => country.iso === this.state.locale.toUpperCase()
+      );
     }
 
     return (
@@ -140,18 +173,43 @@ class EditUser extends Component {
                 margin="normal"
               />
               <FormControl className={classes.input}>
-                <InputLabel htmlFor="league_id">Выбрать лигу</InputLabel>
+                <InputLabel htmlFor="league_id" className={classes.select}>
+                  Выбрать лигу
+                </InputLabel>
                 <Select
                   className={classes.select}
                   value={this.state.league_id}
-                  defaultValue={this.state.league}
                   onChange={this.onChangeHandler}
+                  displayEmpty
                   inputProps={{
                     name: "league_id",
                     id: "league_id"
                   }}
                 >
+                  <MenuItem value={this.state.league_id} disabled>
+                    {this.state.league}
+                  </MenuItem>
                   {leaguesOptions}
+                </Select>
+              </FormControl>
+              <FormControl className={classes.input}>
+                <InputLabel htmlFor="locale" className={classes.select}>
+                  Выбрать страну
+                </InputLabel>
+                <Select
+                  className={classes.select}
+                  value={this.state.locale}
+                  onChange={this.onChangeHandler}
+                  displayEmpty
+                  inputProps={{
+                    name: "locale",
+                    id: "locale"
+                  }}
+                >
+                  <MenuItem value={this.state.locale} disabled>
+                    {this.state.country}
+                  </MenuItem>
+                  {countriesOptions}
                 </Select>
               </FormControl>
             </div>
@@ -173,13 +231,15 @@ class EditUser extends Component {
 
 const mapStateToProps = state => ({
   players: state.players,
-  leagues: state.leagues
+  leagues: state.leagues,
+  users: state.users,
+  common: state.common
 });
 
 export default compose(
   withStyles(styles),
   connect(
     mapStateToProps,
-    { editUser, getLeagues, getUser }
+    { editUser, getLeagues, getUser, getCountries }
   )
 )(EditUser);

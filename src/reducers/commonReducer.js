@@ -1,7 +1,8 @@
-import { OPEN_NAV, CLOSE_NAV } from "../actions/types";
+import { OPEN_NAV, CLOSE_NAV, GET_COUNTRIES } from "../actions/types";
 
 const initialState = {
-  open: false
+  open: false,
+  countries: null
 };
 
 export default function(state = initialState, action) {
@@ -15,6 +16,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         open: action.payload
+      };
+    case GET_COUNTRIES:
+      return {
+        ...state,
+        countries: action.payload
       };
     default:
       return state;

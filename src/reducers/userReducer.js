@@ -1,4 +1,4 @@
-import { GET_ERRORS, GET_USER } from "../actions/types";
+import { GET_ERRORS, GET_CURRENT_USER } from "../actions/types";
 
 const initialState = {
   errors: null,
@@ -12,7 +12,7 @@ export default function(state = initialState, action) {
         ...state,
         errors: action.payload
       };
-    case GET_USER:
+    case GET_CURRENT_USER:
       return {
         ...state,
         user: action.payload

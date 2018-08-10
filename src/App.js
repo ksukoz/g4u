@@ -39,7 +39,8 @@ class App extends Component {
             <Route exact path="/choose-league" component={ChooseLeague} />
             <PrivateRoute path="/" component={Header} />
             <main className="main">
-              <Navigation className="Navigation" />
+              <PrivateRoute path="/" component={Navigation} />
+              {/* <Navigation className="Navigation" /> */}
               <div className="container">
                 <Switch>
                   <PrivateRoute exact path="/" component={News} />
