@@ -18,6 +18,7 @@ import AddPlayer from "./components/players/AddPlayer";
 import EditUser from "./components/user/EditUser";
 import Header from "./components/layout/Header";
 import Navigation from "./components/layout/Navigation";
+import InProgress from "./components/layout/InProgress";
 
 if (localStorage.user) {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -59,6 +60,13 @@ class App extends Component {
                 </Switch>
                 <Switch>
                   <PrivateRoute exact path="/edit-user" component={EditUser} />
+                </Switch>
+                <Switch>
+                  <PrivateRoute
+                    exact
+                    path="/in-progress"
+                    component={InProgress}
+                  />
                 </Switch>
               </div>
             </main>

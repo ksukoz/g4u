@@ -94,7 +94,6 @@ class NewsItem extends React.Component {
       id.id = e.target.parentNode.id;
     }
     this.props.setLike(id);
-    console.log(id);
   };
 
   render() {

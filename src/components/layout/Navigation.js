@@ -133,7 +133,7 @@ class Navigation extends React.Component {
             <ListItem button className={classes.listItem}>
               <Link
                 className={classes.nav_link}
-                to="/"
+                to="/in-progress"
                 onClick={this.onClickHandler.bind(this, "Турниры")}
               >
                 <img className={classes.nav_icon} src={FootballCup} alt="" />
@@ -146,7 +146,7 @@ class Navigation extends React.Component {
             <ListItem button className={classes.listItem}>
               <Link
                 className={classes.nav_link}
-                to="/"
+                to="/in-progress"
                 onClick={this.onClickHandler.bind(this, "Команды")}
               >
                 <img className={classes.nav_icon} src={FootballClub} alt="" />
@@ -177,7 +177,7 @@ class Navigation extends React.Component {
             <ListItem button className={classes.listItem}>
               <Link
                 className={classes.nav_link}
-                to="/"
+                to="/in-progress"
                 onClick={this.onClickHandler.bind(this, "Мои назначения")}
               >
                 <img className={classes.nav_icon} src={Football} alt="" />
@@ -191,7 +191,7 @@ class Navigation extends React.Component {
             <ListItem button className={classes.listItem}>
               <Link
                 className={classes.nav_link}
-                to="/"
+                to="/in-progress"
                 onClick={this.onClickHandler.bind(this, "Мои запросы")}
               >
                 <img className={classes.nav_icon} src={Questions} alt="" />
@@ -207,7 +207,7 @@ class Navigation extends React.Component {
             <ListItem button className={classes.listItem}>
               <Link
                 className={classes.nav_link}
-                to="/"
+                to="/in-progress"
                 onClick={this.onClickHandler.bind(
                   this,
                   "Правила использования"
@@ -236,7 +236,7 @@ class Navigation extends React.Component {
             <ListItem button className={classes.listItem}>
               <Link
                 className={classes.nav_link}
-                to="/"
+                to="/in-progress"
                 onClick={this.onClickHandler.bind(this, "Контакты")}
               >
                 <img className={classes.nav_icon} src={Contacts} alt="" />
