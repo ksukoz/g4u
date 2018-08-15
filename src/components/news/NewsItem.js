@@ -188,9 +188,9 @@ class NewsItem extends React.Component {
                   />
                 )}
               </IconButton>
-              <IconButton aria-label="Share">
+              {/* <IconButton aria-label="Share">
                 <ShareIcon className={classes.icon} />
-              </IconButton>
+              </IconButton> */}
             </div>
 
             <div className={classes.date}>{this.props.date}</div>

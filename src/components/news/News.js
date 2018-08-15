@@ -60,15 +60,20 @@ class News extends Component {
     }
     return (
       <div className="News">
-        <Button
-          variant="extendedFab"
-          aria-label="Delete"
-          className={classes.button}
-        >
-          <Link className={classes.button_link} to="/add-news">
-            Добавить новость
-          </Link>
-        </Button>
+        {JSON.parse(localStorage.getItem("user")).personal === 1 ||
+        JSON.parse(localStorage.getItem("user")).personal === 7 ? (
+          <Button
+            variant="extendedFab"
+            aria-label="Delete"
+            className={classes.button}
+          >
+            <Link className={classes.button_link} to="/add-news">
+              Добавить новость
+            </Link>
+          </Button>
+        ) : (
+          ""
+        )}
         <div className="news_wrap">{newsList}</div>
       </div>
     );

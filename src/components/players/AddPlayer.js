@@ -249,7 +249,7 @@ class AddPlayer extends Component {
                 label="Рост"
                 type="number"
                 name="stature"
-                className="text-field"
+                className={classes.input}
                 value={this.state.stature}
                 onChange={this.onChangeHandler}
                 margin="normal"
@@ -258,7 +258,7 @@ class AddPlayer extends Component {
                 label="Вес"
                 type="number"
                 name="weight"
-                className="text-field"
+                className={classes.input}
                 value={this.state.weight}
                 onChange={this.onChangeHandler}
                 margin="normal"
@@ -267,7 +267,7 @@ class AddPlayer extends Component {
                 label="Телефон"
                 type="tel"
                 name="phone"
-                className="text-field"
+                className={classes.input}
                 value={this.state.phone}
                 onChange={this.onChangeHandler}
                 margin="normal"
@@ -277,7 +277,7 @@ class AddPlayer extends Component {
               <TextField
                 label="Facebook"
                 name="fb"
-                className="text-field"
+                className={classes.input}
                 value={this.state.fb}
                 onChange={this.onChangeHandler}
                 margin="normal"
@@ -285,7 +285,7 @@ class AddPlayer extends Component {
               <TextField
                 label="VK"
                 name="vk"
-                className="text-field"
+                className={classes.input}
                 value={this.state.vk}
                 onChange={this.onChangeHandler}
                 margin="normal"

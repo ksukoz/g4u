@@ -138,13 +138,17 @@ class AddNews extends Component {
         <div className={classes.form}>
           <form onSubmit={this.onSubmit}>
             <div>
-              <Input
+              <TextField
                 className={classes.input}
                 type="text"
                 name="title"
                 value={this.state.title}
                 onChange={this.onChange}
-                placeholder="Заголовок новости"
+                onInput={e => {
+                  e.target.value = e.target.value.slice(0, 60);
+                }}
+                label="Заголовок новости"
+                helperText="Заголовок новости может быть не более 60 символов"
               />
             </div>
             <div>
@@ -157,7 +161,11 @@ class AddNews extends Component {
                 name="text"
                 value={this.state.text}
                 onChange={this.onChange}
+                onInput={e => {
+                  e.target.value = e.target.value.slice(0, 9000);
+                }}
                 margin="normal"
+                helperText="Текст новости может быть не более 9000 символов"
               />
             </div>
             <InputFile
