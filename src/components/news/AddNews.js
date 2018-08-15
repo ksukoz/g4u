@@ -85,13 +85,15 @@ class AddNews extends Component {
   onClickHandler = () => {
     const tagItem = this.state.tag;
     const tagList = this.state.tags;
-    tagList.push(tagItem);
+    if (tagItem.length > 0) {
+      tagList.push(tagItem);
 
-    this.setState({
-      ...this.state,
-      tags: tagList,
-      tag: ""
-    });
+      this.setState({
+        ...this.state,
+        tags: tagList,
+        tag: ""
+      });
+    }
   };
 
   onDeleteHandle = data => () => {
