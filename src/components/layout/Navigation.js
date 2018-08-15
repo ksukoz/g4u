@@ -157,21 +157,39 @@ class Navigation extends React.Component {
               </Link>
             </ListItem>
             <ListItem button className={classes.listItem}>
-              <Link
-                className={classes.nav_link}
-                to="/add-player"
-                onClick={this.onClickHandler.bind(this, "Игроки")}
-              >
-                <img
-                  className={classes.nav_icon}
-                  src={FootballPlayers}
-                  alt=""
-                />
-                <ListItemText
-                  className={!this.props.common.open ? classes.hide : ""}
-                  primary="Игроки"
-                />
-              </Link>
+              {JSON.parse(localStorage.getItem("user")).player === 0 ? (
+                <Link
+                  className={classes.nav_link}
+                  to="/add-player"
+                  onClick={this.onClickHandler.bind(this, "Игроки")}
+                >
+                  <img
+                    className={classes.nav_icon}
+                    src={FootballPlayers}
+                    alt=""
+                  />
+                  <ListItemText
+                    className={!this.props.common.open ? classes.hide : ""}
+                    primary="Игроки"
+                  />
+                </Link>
+              ) : (
+                <Link
+                  className={classes.nav_link}
+                  to="/edit-player"
+                  onClick={this.onClickHandler.bind(this, "Игроки")}
+                >
+                  <img
+                    className={classes.nav_icon}
+                    src={FootballPlayers}
+                    alt=""
+                  />
+                  <ListItemText
+                    className={!this.props.common.open ? classes.hide : ""}
+                    primary="Игроки"
+                  />
+                </Link>
+              )}
             </ListItem>
 
             <ListItem button className={classes.listItem}>

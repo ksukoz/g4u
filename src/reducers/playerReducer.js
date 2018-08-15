@@ -1,8 +1,9 @@
-import { GET_ERRORS, GET_POSITIONS } from "../actions/types";
+import { GET_ERRORS, GET_POSITIONS, GET_PLAYER } from "../actions/types";
 
 const initialState = {
   errors: null,
-  positions: null
+  positions: null,
+  player: null
 };
 
 export default function(state = initialState, action) {
@@ -16,6 +17,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         positions: action.payload
+      };
+    case GET_PLAYER:
+      return {
+        ...state,
+        player: action.payload
       };
     default:
       return state;

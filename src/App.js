@@ -15,6 +15,7 @@ import News from "./components/news/News";
 import AddNews from "./components/news/AddNews";
 import ChooseLeague from "./components/auth/ChooseLeague";
 import AddPlayer from "./components/players/AddPlayer";
+import EditPlayer from "./components/players/EditPlayer";
 import EditUser from "./components/user/EditUser";
 import Header from "./components/layout/Header";
 import Navigation from "./components/layout/Navigation";
@@ -56,6 +57,13 @@ class App extends Component {
                     exact
                     path="/add-player"
                     component={AddPlayer}
+                  />
+                </Switch>
+                <Switch>
+                  <PrivateRoute
+                    exact
+                    path="/edit-player"
+                    component={EditPlayer}
                   />
                 </Switch>
                 <Switch>

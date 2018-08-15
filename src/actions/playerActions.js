@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_ERRORS, GET_POSITIONS } from "../actions/types";
+import { GET_ERRORS, GET_POSITIONS, GET_PLAYER } from "../actions/types";
 
 export const getPositions = () => dispatch => {
   axios
@@ -35,6 +35,29 @@ export const addPlayer = (stuffData, history) => dispatch => {
         });
       } else {
         history.push("/add-player");
+      }
+    });
+};
+export const getPlayer = () => dispatch => {
+  axios
+    .get("http://api.afl.lan//user/player", {
+      headers: {
+        Authorization: `G4User ${
+          JSON.parse(localStorage.getItem("user")).token
+        }`
+      }
+    })
+    .then(res => {
+      if (res.data.error) {
+        dispatch({
+          type: GET_ERRORS,
+          payload: res.data.message
+        });
+      } else {
+        dispatch({
+          type: GET_PLAYER,
+          payload: res.data.answer
+        });
       }
     });
 };
