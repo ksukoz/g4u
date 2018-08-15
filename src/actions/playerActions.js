@@ -3,7 +3,7 @@ import { GET_ERRORS, GET_POSITIONS, GET_PLAYER } from "../actions/types";
 
 export const getPositions = () => dispatch => {
   axios
-    .get("http://api.afl.lan/players/getposition", {
+    .get("http://api.mygame4u.com/players/getposition", {
       headers: {
         Authorization: `G4User ${
           JSON.parse(localStorage.getItem("user")).token
@@ -20,7 +20,7 @@ export const getPositions = () => dispatch => {
 
 export const addPlayer = (stuffData, history) => dispatch => {
   axios
-    .post("http://api.afl.lan/players/add", stuffData, {
+    .post("http://api.mygame4u.com/players/add", stuffData, {
       headers: {
         Authorization: `G4User ${
           JSON.parse(localStorage.getItem("user")).token
@@ -41,7 +41,7 @@ export const addPlayer = (stuffData, history) => dispatch => {
 
 export const getPlayer = () => dispatch => {
   axios
-    .get("http://api.afl.lan//user/player", {
+    .get("http://api.mygame4u.com//user/player", {
       headers: {
         Authorization: `G4User ${
           JSON.parse(localStorage.getItem("user")).token
@@ -65,7 +65,7 @@ export const getPlayer = () => dispatch => {
 
 export const updatePlayer = (stuffData, history) => dispatch => {
   axios
-    .post("http://api.afl.lan/user/updateplayer", stuffData, {
+    .post("http://api.mygame4u.com/user/updateplayer", stuffData, {
       headers: {
         Authorization: `G4User ${
           JSON.parse(localStorage.getItem("user")).token
@@ -87,7 +87,7 @@ export const updatePlayer = (stuffData, history) => dispatch => {
 
 export const separatePlayer = history => dispatch => {
   axios
-    .get("http://api.afl.lan/user/delplmerge", {
+    .get("http://api.mygame4u.com/user/delplmerge", {
       headers: {
         Authorization: `G4User ${
           JSON.parse(localStorage.getItem("user")).token

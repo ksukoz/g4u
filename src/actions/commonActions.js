@@ -16,7 +16,7 @@ export const handleDrawerClose = () => {
 };
 
 export const getCountries = () => dispatch => {
-  axios.get("http://api.afl.lan/location/country").then(res => {
+  axios.get("http://api.mygame4u.com/location/country").then(res => {
     dispatch({
       type: GET_COUNTRIES,
       payload: res.data.answer

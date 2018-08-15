@@ -4,7 +4,7 @@ import { GET_LEAGUES } from "./types";
 // Get leagues
 export const getLeagues = () => dispatch => {
   axios
-    .get("http://api.afl.lan/leagues", {
+    .get("http://api.mygame4u.com/leagues", {
       headers: {
         Authorization: `G4User ${
           JSON.parse(localStorage.getItem("user")).token
@@ -21,7 +21,7 @@ export const getLeagues = () => dispatch => {
 
 export const setLeagues = (leagueId, history) => dispatch => {
   axios
-    .post("http://api.afl.lan/user/setleague", leagueId, {
+    .post("http://api.mygame4u.com/user/setleague", leagueId, {
       headers: {
         Authorization: `G4User ${
           JSON.parse(localStorage.getItem("user")).token

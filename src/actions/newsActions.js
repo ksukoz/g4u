@@ -3,7 +3,7 @@ import { GET_ERRORS, GET_NEWS } from "./types";
 
 export const addNews = newsData => dispatch => {
   axios
-    .post("http://api.afl.lan/news/add", newsData, {
+    .post("http://api.mygame4u.com/news/add", newsData, {
       headers: {
         Authorization: `G4User ${
           JSON.parse(localStorage.getItem("user")).token
@@ -23,7 +23,7 @@ export const addNews = newsData => dispatch => {
 
 export const getNews = () => dispatch => {
   axios
-    .get("http://api.afl.lan/news", {
+    .get("http://api.mygame4u.com/news", {
       headers: {
         Authorization: `G4User ${
           JSON.parse(localStorage.getItem("user")).token
@@ -47,7 +47,7 @@ export const getNews = () => dispatch => {
 
 export const setLike = newsId => dispatch => {
   axios
-    .post("http://api.afl.lan/news/like", newsId, {
+    .post("http://api.mygame4u.com/news/like", newsId, {
       headers: {
         Authorization: `G4User ${
           JSON.parse(localStorage.getItem("user")).token
