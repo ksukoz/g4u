@@ -84,3 +84,24 @@ export const updatePlayer = (stuffData, history) => dispatch => {
       }
     });
 };
+
+export const separatePlayer = history => dispatch => {
+  axios
+    .get("http://api.afl.lan/user/delplmerge", {
+      headers: {
+        Authorization: `G4User ${
+          JSON.parse(localStorage.getItem("user")).token
+        }`
+      }
+    })
+    .then(res => {
+      if (res.data.error) {
+        dispatch({
+          type: GET_ERRORS,
+          payload: res.data.message
+        });
+      } else {
+        history.push("/add-player");
+      }
+    });
+};

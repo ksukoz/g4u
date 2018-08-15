@@ -6,7 +6,8 @@ import "react-image-crop/dist/ReactCrop.css";
 import {
   getPlayer,
   getPositions,
-  updatePlayer
+  updatePlayer,
+  separatePlayer
 } from "../../actions/playerActions";
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
@@ -169,6 +170,13 @@ class EditPlayer extends Component {
 
     this.props.updatePlayer(updatedPlayer, this.props.history);
     this.setState({ ...this.state, image: null });
+  };
+
+  onClickHandler = e => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    this.props.separatePlayer(this.props.history);
+    user.player = 0;
+    localStorage.setItem("user", JSON.stringify(user));
   };
 
   componentDidMount() {
@@ -353,7 +361,12 @@ class EditPlayer extends Component {
             <Button size="large" type="submit" className={classes.submit}>
               Обновить
             </Button>
-            <Button size="large" type="button" className={classes.button}>
+            <Button
+              size="large"
+              type="button"
+              className={classes.button}
+              onClick={this.onClickHandler}
+            >
               Отвязать
             </Button>
           </form>
@@ -392,6 +405,6 @@ export default compose(
   withStyles(styles),
   connect(
     mapStateToProps,
-    { getPlayer, getPositions, updatePlayer }
+    { getPlayer, getPositions, updatePlayer, separatePlayer }
   )
 )(EditPlayer);
