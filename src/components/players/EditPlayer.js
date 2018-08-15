@@ -3,7 +3,11 @@ import compose from "recompose/compose";
 import { connect } from "react-redux";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
-import { getPlayer, getPositions } from "../../actions/playerActions";
+import {
+  getPlayer,
+  getPositions,
+  updatePlayer
+} from "../../actions/playerActions";
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -17,7 +21,14 @@ import Button from "@material-ui/core/Button";
 const styles = theme => ({
   root: {
     display: "flex",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    flexWrap: "wrap"
+  },
+  error: {
+    color: "#ff5e5e",
+    paddingBottom: "2rem",
+    width: "100%",
+    textAlign: "center"
   },
   form: {
     width: "49%"
@@ -39,9 +50,10 @@ const styles = theme => ({
     width: "100%"
   },
   button: {
-    margin: theme.spacing.unit,
     background: "transparent",
+    border: "1px solid #43A047",
     color: "rgba(0,0,0,.5)",
+    borderRadius: 40,
     transition: ".3s",
     "&:hover, &:active": {
       backgroundColor: "#43A047",
@@ -49,6 +61,8 @@ const styles = theme => ({
     }
   },
   submit: {
+    marginTop: "1rem",
+    marginRight: "1rem",
     backgroundColor: "#43A047",
     borderRadius: 40,
     color: "#fff",
@@ -78,6 +92,7 @@ class EditPlayer extends Component {
     position: "",
     image: null,
     readyImage: "",
+    error: "",
     crop: {
       x: 30,
       y: 30,
@@ -143,7 +158,7 @@ class EditPlayer extends Component {
   onSubmitHandler = e => {
     e.preventDefault();
 
-    const newPlayer = {
+    const updatedPlayer = {
       photo: this.state.readyImage,
       stature: this.state.stature,
       weight: this.state.weight,
@@ -152,7 +167,8 @@ class EditPlayer extends Component {
       VK: this.state.vk
     };
 
-    // this.props.addPlayer(newPlayer, this.props.history);
+    this.props.updatePlayer(updatedPlayer, this.props.history);
+    this.setState({ ...this.state, image: null });
   };
 
   componentDidMount() {
@@ -187,6 +203,13 @@ class EditPlayer extends Component {
         position: player.position
       });
     }
+
+    if (nextProps.errors.length > 0) {
+      this.setState({
+        ...this.state,
+        error: nextProps.errors
+      });
+    }
   }
 
   render() {
@@ -204,6 +227,11 @@ class EditPlayer extends Component {
 
     return (
       <div className={classes.root}>
+        <div className={classes.error}>
+          <small variant="caption" component="small">
+            {this.state.error}
+          </small>
+        </div>
         <div className={classes.form}>
           <form className="player__form" onSubmit={this.onSubmitHandler}>
             <div className={classes.input_wrap}>
@@ -322,14 +350,11 @@ class EditPlayer extends Component {
                 margin="normal"
               />
             </div>
-            <Button
-              variant="contained"
-              color="primary"
-              size="large"
-              type="submit"
-              className={classes.submit}
-            >
-              Сохранить
+            <Button size="large" type="submit" className={classes.submit}>
+              Обновить
+            </Button>
+            <Button size="large" type="button" className={classes.button}>
+              Отвязать
             </Button>
           </form>
 
@@ -359,13 +384,14 @@ class EditPlayer extends Component {
 }
 
 const mapStateToProps = state => ({
-  players: state.players
+  players: state.players,
+  errors: state.errors
 });
 
 export default compose(
   withStyles(styles),
   connect(
     mapStateToProps,
-    { getPlayer, getPositions }
+    { getPlayer, getPositions, updatePlayer }
   )
 )(EditPlayer);
