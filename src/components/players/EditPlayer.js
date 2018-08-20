@@ -84,6 +84,7 @@ class EditPlayer extends Component {
     surname: "",
     patronymic: "",
     position_id: "",
+    leg: "",
     birthday: "",
     stature: "",
     weight: "",
@@ -161,6 +162,7 @@ class EditPlayer extends Component {
 
     const updatedPlayer = {
       photo: this.state.readyImage,
+      leg: this.state.leg,
       stature: this.state.stature,
       weight: this.state.weight,
       phone: this.state.phone,
@@ -201,6 +203,7 @@ class EditPlayer extends Component {
         position_id: positions.filter(
           positionItem => positionItem.type === player.position
         )[0].position_id,
+        leg: player.leg,
         birthday: player.birthday,
         stature: player.stature,
         weight: player.weight,
@@ -297,6 +300,24 @@ class EditPlayer extends Component {
                   {positionsList}
                 </Select>
               </FormControl>
+              <FormControl className={classes.input}>
+                <InputLabel htmlFor="leg">Выбрать ведущую ногу</InputLabel>
+                <Select
+                  className={classes.select}
+                  value={this.state.leg}
+                  onChange={this.onChangeHandler}
+                  inputProps={{
+                    name: "leg",
+                    id: "leg"
+                  }}
+                >
+                  <MenuItem value="left">Левая</MenuItem>
+                  <MenuItem value="right">Правая</MenuItem>
+                  <MenuItem value="both">Обе</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+            <div className={classes.input_wrap}>
               <TextField
                 id="birthday"
                 label="Дата рождения"
@@ -310,8 +331,6 @@ class EditPlayer extends Component {
                 }}
                 disabled
               />
-            </div>
-            <div className={classes.input_wrap}>
               <TextField
                 label="Рост"
                 type="number"
@@ -330,6 +349,8 @@ class EditPlayer extends Component {
                 onChange={this.onChangeHandler}
                 margin="normal"
               />
+            </div>
+            <div className={classes.input_wrap}>
               <TextField
                 label="Телефон"
                 type="tel"
@@ -339,8 +360,6 @@ class EditPlayer extends Component {
                 onChange={this.onChangeHandler}
                 margin="normal"
               />
-            </div>
-            <div className={classes.input_wrap}>
               <TextField
                 label="Facebook"
                 name="fb"

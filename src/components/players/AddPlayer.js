@@ -69,6 +69,7 @@ class AddPlayer extends Component {
     surname: "",
     patronymic: "",
     position_id: "",
+    leg: "",
     birthday: "",
     stature: "",
     weight: "",
@@ -83,7 +84,8 @@ class AddPlayer extends Component {
       width: 30,
       height: 30,
       aspect: 1 / 1
-    }
+    },
+    errors: ""
   };
 
   onChangeFileHandler = e => {
@@ -147,6 +149,7 @@ class AddPlayer extends Component {
       surename: this.state.surname,
       patronymic: this.state.patronymic,
       position_id: +this.state.position_id,
+      leg: this.state.leg,
       photo: this.state.readyImage,
       birthday: this.state.birthday,
       stature: this.state.stature,
@@ -178,6 +181,7 @@ class AddPlayer extends Component {
 
     return (
       <div className={classes.root}>
+        {this.state.errors ? `<p>${this.state.errors}</p>` : ""}
         <div className={classes.form}>
           <form className="player__form" onSubmit={this.onSubmitHandler}>
             <div className={classes.input_wrap}>
@@ -231,6 +235,24 @@ class AddPlayer extends Component {
                   {positionsList}
                 </Select>
               </FormControl>
+              <FormControl className={classes.input}>
+                <InputLabel htmlFor="leg">Выбрать ведущую ногу</InputLabel>
+                <Select
+                  className={classes.select}
+                  value={this.state.leg}
+                  onChange={this.onChangeHandler}
+                  inputProps={{
+                    name: "leg",
+                    id: "leg"
+                  }}
+                >
+                  <MenuItem value="left">Левая</MenuItem>
+                  <MenuItem value="right">Правая</MenuItem>
+                  <MenuItem value="both">Обе</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+            <div className={classes.input_wrap}>
               <TextField
                 id="birthday"
                 label="Дата рождения"
@@ -243,8 +265,6 @@ class AddPlayer extends Component {
                   shrink: true
                 }}
               />
-            </div>
-            <div className={classes.input_wrap}>
               <TextField
                 label="Рост"
                 type="number"
@@ -263,6 +283,8 @@ class AddPlayer extends Component {
                 onChange={this.onChangeHandler}
                 margin="normal"
               />
+            </div>
+            <div className={classes.input_wrap}>
               <TextField
                 label="Телефон"
                 type="tel"
@@ -272,8 +294,6 @@ class AddPlayer extends Component {
                 onChange={this.onChangeHandler}
                 margin="normal"
               />
-            </div>
-            <div className={classes.input_wrap}>
               <TextField
                 label="Facebook"
                 name="fb"
@@ -328,7 +348,8 @@ class AddPlayer extends Component {
 }
 
 const mapStateToProps = state => ({
-  players: state.players
+  players: state.players,
+  errors: state.errors
 });
 
 export default compose(
