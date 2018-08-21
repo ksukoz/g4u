@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-
+import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
 import classNames from "classnames";
 import compose from "recompose/compose";
@@ -121,12 +121,15 @@ class Navigation extends React.Component {
               <Link
                 className={classes.nav_link}
                 to="/"
-                onClick={this.onClickHandler.bind(this, "Новости")}
+                onClick={this.onClickHandler.bind(
+                  this,
+                  <FormattedMessage id="nav.news" />
+                )}
               >
                 <img className={classes.nav_icon} src={Newspaper} alt="" />
                 <ListItemText
                   className={!this.props.common.open ? classes.hide : ""}
-                  primary="Новости"
+                  primary={<FormattedMessage id="nav.news" />}
                 />
               </Link>
             </ListItem>
@@ -134,12 +137,15 @@ class Navigation extends React.Component {
               <Link
                 className={classes.nav_link}
                 to="/in-progress"
-                onClick={this.onClickHandler.bind(this, "Турниры")}
+                onClick={this.onClickHandler.bind(
+                  this,
+                  <FormattedMessage id="nav.tournaments" />
+                )}
               >
                 <img className={classes.nav_icon} src={FootballCup} alt="" />
                 <ListItemText
                   className={!this.props.common.open ? classes.hide : ""}
-                  primary="Турниры"
+                  primary={<FormattedMessage id="nav.tournaments" />}
                 />
               </Link>
             </ListItem>
@@ -147,12 +153,15 @@ class Navigation extends React.Component {
               <Link
                 className={classes.nav_link}
                 to="/in-progress"
-                onClick={this.onClickHandler.bind(this, "Команды")}
+                onClick={this.onClickHandler.bind(
+                  this,
+                  <FormattedMessage id="nav.commands" />
+                )}
               >
                 <img className={classes.nav_icon} src={FootballClub} alt="" />
                 <ListItemText
                   className={!this.props.common.open ? classes.hide : ""}
-                  primary="Команды"
+                  primary={<FormattedMessage id="nav.commands" />}
                 />
               </Link>
             </ListItem>
@@ -161,7 +170,10 @@ class Navigation extends React.Component {
                 <Link
                   className={classes.nav_link}
                   to="/add-player"
-                  onClick={this.onClickHandler.bind(this, "Игроки")}
+                  onClick={this.onClickHandler.bind(
+                    this,
+                    <FormattedMessage id="nav.players" />
+                  )}
                 >
                   <img
                     className={classes.nav_icon}
@@ -170,14 +182,17 @@ class Navigation extends React.Component {
                   />
                   <ListItemText
                     className={!this.props.common.open ? classes.hide : ""}
-                    primary="Игроки"
+                    primary={<FormattedMessage id="nav.players" />}
                   />
                 </Link>
               ) : (
                 <Link
                   className={classes.nav_link}
                   to="/edit-player"
-                  onClick={this.onClickHandler.bind(this, "Игроки")}
+                  onClick={this.onClickHandler.bind(
+                    this,
+                    <FormattedMessage id="nav.players" />
+                  )}
                 >
                   <img
                     className={classes.nav_icon}
@@ -186,7 +201,7 @@ class Navigation extends React.Component {
                   />
                   <ListItemText
                     className={!this.props.common.open ? classes.hide : ""}
-                    primary="Игроки"
+                    primary={<FormattedMessage id="nav.players" />}
                   />
                 </Link>
               )}
@@ -196,12 +211,15 @@ class Navigation extends React.Component {
               <Link
                 className={classes.nav_link}
                 to="/in-progress"
-                onClick={this.onClickHandler.bind(this, "Мои назначения")}
+                onClick={this.onClickHandler.bind(
+                  this,
+                  <FormattedMessage id="nav.appointments" />
+                )}
               >
                 <img className={classes.nav_icon} src={Football} alt="" />
                 <ListItemText
                   className={!this.props.common.open ? classes.hide : ""}
-                  primary="Мои назначения"
+                  primary={<FormattedMessage id="nav.appointments" />}
                 />
               </Link>
             </ListItem>
@@ -210,12 +228,15 @@ class Navigation extends React.Component {
               <Link
                 className={classes.nav_link}
                 to="/in-progress"
-                onClick={this.onClickHandler.bind(this, "Мои запросы")}
+                onClick={this.onClickHandler.bind(
+                  this,
+                  <FormattedMessage id="nav.queries" />
+                )}
               >
                 <img className={classes.nav_icon} src={Questions} alt="" />
                 <ListItemText
                   className={!this.props.common.open ? classes.hide : ""}
-                  primary="Мои запросы"
+                  primary={<FormattedMessage id="nav.queries" />}
                 />
               </Link>
             </ListItem>
@@ -228,13 +249,13 @@ class Navigation extends React.Component {
                 to="/in-progress"
                 onClick={this.onClickHandler.bind(
                   this,
-                  "Правила использования"
+                  <FormattedMessage id="nav.terms" />
                 )}
               >
                 <img className={classes.nav_icon} src={Info} alt="" />
                 <ListItemText
                   className={!this.props.common.open ? classes.hide : ""}
-                  primary="Правила использования"
+                  primary={<FormattedMessage id="nav.terms" />}
                 />
               </Link>
             </ListItem>
@@ -242,12 +263,15 @@ class Navigation extends React.Component {
               <Link
                 className={classes.nav_link}
                 to="/edit-user"
-                onClick={this.onClickHandler.bind(this, "Настройки")}
+                onClick={this.onClickHandler.bind(
+                  this,
+                  <FormattedMessage id="nav.settings" />
+                )}
               >
                 <img className={classes.nav_icon} src={Settings} alt="" />
                 <ListItemText
                   className={!this.props.common.open ? classes.hide : ""}
-                  primary="Настройки"
+                  primary={<FormattedMessage id="nav.settings" />}
                 />
               </Link>
             </ListItem>
@@ -255,12 +279,15 @@ class Navigation extends React.Component {
               <Link
                 className={classes.nav_link}
                 to="/in-progress"
-                onClick={this.onClickHandler.bind(this, "Контакты")}
+                onClick={this.onClickHandler.bind(
+                  this,
+                  <FormattedMessage id="nav.contacts" />
+                )}
               >
                 <img className={classes.nav_icon} src={Contacts} alt="" />
                 <ListItemText
                   className={!this.props.common.open ? classes.hide : ""}
-                  primary="Контакты"
+                  primary={<FormattedMessage id="nav.contacts" />}
                 />
               </Link>
             </ListItem>

@@ -16,8 +16,6 @@
   overflow-y: auto;
 }
 
-.news_wrap {
-  /* display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly; */
+img {
+  max-width: 100%;
 }

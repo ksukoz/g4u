@@ -19,19 +19,27 @@ export default {
       submit: "Sign up",
       link: "Log in"
     },
-    header: {
-      main: "Main",
+    nav: {
       news: "News",
-      leagues: "Leagues"
+      tournaments: "Tournament",
+      commands: "Commands",
+      players: "Players",
+      appointments: "Appointments",
+      queries: "Queries",
+      terms: "Terms of use",
+      settings: "Settings",
+      contacts: "Contacts"
+    },
+    news: {
+      more: "Read more"
+    },
+    header: {
+      logout: "Log out"
     },
     promo: {
       heading: "Комфортная игра на лучших полях вашего города",
       text:
         "Футбольный турнир G4U (Game for You) это бескомпромисное качество игры с лучшими игроками Украины и внушительным призовым фондом."
-    },
-    news: {
-      heading: "News",
-      link: "Read more"
     },
     stats: {
       heading: "Аматорська футбольна ліга MyGame4U",
@@ -74,19 +82,27 @@ export default {
       submit: "Зареєструватися",
       link: "Увійти"
     },
-    header: {
-      main: "Головна",
+    nav: {
       news: "Новини",
-      leagues: "Ліги"
+      tournaments: "Турніри",
+      commands: "Команди",
+      players: "Гравці",
+      appointments: "Мої призначення",
+      queries: "Мої запити",
+      terms: "Правила користування",
+      settings: "Налаштування",
+      contacts: "Контакти"
+    },
+    header: {
+      logout: "Вийти"
+    },
+    news: {
+      more: "Читати більше"
     },
     promo: {
       heading: "Краща гра на кращих полях вашого міста",
       text:
         "Футбольний турнір MyGame4U (My Game for You) це безкомпромісна якість гри з кращими гравцями України та значним призовим фондом."
-    },
-    news: {
-      heading: "Новини",
-      link: "Докладніше"
     },
     stats: {
       heading: "Аматорська футбольна ліга MyGame4U",
@@ -132,19 +148,27 @@ export default {
       submit: "Зарегистрироваться",
       link: "Войти"
     },
-    header: {
-      main: "Главная",
+    nav: {
       news: "Новости",
-      leagues: "Лиги"
+      tournaments: "Турниры",
+      commands: "Команды",
+      players: "Игроки",
+      appointments: "Мои назначения",
+      queries: "Мои запросы",
+      terms: "Правила использования",
+      settings: "Настройки",
+      contacts: "Контакты"
+    },
+    header: {
+      logout: "Выйти"
+    },
+    news: {
+      more: "Читать дальше"
     },
     promo: {
       heading: "Комфортная игра на лучших полях вашего города",
       text:
         "Футбольный турнир G4U (Game for You) это бескомпромисное качество игры с лучшими игроками Украины и внушительным призовым фондом."
-    },
-    news: {
-      heading: "Новости",
-      link: "Читать далее"
     },
     stats: {
       heading: "Аматорская футбольная лига MyGame4U",

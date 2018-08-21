@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import compose from "recompose/compose";
+import { FormattedMessage } from "react-intl";
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import AppBar from "@material-ui/core/AppBar";
@@ -67,6 +68,7 @@ const styles = {
   },
   logout: {
     marginLeft: "auto",
+    marginRight: "1rem",
     color: "#fff"
   }
 };
@@ -115,7 +117,7 @@ class Header extends React.Component {
                   : "Новости"}
               </Typography>
               <Button className={classes.logout} onClick={this.onClickHandler}>
-                Выйти
+                <FormattedMessage id="header.logout" />
               </Button>
             </Toolbar>
           </AppBar>
