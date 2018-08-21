@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import compose from "recompose/compose";
 import { connect } from "react-redux";
+import { FormattedMessage } from "react-intl";
 import "react-image-crop/dist/ReactCrop.css";
 import { editUser, getUser } from "../../actions/userActions";
 import { getCountries } from "../../actions/commonActions";
@@ -157,7 +158,7 @@ class EditUser extends Component {
           <form className="player__form" onSubmit={this.onSubmitHandler}>
             <div className={classes.input_wrap}>
               <TextField
-                label="Никнейм"
+                label={<FormattedMessage id="user.nickLabel" />}
                 name="nickname"
                 className={classes.input}
                 value={this.state.nickname}
@@ -165,7 +166,7 @@ class EditUser extends Component {
                 margin="normal"
               />
               <TextField
-                label="Email"
+                label={<FormattedMessage id="user.emailLabel" />}
                 name="email"
                 className={classes.input}
                 value={this.state.email}
@@ -174,7 +175,7 @@ class EditUser extends Component {
               />
               <FormControl className={classes.input}>
                 <InputLabel htmlFor="league_id" className={classes.select}>
-                  Выбрать лигу
+                  <FormattedMessage id="user.leagueLabel" />
                 </InputLabel>
                 <Select
                   className={classes.select}
@@ -194,7 +195,7 @@ class EditUser extends Component {
               </FormControl>
               <FormControl className={classes.input}>
                 <InputLabel htmlFor="locale" className={classes.select}>
-                  Выбрать страну
+                  <FormattedMessage id="user.localeLabel" />
                 </InputLabel>
                 <Select
                   className={classes.select}
@@ -220,7 +221,7 @@ class EditUser extends Component {
               type="submit"
               className={classes.submit}
             >
-              Сохранить
+              {<FormattedMessage id="user.save" />}
             </Button>
           </form>
         </div>

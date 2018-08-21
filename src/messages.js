@@ -59,6 +59,13 @@ export default {
       untie: "Untie",
       save: "Save",
       close: "Close"
+    },
+    user: {
+      nickLabel: "Nickname",
+      emailLabel: "Email",
+      leagueLabel: "Choose league",
+      localeLabel: "Choose country",
+      save: "Save"
     }
   },
   uk: {
@@ -121,6 +128,13 @@ export default {
       untie: "Відв'язати",
       save: "Зберегти",
       close: "Закрити"
+    },
+    user: {
+      nickLabel: "Нікнейм",
+      emailLabel: "Email",
+      leagueLabel: "Обрати лігу",
+      localeLabel: "Обрати країну",
+      save: "Зберегти"
     }
   },
   "ru-RU": {
@@ -183,6 +197,13 @@ export default {
       untie: "Отвязать",
       save: "Сохранить",
       close: "Закрыть"
+    },
+    user: {
+      nickLabel: "Никнейм",
+      emailLabel: "Email",
+      leagueLabel: "Выбрать лигу",
+      localeLabel: "Выбрать страну",
+      save: "Сохранить"
     }
   }
 };
