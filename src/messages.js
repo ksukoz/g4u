@@ -39,6 +39,26 @@ export default {
     },
     header: {
       logout: "Log out"
+    },
+    player: {
+      nameLabel: "Name",
+      surnameLabel: "Surname",
+      patronymicLabel: "Patronymic",
+      positionLabel: "Choose position",
+      legLabel: "Choose the leading leg",
+      leftLeg: "Left",
+      rightLeg: "Right",
+      bothtLeg: "Both",
+      birthdayLabel: "Birthday",
+      statureLabel: "Stature",
+      weightLabel: "Weight",
+      phoneLabel: "Phone",
+      fbLabel: "Facebook",
+      vkLabel: "Vkontakte",
+      update: "Update",
+      untie: "Untie",
+      save: "Save",
+      close: "Close"
     }
   },
   uk: {
@@ -81,6 +101,26 @@ export default {
       tagsLabel: "Теги",
       helper: "Заголовок новини може бути не більше 60 символів",
       submit: "Зберегти новину"
+    },
+    player: {
+      nameLabel: "Ім'я",
+      surnameLabel: "Прізвище",
+      patronymicLabel: "По-батькові",
+      positionLabel: "Обрати позицію",
+      legLabel: "Обрати провідну ногу",
+      leftLeg: "Ліва",
+      rightLeg: "Права",
+      bothtLeg: "Обидві",
+      birthdayLabel: "День народження",
+      statureLabel: "Зріст",
+      weightLabel: "Вага",
+      phoneLabel: "Телефон",
+      fbLabel: "Facebook",
+      vkLabel: "Vkontakte",
+      update: "Оновити",
+      untie: "Відв'язати",
+      save: "Зберегти",
+      close: "Закрити"
     }
   },
   "ru-RU": {
@@ -123,6 +163,26 @@ export default {
       tagsLabel: "Тэги",
       helper: "Заголовок новости может быть не более 60 символов",
       submit: "Сохранить новость"
+    },
+    player: {
+      nameLabel: "Имя",
+      surnameLabel: "Фамилия",
+      patronymicLabel: "Отчество",
+      positionLabel: "Выбрать позицию",
+      legLabel: "Выбрать ведущую ногу",
+      leftLeg: "Левая",
+      rightLeg: "Правая",
+      bothtLeg: "Обе",
+      birthdayLabel: "День рождение",
+      statureLabel: "Рост",
+      weightLabel: "Вес",
+      phoneLabel: "Телефон",
+      fbLabel: "Facebook",
+      vkLabel: "Vkontakte",
+      update: "Обновить",
+      untie: "Отвязать",
+      save: "Сохранить",
+      close: "Закрыть"
     }
   }
 };
