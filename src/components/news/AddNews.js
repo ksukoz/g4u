@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import compose from "recompose/compose";
 import { connect } from "react-redux";
 import { addNews } from "../../actions/newsActions";
+import CKEditor from "react-ckeditor-component";
 import { withStyles } from "@material-ui/core/styles";
 import Input from "@material-ui/core/Input";
 import TextField from "@material-ui/core/TextField";
@@ -49,6 +50,9 @@ const styles = theme => ({
     "&:focus": {
       backgroundColor: "#effcf1"
     }
+  },
+  editor: {
+    margin: "1rem 0"
   }
 });
 
@@ -68,18 +72,34 @@ class AddNews extends Component {
     });
   };
 
+  onEditorChange = e => {
+    if (e.editor.getData().length <= 9000) {
+      this.setState({
+        ...this.state,
+        text: e.editor.getData()
+      });
+    } else {
+      this.setState({
+        ...this.state,
+        text: e.editor.getData().slice(0, 9000)
+      });
+    }
+  };
+
   onChangeFileHandler = e => {
     const reader = new FileReader();
-    reader.readAsDataURL(e.target.files[0]);
-    reader.addEventListener(
-      "load",
-      () => {
-        this.setState({
-          photo: reader.result
-        });
-      },
-      false
-    );
+    if (e.target.files[0]) {
+      reader.readAsDataURL(e.target.files[0]);
+      reader.addEventListener(
+        "load",
+        () => {
+          this.setState({
+            photo: reader.result
+          });
+        },
+        false
+      );
+    }
   };
 
   onClickHandler = () => {
@@ -118,6 +138,20 @@ class AddNews extends Component {
     this.props.addNews(addNews);
   };
 
+  // componentDidMount() {
+  //   let configuration = {
+  //     toolbar: "Basic"
+  //   };
+  //   CKEDITOR.replace("editor", configuration);
+  //   CKEDITOR.instances.editor.on(
+  //     "change",
+  //     function() {
+  //       let data = CKEDITOR.instances.editor.getData();
+  //       this.props.onChange(data);
+  //     }.bind(this)
+  //   );
+  // }
+
   render() {
     const { classes } = this.props;
     const { tags } = this.state;
@@ -153,21 +187,58 @@ class AddNews extends Component {
                 helperText="Заголовок новости может быть не более 60 символов"
               />
             </div>
+
             <div>
-              <TextField
-                className={classes.input}
-                id="multiline-flexible"
-                label="Multiline"
-                multiline
-                rows="10"
+              <CKEditor
+                activeClass={classes.editor}
+                content={this.state.text}
                 name="text"
-                value={this.state.text}
-                onChange={this.onChange}
-                onInput={e => {
-                  e.target.value = e.target.value.slice(0, 9000);
+                events={{
+                  change: this.onEditorChange
                 }}
-                margin="normal"
-                helperText="Текст новости может быть не более 9000 символов"
+                config={{
+                  toolbar: [
+                    ["Styles", "Format", "Font", "FontSize"],
+                    [
+                      "Bold",
+                      "Italic",
+                      "Underline",
+                      "StrikeThrough",
+                      "-",
+                      "Undo",
+                      "Redo",
+                      "-",
+                      "Cut",
+                      "Copy",
+                      "Paste",
+                      "Find",
+                      "Replace",
+                      "-",
+                      "Outdent",
+                      "Indent",
+                      "-",
+                      "Print"
+                    ],
+                    [
+                      "NumberedList",
+                      "BulletedList",
+                      "-",
+                      "JustifyLeft",
+                      "JustifyCenter",
+                      "JustifyRight",
+                      "JustifyBlock"
+                    ],
+                    [
+                      "Image",
+                      "Table",
+                      "-",
+                      "Flash",
+                      "Smiley",
+                      "TextColor",
+                      "BGColor"
+                    ]
+                  ]
+                }}
               />
             </div>
             <InputFile
