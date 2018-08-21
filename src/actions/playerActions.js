@@ -34,6 +34,9 @@ export const addPlayer = (stuffData, history) => dispatch => {
           payload: res.data.message
         });
       } else {
+        const user = JSON.parse(localStorage.getItem("user"));
+        user.player = res.data.answer;
+        localStorage.setItem("user", JSON.stringify(user));
         history.push("/edit-player");
       }
     });
@@ -41,7 +44,7 @@ export const addPlayer = (stuffData, history) => dispatch => {
 
 export const getPlayer = () => dispatch => {
   axios
-    .get("http://api.mygame4u.com//user/player", {
+    .get("http://api.mygame4u.com/user/player", {
       headers: {
         Authorization: `G4User ${
           JSON.parse(localStorage.getItem("user")).token

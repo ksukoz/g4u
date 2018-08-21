@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Provider } from "react-redux";
+import ConnectedIntlProvider from "./components/common/ConnectedIntlProvider";
 import store from "./store";
 
 import Login from "./components/auth/Login";
@@ -33,7 +33,7 @@ class App extends Component {
 
   render() {
     return (
-      <Provider store={store}>
+      <ConnectedIntlProvider>
         <Router>
           <div className="App">
             <Route exact path="/register" component={Register} />
@@ -80,7 +80,7 @@ class App extends Component {
             </main>
           </div>
         </Router>
-      </Provider>
+      </ConnectedIntlProvider>
     );
   }
 }

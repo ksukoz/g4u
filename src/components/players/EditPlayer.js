@@ -75,6 +75,10 @@ const styles = theme => ({
     "&:focus": {
       backgroundColor: "#effcf1"
     }
+  },
+  birthday: {
+    marginTop: "1rem",
+    width: "32%"
   }
 });
 
@@ -311,6 +315,13 @@ class EditPlayer extends Component {
                     id: "leg"
                   }}
                 >
+                  <MenuItem value={this.state.leg} disabled>
+                    {this.state.leg === "left"
+                      ? "Левая"
+                        ? this.state.leg === "right"
+                        : "Правая"
+                      : "Обе"}
+                  </MenuItem>
                   <MenuItem value="left">Левая</MenuItem>
                   <MenuItem value="right">Правая</MenuItem>
                   <MenuItem value="both">Обе</MenuItem>
@@ -323,7 +334,7 @@ class EditPlayer extends Component {
                 label="Дата рождения"
                 type="date"
                 name="birthday"
-                className={classes.input}
+                className={classes.birthday}
                 value={this.state.birthday}
                 onChange={this.onChangeHandler}
                 InputLabelProps={{
