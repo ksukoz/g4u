@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import compose from "recompose/compose";
 import { connect } from "react-redux";
+import { FormattedMessage } from "react-intl";
 import { addNews } from "../../actions/newsActions";
 import CKEditor from "react-ckeditor-component";
 import { withStyles } from "@material-ui/core/styles";
-import Input from "@material-ui/core/Input";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
@@ -138,20 +138,6 @@ class AddNews extends Component {
     this.props.addNews(addNews);
   };
 
-  // componentDidMount() {
-  //   let configuration = {
-  //     toolbar: "Basic"
-  //   };
-  //   CKEDITOR.replace("editor", configuration);
-  //   CKEDITOR.instances.editor.on(
-  //     "change",
-  //     function() {
-  //       let data = CKEDITOR.instances.editor.getData();
-  //       this.props.onChange(data);
-  //     }.bind(this)
-  //   );
-  // }
-
   render() {
     const { classes } = this.props;
     const { tags } = this.state;
@@ -183,8 +169,8 @@ class AddNews extends Component {
                 onInput={e => {
                   e.target.value = e.target.value.slice(0, 60);
                 }}
-                label="Заголовок новости"
-                helperText="Заголовок новости может быть не более 60 символов"
+                label={<FormattedMessage id="news.titleLabel" />}
+                helperText={<FormattedMessage id="news.helper" />}
               />
             </div>
 
@@ -247,12 +233,12 @@ class AddNews extends Component {
               onChange={this.onChangeFileHandler}
             />
             <div>
-              <Input
+              <TextField
                 type="text"
                 name="tag"
                 value={this.state.tag}
                 onChange={this.onChange}
-                placeholder="Тэги"
+                label={<FormattedMessage id="news.tagsLabel" />}
               />
               <Button
                 variant="fab"
@@ -272,9 +258,8 @@ class AddNews extends Component {
                 type="submit"
                 className={classes.submit}
               >
-                Сохранить новость
+                <FormattedMessage id="news.submit" />
               </Button>
-              {/* <input value="" /> */}
             </div>
           </form>
         </div>
