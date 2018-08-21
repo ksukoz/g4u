@@ -1,5 +1,24 @@
 export default {
   "en-US": {
+    login: {
+      heading: "Log in",
+      text: "Log in your account",
+      emailLabel: "Your email",
+      passwordLabel: "Your password",
+      submit: "Submit",
+      link: "Create an account"
+    },
+    registration: {
+      heading: "Sign up",
+      text: "Create your account",
+      name: "Your name",
+      emailLabel: "Your email",
+      passwordLabel: "Your password",
+      confirmLabel: "Confirm password",
+      countryLabel: "Choose country",
+      submit: "Sign up",
+      link: "Log in"
+    },
     header: {
       main: "Main",
       news: "News",
@@ -36,6 +55,25 @@ export default {
     }
   },
   uk: {
+    login: {
+      heading: "Увійти",
+      text: "Увійти в свій акаунт",
+      emailLabel: "Ваш email",
+      passwordLabel: "Ваш пароль",
+      submit: "Увійти",
+      link: "Створити новий акаунт"
+    },
+    registration: {
+      heading: "Зареєструватися",
+      text: "Створити свій акаунт",
+      name: "Ваше ім'я",
+      emailLabel: "Ваш email",
+      passwordLabel: "Ваш пароль",
+      confirmLabel: "Підтвердити пароль",
+      countryLabel: "Обрати країну",
+      submit: "Зареєструватися",
+      link: "Увійти"
+    },
     header: {
       main: "Головна",
       news: "Новини",
@@ -75,6 +113,25 @@ export default {
     }
   },
   "ru-RU": {
+    login: {
+      heading: "Войти",
+      text: "Войти в свой аккаунт",
+      emailLabel: "Ваш email",
+      passwordLabel: "Ваш пароль",
+      submit: "Войти",
+      link: "Создать аккаунт"
+    },
+    registration: {
+      heading: "Зарегистрироваться",
+      text: "Создать свой аккаунт",
+      name: "Ваше имя",
+      emailLabel: "Ваш email",
+      passwordLabel: "Ваш пароль",
+      confirmLabel: "Подтвердите пароль",
+      countryLabel: "Выбрать страну",
+      submit: "Зарегистрироваться",
+      link: "Войти"
+    },
     header: {
       main: "Главная",
       news: "Новости",

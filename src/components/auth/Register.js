@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
+import { FormattedMessage } from "react-intl";
 import { withStyles } from "@material-ui/core/styles";
 import { registerUser } from "../../actions/authActions";
 import { getCountries } from "../../actions/commonActions";
@@ -111,8 +112,12 @@ class Register extends Component {
 
     return (
       <Paper className={classes.root}>
-        <h1>Зарегистрироваться</h1>
-        <p>Создать свой аккаунт</p>
+        <h1>
+          <FormattedMessage id="registration.heading" />
+        </h1>
+        <p>
+          <FormattedMessage id="registration.text" />
+        </p>
         <form onSubmit={this.onSubmitHandler}>
           <div>
             <TextField
@@ -121,7 +126,7 @@ class Register extends Component {
               name="nickname"
               value={this.state.nickname}
               onChange={this.onChangeHandler}
-              label="Ваше имя"
+              label={<FormattedMessage id="registration.name" />}
             />
           </div>
           <div>
@@ -131,7 +136,7 @@ class Register extends Component {
               name="email"
               value={this.state.email}
               onChange={this.onChangeHandler}
-              label="Ваш email"
+              label={<FormattedMessage id="registration.emailLabel" />}
             />
           </div>
           <div>
@@ -139,7 +144,7 @@ class Register extends Component {
               className={classes.input}
               type="password"
               name="password"
-              label="Ваш пароль"
+              label={<FormattedMessage id="registration.passwordLabel" />}
               value={this.state.password}
               onChange={this.onChangeHandler}
             />
@@ -149,7 +154,7 @@ class Register extends Component {
               className={classes.input}
               type="password"
               name="password2"
-              label="Подтвердите пароль"
+              label={<FormattedMessage id="registration.confirmLabel" />}
               value={this.state.password2}
               onChange={this.onChangeHandler}
             />
@@ -157,7 +162,7 @@ class Register extends Component {
           <div>
             <FormControl className={classes.input}>
               <InputLabel htmlFor="locale" className={classes.select}>
-                Выбрать страну
+                <FormattedMessage id="registration.countryLabel" />
               </InputLabel>
               <Select
                 className={classes.select}
@@ -174,7 +179,7 @@ class Register extends Component {
             </FormControl>
           </div>
           <Button variant="contained" type="submit" className={classes.submit}>
-            Зарегистрироваться
+            <FormattedMessage id="registration.submit" />
           </Button>
           <div className={classes.error}>
             <small variant="caption" component="small">
@@ -184,7 +189,7 @@ class Register extends Component {
         </form>
 
         <Link to="/login" className={classes.link}>
-          Войти
+          <FormattedMessage id="registration.link" />
         </Link>
       </Paper>
     );
