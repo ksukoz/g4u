@@ -126,7 +126,7 @@ class EditUser extends Component {
     const { countries } = this.props.common;
     let leaguesOptions;
     let countriesOptions;
-    let countryName;
+    // let countryName;
 
     if (leaguesList !== null) {
       leaguesOptions = leaguesList.map(league => {
@@ -146,9 +146,9 @@ class EditUser extends Component {
           </MenuItem>
         );
       });
-      countryName = countries.filter(
-        country => country.iso === this.state.locale.toUpperCase()
-      );
+      // countryName = countries.filter(
+      //   country => country.iso === this.state.locale.toUpperCase()
+      // );
     }
 
     return (

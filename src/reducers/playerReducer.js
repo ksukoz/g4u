@@ -1,4 +1,4 @@
-import { GET_ERRORS, GET_POSITIONS, GET_PLAYER } from "../actions/types";
+import { GET_POSITIONS, GET_PLAYER } from "../actions/types";
 
 const initialState = {
   positions: null,
