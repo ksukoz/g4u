@@ -5,6 +5,7 @@ import { FormattedMessage } from "react-intl";
 import "react-image-crop/dist/ReactCrop.css";
 import { editUser, getUser } from "../../actions/userActions";
 import { getCountries } from "../../actions/commonActions";
+import { setLanguage } from "../../actions/languageActions";
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -80,7 +81,6 @@ class EditUser extends Component {
 
     let user = JSON.parse(localStorage.getItem("user"));
     user.lang = this.state.lang;
-    console.log(user);
 
     const editUser = {
       nickname: this.state.nickname,
@@ -90,8 +90,8 @@ class EditUser extends Component {
     };
 
     this.props.editUser(editUser);
+    this.props.setLanguage(this.state.lang);
     localStorage.setItem("user", JSON.stringify(user));
-    window.location.reload();
   };
 
   componentWillMount() {
@@ -281,6 +281,6 @@ export default compose(
   withStyles(styles),
   connect(
     mapStateToProps,
-    { editUser, getLeagues, getUser, getCountries }
+    { editUser, getLeagues, getUser, getCountries, setLanguage }
   )
 )(EditUser);
