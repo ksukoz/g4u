@@ -121,11 +121,7 @@ class EditUser extends Component {
     ) {
       user = nextProps.users.user;
       countries = nextProps.common.countries;
-      lang =
-        // JSON.parse(localStorage.getItem("user")).lang !== null
-        //   ? JSON.parse(localStorage.getItem("user")).lang
-        //   :
-        nextProps.lang.locale;
+      lang = nextProps.lang.locale;
 
       this.setState({
         ...this.state,

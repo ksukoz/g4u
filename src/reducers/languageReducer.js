@@ -11,7 +11,7 @@ addLocaleData([...en, ...uk, ...ru]);
 
 const initialState = {
   locale:
-    JSON.parse(localStorage.getItem("user")).lang !== null
+    localStorage.user && JSON.parse(localStorage.getItem("user")).lang
       ? JSON.parse(localStorage.getItem("user")).lang
       : (navigator.languages && navigator.languages[0]) ||
         navigator.language ||
