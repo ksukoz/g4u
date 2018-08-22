@@ -21,18 +21,18 @@ const styles = theme => ({
     display: "flex",
     justifyContent: "space-between"
   },
-  form: {
-    width: "49%"
-  },
+  // form: {
+  //   width: "49%"
+  // },
   media: {
     width: "49%"
   },
   img: {
     width: "100%"
   },
-  input: {
-    width: "24%"
-  },
+  // input: {
+  //   width: "24%"
+  // },
   input_wrap: {
     display: "flex",
     justifyContent: "space-between",
@@ -67,15 +67,20 @@ class EditUser extends Component {
     league_id: "",
     league: "",
     locale: "",
-    country: ""
+    country: "",
+    lang: ""
   };
 
   onChangeHandler = e => {
-    this.setState({ [e.target.name]: e.target.value });
+    this.setState({ ...this.state, [e.target.name]: e.target.value });
   };
 
   onSubmitHandler = e => {
     e.preventDefault();
+
+    let user = JSON.parse(localStorage.getItem("user"));
+    user.lang = this.state.lang;
+    console.log(user);
 
     const editUser = {
       nickname: this.state.nickname,
@@ -85,6 +90,8 @@ class EditUser extends Component {
     };
 
     this.props.editUser(editUser);
+    localStorage.setItem("user", JSON.stringify(user));
+    window.location.reload();
   };
 
   componentWillMount() {
@@ -105,9 +112,21 @@ class EditUser extends Component {
   componentWillReceiveProps(nextProps) {
     let user;
     let countries;
-    if (nextProps.users.user !== null && nextProps.common.countries !== null) {
+    let lang;
+
+    if (
+      nextProps.users.user !== null &&
+      nextProps.common.countries !== null &&
+      nextProps.lang.locale !== null
+    ) {
       user = nextProps.users.user;
       countries = nextProps.common.countries;
+      lang =
+        // JSON.parse(localStorage.getItem("user")).lang !== null
+        //   ? JSON.parse(localStorage.getItem("user")).lang
+        //   :
+        nextProps.lang.locale;
+
       this.setState({
         ...this.state,
         nickname: user.nickname,
@@ -116,7 +135,8 @@ class EditUser extends Component {
         locale: user.locale,
         country: countries.filter(
           countryItem => countryItem.iso === user.locale.toUpperCase()
-        )[0].name
+        )[0].name,
+        lang: lang
       });
     }
   }
@@ -213,6 +233,25 @@ class EditUser extends Component {
                   {countriesOptions}
                 </Select>
               </FormControl>
+              <FormControl className={classes.input}>
+                <InputLabel htmlFor="lang" className={classes.select}>
+                  <FormattedMessage id="user.langLabel" />
+                </InputLabel>
+                <Select
+                  className={classes.select}
+                  value={this.state.lang}
+                  onChange={this.onChangeHandler}
+                  displayEmpty
+                  inputProps={{
+                    name: "lang",
+                    id: "lang"
+                  }}
+                >
+                  <MenuItem value="en-US">English</MenuItem>
+                  <MenuItem value="ru-RU">Русский</MenuItem>
+                  <MenuItem value="uk">Українська</MenuItem>
+                </Select>
+              </FormControl>
             </div>
             <Button
               variant="contained"
@@ -234,7 +273,8 @@ const mapStateToProps = state => ({
   players: state.players,
   leagues: state.leagues,
   users: state.users,
-  common: state.common
+  common: state.common,
+  lang: state.lang
 });
 
 export default compose(

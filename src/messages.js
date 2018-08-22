@@ -65,6 +65,7 @@ export default {
       emailLabel: "Email",
       leagueLabel: "Choose league",
       localeLabel: "Choose country",
+      langLabel: "Choose language",
       save: "Save"
     }
   },
@@ -134,6 +135,7 @@ export default {
       emailLabel: "Email",
       leagueLabel: "Обрати лігу",
       localeLabel: "Обрати країну",
+      langLabel: "Обрати мову",
       save: "Зберегти"
     }
   },
@@ -203,6 +205,7 @@ export default {
       emailLabel: "Email",
       leagueLabel: "Выбрать лигу",
       localeLabel: "Выбрать страну",
+      langLabel: "Выбрать язык",
       save: "Сохранить"
     }
   }
