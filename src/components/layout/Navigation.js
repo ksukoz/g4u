@@ -86,7 +86,6 @@ const styles = theme => ({
   },
   nav_icon: {
     width: 20,
-    paddingRight: 10,
     [theme.breakpoints.up("md")]: {
       width: 40,
       paddingRight: 0

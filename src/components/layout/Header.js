@@ -44,8 +44,13 @@ const styles = {
     flexGrow: 1
   },
   menuButton: {
-    marginLeft: 12,
-    marginRight: 36
+    margin: 0,
+    marginRight: 36,
+    [theme.breakpoints.up("md")]: {
+      width: `calc(100vw - 250px)`,
+      marginLeft: 12,
+      marginRight: 36
+    }
   },
   appBar: {
     backgroundColor: "#43A047",
@@ -66,7 +71,7 @@ const styles = {
     }),
     [theme.breakpoints.up("xs")]: {
       width: `calc(100vw - 250px)`,
-      marginLeft: 181
+      marginLeft: 171
     }
   },
   hide: {
