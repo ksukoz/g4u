@@ -29,13 +29,17 @@ const drawerWidth = 295;
 
 const styles = theme => ({
   drawerPaper: {
+    borderRight: "none",
+    width: 250,
     position: "relative",
     whiteSpace: "nowrap",
-    width: drawerWidth,
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen
-    })
+    }),
+    [theme.breakpoints.up("md")]: {
+      width: drawerWidth
+    }
   },
   drawerPaperClose: {
     overflowX: "hidden",
@@ -43,8 +47,8 @@ const styles = theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
     }),
-    width: theme.spacing.unit * 7,
-    [theme.breakpoints.up("sm")]: {
+    width: theme.spacing.unit * 6,
+    [theme.breakpoints.up("md")]: {
       width: theme.spacing.unit * 10.3
     }
   },
@@ -56,9 +60,12 @@ const styles = theme => ({
   toolbar: {
     display: "flex",
     alignItems: "center",
+    padding: 0,
     justifyContent: "flex-end",
-    padding: "0 8px",
-    ...theme.mixins.toolbar
+    ...theme.mixins.toolbar,
+    [theme.breakpoints.up("md")]: {
+      padding: "0 8px"
+    }
   },
   content: {
     flexGrow: 1,
@@ -66,8 +73,11 @@ const styles = theme => ({
     padding: theme.spacing.unit * 3
   },
   listItem: {
-    padding: "12px 18px",
-    paddingRight: 15
+    padding: "12px 15px",
+    [theme.breakpoints.up("md")]: {
+      padding: "12px 18px",
+      paddingRight: 15
+    }
   },
   nav_link: {
     display: "flex",
@@ -75,8 +85,12 @@ const styles = theme => ({
     textDecoration: "none"
   },
   nav_icon: {
-    width: 40,
-    paddingRight: 10
+    width: 20,
+    paddingRight: 10,
+    [theme.breakpoints.up("md")]: {
+      width: 40,
+      paddingRight: 0
+    }
   },
   hide: {
     display: "none"
@@ -117,180 +131,227 @@ class Navigation extends React.Component {
           </div>
           <Divider />
           <List>
-            <ListItem button className={classes.listItem}>
-              <Link
-                className={classes.nav_link}
-                to="/"
-                onClick={this.onClickHandler.bind(
-                  this,
-                  <FormattedMessage id="nav.news" />
-                )}
-              >
+            <Link
+              className={classes.nav_link}
+              to="/"
+              onClick={this.onClickHandler.bind(
+                this,
+                <FormattedMessage id="nav.news" />
+              )}
+            >
+              <ListItem button className={classes.listItem}>
                 <img className={classes.nav_icon} src={Newspaper} alt="" />
                 <ListItemText
-                  className={!this.props.common.open ? classes.hide : ""}
+                  className={
+                    !this.props.common.open ? classes.hide : classes.text
+                  }
                   primary={<FormattedMessage id="nav.news" />}
                 />
-              </Link>
-            </ListItem>
-            <ListItem button className={classes.listItem}>
-              <Link
-                className={classes.nav_link}
-                to="/in-progress"
-                onClick={this.onClickHandler.bind(
-                  this,
-                  <FormattedMessage id="nav.tournaments" />
-                )}
-              >
+              </ListItem>
+            </Link>
+            <Link
+              className={classes.nav_link}
+              to="/in-progress"
+              onClick={this.onClickHandler.bind(
+                this,
+                <FormattedMessage id="nav.tournaments" />
+              )}
+            >
+              <ListItem button className={classes.listItem}>
                 <img className={classes.nav_icon} src={FootballCup} alt="" />
                 <ListItemText
                   className={!this.props.common.open ? classes.hide : ""}
-                  primary={<FormattedMessage id="nav.tournaments" />}
+                  primary={
+                    <FormattedMessage
+                      className={classes.text}
+                      id="nav.tournaments"
+                    />
+                  }
                 />
-              </Link>
-            </ListItem>
-            <ListItem button className={classes.listItem}>
-              <Link
-                className={classes.nav_link}
-                to="/in-progress"
-                onClick={this.onClickHandler.bind(
-                  this,
-                  <FormattedMessage id="nav.commands" />
-                )}
-              >
+              </ListItem>
+            </Link>
+            <Link
+              className={classes.nav_link}
+              to="/in-progress"
+              onClick={this.onClickHandler.bind(
+                this,
+                <FormattedMessage id="nav.commands" />
+              )}
+            >
+              <ListItem button className={classes.listItem}>
                 <img className={classes.nav_icon} src={FootballClub} alt="" />
                 <ListItemText
                   className={!this.props.common.open ? classes.hide : ""}
-                  primary={<FormattedMessage id="nav.commands" />}
+                  primary={
+                    <FormattedMessage
+                      className={classes.text}
+                      id="nav.commands"
+                    />
+                  }
                 />
-              </Link>
-            </ListItem>
-            <ListItem button className={classes.listItem}>
-              {JSON.parse(localStorage.getItem("user")).player === 0 ? (
-                <Link
-                  className={classes.nav_link}
-                  to="/add-player"
-                  onClick={this.onClickHandler.bind(
-                    this,
-                    <FormattedMessage id="nav.players" />
-                  )}
-                >
-                  <img
-                    className={classes.nav_icon}
-                    src={FootballPlayers}
-                    alt=""
-                  />
-                  <ListItemText
-                    className={!this.props.common.open ? classes.hide : ""}
-                    primary={<FormattedMessage id="nav.players" />}
-                  />
-                </Link>
-              ) : (
-                <Link
-                  className={classes.nav_link}
-                  to="/edit-player"
-                  onClick={this.onClickHandler.bind(
-                    this,
-                    <FormattedMessage id="nav.players" />
-                  )}
-                >
-                  <img
-                    className={classes.nav_icon}
-                    src={FootballPlayers}
-                    alt=""
-                  />
-                  <ListItemText
-                    className={!this.props.common.open ? classes.hide : ""}
-                    primary={<FormattedMessage id="nav.players" />}
-                  />
-                </Link>
-              )}
-            </ListItem>
+              </ListItem>
+            </Link>
 
-            <ListItem button className={classes.listItem}>
+            {JSON.parse(localStorage.getItem("user")).player === 0 ? (
               <Link
                 className={classes.nav_link}
-                to="/in-progress"
+                to="/add-player"
                 onClick={this.onClickHandler.bind(
                   this,
-                  <FormattedMessage id="nav.appointments" />
+                  <FormattedMessage id="nav.players" />
                 )}
               >
+                <ListItem button className={classes.listItem}>
+                  <img
+                    className={classes.nav_icon}
+                    src={FootballPlayers}
+                    alt=""
+                  />
+                  <ListItemText
+                    className={!this.props.common.open ? classes.hide : ""}
+                    primary={
+                      <FormattedMessage
+                        className={classes.text}
+                        id="nav.players"
+                      />
+                    }
+                  />
+                </ListItem>
+              </Link>
+            ) : (
+              <Link
+                className={classes.nav_link}
+                to="/edit-player"
+                onClick={this.onClickHandler.bind(
+                  this,
+                  <FormattedMessage id="nav.players" />
+                )}
+              >
+                <ListItem button className={classes.listItem}>
+                  <img
+                    className={classes.nav_icon}
+                    src={FootballPlayers}
+                    alt=""
+                  />
+                  <ListItemText
+                    className={!this.props.common.open ? classes.hide : ""}
+                    primary={
+                      <FormattedMessage
+                        className={classes.text}
+                        id="nav.players"
+                      />
+                    }
+                  />
+                </ListItem>
+              </Link>
+            )}
+
+            <Link
+              className={classes.nav_link}
+              to="/in-progress"
+              onClick={this.onClickHandler.bind(
+                this,
+                <FormattedMessage id="nav.appointments" />
+              )}
+            >
+              <ListItem button className={classes.listItem}>
                 <img className={classes.nav_icon} src={Football} alt="" />
                 <ListItemText
                   className={!this.props.common.open ? classes.hide : ""}
-                  primary={<FormattedMessage id="nav.appointments" />}
+                  primary={
+                    <FormattedMessage
+                      className={classes.text}
+                      id="nav.appointments"
+                    />
+                  }
                 />
-              </Link>
-            </ListItem>
+              </ListItem>
+            </Link>
 
-            <ListItem button className={classes.listItem}>
-              <Link
-                className={classes.nav_link}
-                to="/in-progress"
-                onClick={this.onClickHandler.bind(
-                  this,
-                  <FormattedMessage id="nav.queries" />
-                )}
-              >
+            <Link
+              className={classes.nav_link}
+              to="/in-progress"
+              onClick={this.onClickHandler.bind(
+                this,
+                <FormattedMessage id="nav.queries" />
+              )}
+            >
+              <ListItem button className={classes.listItem}>
                 <img className={classes.nav_icon} src={Questions} alt="" />
                 <ListItemText
                   className={!this.props.common.open ? classes.hide : ""}
-                  primary={<FormattedMessage id="nav.queries" />}
+                  primary={
+                    <FormattedMessage
+                      className={classes.text}
+                      id="nav.queries"
+                    />
+                  }
                 />
-              </Link>
-            </ListItem>
+              </ListItem>
+            </Link>
           </List>
           <Divider />
           <List>
-            <ListItem button className={classes.listItem}>
-              <Link
-                className={classes.nav_link}
-                to="/in-progress"
-                onClick={this.onClickHandler.bind(
-                  this,
-                  <FormattedMessage id="nav.terms" />
-                )}
-              >
+            <Link
+              className={classes.nav_link}
+              to="/in-progress"
+              onClick={this.onClickHandler.bind(
+                this,
+                <FormattedMessage id="nav.terms" />
+              )}
+            >
+              <ListItem button className={classes.listItem}>
                 <img className={classes.nav_icon} src={Info} alt="" />
                 <ListItemText
                   className={!this.props.common.open ? classes.hide : ""}
-                  primary={<FormattedMessage id="nav.terms" />}
+                  primary={
+                    <FormattedMessage className={classes.text} id="nav.terms" />
+                  }
                 />
-              </Link>
-            </ListItem>
-            <ListItem button className={classes.listItem}>
-              <Link
-                className={classes.nav_link}
-                to="/edit-user"
-                onClick={this.onClickHandler.bind(
-                  this,
-                  <FormattedMessage id="nav.settings" />
-                )}
-              >
+              </ListItem>
+            </Link>
+            <Link
+              className={classes.nav_link}
+              to="/edit-user"
+              onClick={this.onClickHandler.bind(
+                this,
+                <FormattedMessage id="nav.settings" />
+              )}
+            >
+              <ListItem button className={classes.listItem}>
                 <img className={classes.nav_icon} src={Settings} alt="" />
                 <ListItemText
                   className={!this.props.common.open ? classes.hide : ""}
-                  primary={<FormattedMessage id="nav.settings" />}
+                  primary={
+                    <FormattedMessage
+                      className={classes.text}
+                      id="nav.settings"
+                    />
+                  }
                 />
-              </Link>
-            </ListItem>
-            <ListItem button className={classes.listItem}>
-              <Link
-                className={classes.nav_link}
-                to="/in-progress"
-                onClick={this.onClickHandler.bind(
-                  this,
-                  <FormattedMessage id="nav.contacts" />
-                )}
-              >
+              </ListItem>
+            </Link>
+            <Link
+              className={classes.nav_link}
+              to="/in-progress"
+              onClick={this.onClickHandler.bind(
+                this,
+                <FormattedMessage id="nav.contacts" />
+              )}
+            >
+              <ListItem button className={classes.listItem}>
                 <img className={classes.nav_icon} src={Contacts} alt="" />
                 <ListItemText
                   className={!this.props.common.open ? classes.hide : ""}
-                  primary={<FormattedMessage id="nav.contacts" />}
+                  primary={
+                    <FormattedMessage
+                      className={classes.text}
+                      id="nav.contacts"
+                    />
+                  }
                 />
-              </Link>
-            </ListItem>
+              </ListItem>
+            </Link>
           </List>
         </div>
       </Drawer>

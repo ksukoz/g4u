@@ -1,3 +1,18 @@
+html {
+  font-size: 62.5%;
+  background-color: #fff;
+}
+@media (max-width: 75em) {
+  html {
+    font-size: 43.75%;
+  }
+}
+@media (max-width: 56.25em) {
+  html {
+    font-size: 50%;
+  }
+}
+
 body {
   margin: 0;
   padding: 0;

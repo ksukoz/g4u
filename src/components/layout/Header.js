@@ -49,6 +49,8 @@ const styles = {
   },
   appBar: {
     backgroundColor: "#43A047",
+    left: 0,
+    maxWidth: "100vw",
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
@@ -61,7 +63,11 @@ const styles = {
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen
-    })
+    }),
+    [theme.breakpoints.up("xs")]: {
+      width: `calc(100vw - 250px)`,
+      marginLeft: 181
+    }
   },
   hide: {
     display: "none"
@@ -69,7 +75,10 @@ const styles = {
   logout: {
     marginLeft: "auto",
     marginRight: "1rem",
-    color: "#fff"
+    color: "#fff",
+    [theme.breakpoints.up("xs")]: {
+      marginLeft: 0
+    }
   }
 };
 
