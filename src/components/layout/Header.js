@@ -47,7 +47,7 @@ const styles = {
     margin: 0,
     marginRight: 36,
     [theme.breakpoints.up("md")]: {
-      width: `calc(100vw - 250px)`,
+      width: `calc(100vw - 170px)`,
       marginLeft: 12,
       marginRight: 36
     }
@@ -70,7 +70,7 @@ const styles = {
       duration: theme.transitions.duration.enteringScreen
     }),
     [theme.breakpoints.up("xs")]: {
-      width: `calc(100vw - 250px)`,
+      width: `calc(100vw - 170px)`,
       marginLeft: 171
     }
   },
@@ -80,10 +80,7 @@ const styles = {
   logout: {
     marginLeft: "auto",
     marginRight: "1rem",
-    color: "#fff",
-    [theme.breakpoints.up("xs")]: {
-      marginLeft: 0
-    }
+    color: "#fff"
   }
 };
 

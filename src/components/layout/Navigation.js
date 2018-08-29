@@ -30,7 +30,7 @@ const drawerWidth = 295;
 const styles = theme => ({
   drawerPaper: {
     borderRight: "none",
-    width: 250,
+    width: 170,
     position: "relative",
     whiteSpace: "nowrap",
     transition: theme.transitions.create("width", {

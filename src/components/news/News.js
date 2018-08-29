@@ -74,7 +74,7 @@ class News extends Component {
         ) : (
           ""
         )}
-        <div className="news_wrap">{newsList}</div>
+        <div className={classes.news}>{newsList}</div>
       </div>
     );
   }

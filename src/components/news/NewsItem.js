@@ -24,9 +24,12 @@ import Test from "./img/test_bg.png";
 const styles = theme => ({
   card: {
     position: "relative",
-    width: "70%",
+    width: "100%",
     borderRadius: 20,
-    marginBottom: "1rem"
+    marginBottom: "1rem",
+    [theme.breakpoints.up("md")]: {
+      width: "70%"
+    }
   },
   media: {
     height: 0,
