@@ -47,7 +47,6 @@ const styles = {
     margin: 0,
     marginRight: 36,
     [theme.breakpoints.up("md")]: {
-      width: `calc(100vw - 170px)`,
       marginLeft: 12,
       marginRight: 36
     }
