@@ -24,9 +24,10 @@ import Test from "./img/test_bg.png";
 const styles = theme => ({
   card: {
     position: "relative",
-    width: "100%",
+    width: "99.5%",
     borderRadius: 20,
     marginBottom: "1rem",
+    border: "1px solid rgba(0,0,0,0.2)",
     [theme.breakpoints.up("md")]: {
       width: "70%"
     }
@@ -64,15 +65,15 @@ const styles = theme => ({
     display: "none"
   },
   shortText: {
+    fontSize: "2rem",
     transform: "translateY(0)",
     transition: theme.transitions.create("transform", {
       duration: theme.transitions.duration.shortest
     })
   },
-  // shortTextHide: {
-  //   height: 0,
-  //   transform: "translateY(-1000%)"
-  // },
+  text: {
+    fontSize: "1rem"
+  },
   icon: {
     color: "#fff"
   },
@@ -103,7 +104,9 @@ class NewsItem extends React.Component {
       <div>
         <Card className={classes.card}>
           <CardContent className={classes.shortText}>
-            <Typography component="p">{this.props.title}</Typography>
+            <Typography component="h2" variant="display1">
+              {this.props.title}
+            </Typography>
           </CardContent>
           <Button
             className={classnames(classes.expand, {
@@ -129,9 +132,9 @@ class NewsItem extends React.Component {
                 dangerouslySetInnerHTML={{
                   __html: this.props.text
                 }}
-              >
-                {/* {this.props.text} */}
-              </Typography>
+                variant="body2"
+                className={classes.text}
+              />
               <Typography>{this.props.name}</Typography>
             </CardContent>
           </Collapse>

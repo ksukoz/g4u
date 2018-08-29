@@ -22,21 +22,14 @@ const styles = theme => ({
     display: "flex",
     justifyContent: "space-between"
   },
-  // form: {
-  //   width: "49%"
-  // },
   media: {
     width: "49%"
   },
   img: {
     width: "100%"
   },
-  // input: {
-  //   width: "24%"
-  // },
-  input_wrap: {
-    display: "flex",
-    justifyContent: "space-between",
+  input: {
+    width: "100%",
     marginBottom: "1rem"
   },
   select: {
@@ -172,83 +165,81 @@ class EditUser extends Component {
       <div className={classes.root}>
         <div className={classes.form}>
           <form className="player__form" onSubmit={this.onSubmitHandler}>
-            <div className={classes.input_wrap}>
-              <TextField
-                label={<FormattedMessage id="user.nickLabel" />}
-                name="nickname"
-                className={classes.input}
-                value={this.state.nickname}
+            <TextField
+              label={<FormattedMessage id="user.nickLabel" />}
+              name="nickname"
+              className={classes.input}
+              value={this.state.nickname}
+              onChange={this.onChangeHandler}
+              margin="normal"
+            />
+            <TextField
+              label={<FormattedMessage id="user.emailLabel" />}
+              name="email"
+              className={classes.input}
+              value={this.state.email}
+              onChange={this.onChangeHandler}
+              margin="normal"
+            />
+            <FormControl className={classes.input}>
+              <InputLabel htmlFor="league_id" className={classes.select}>
+                <FormattedMessage id="user.leagueLabel" />
+              </InputLabel>
+              <Select
+                className={classes.select}
+                value={this.state.league_id}
                 onChange={this.onChangeHandler}
-                margin="normal"
-              />
-              <TextField
-                label={<FormattedMessage id="user.emailLabel" />}
-                name="email"
-                className={classes.input}
-                value={this.state.email}
+                displayEmpty
+                inputProps={{
+                  name: "league_id",
+                  id: "league_id"
+                }}
+              >
+                <MenuItem value={this.state.league_id} disabled>
+                  {this.state.league}
+                </MenuItem>
+                {leaguesOptions}
+              </Select>
+            </FormControl>
+            <FormControl className={classes.input}>
+              <InputLabel htmlFor="locale" className={classes.select}>
+                <FormattedMessage id="user.localeLabel" />
+              </InputLabel>
+              <Select
+                className={classes.select}
+                value={this.state.locale}
                 onChange={this.onChangeHandler}
-                margin="normal"
-              />
-              <FormControl className={classes.input}>
-                <InputLabel htmlFor="league_id" className={classes.select}>
-                  <FormattedMessage id="user.leagueLabel" />
-                </InputLabel>
-                <Select
-                  className={classes.select}
-                  value={this.state.league_id}
-                  onChange={this.onChangeHandler}
-                  displayEmpty
-                  inputProps={{
-                    name: "league_id",
-                    id: "league_id"
-                  }}
-                >
-                  <MenuItem value={this.state.league_id} disabled>
-                    {this.state.league}
-                  </MenuItem>
-                  {leaguesOptions}
-                </Select>
-              </FormControl>
-              <FormControl className={classes.input}>
-                <InputLabel htmlFor="locale" className={classes.select}>
-                  <FormattedMessage id="user.localeLabel" />
-                </InputLabel>
-                <Select
-                  className={classes.select}
-                  value={this.state.locale}
-                  onChange={this.onChangeHandler}
-                  displayEmpty
-                  inputProps={{
-                    name: "locale",
-                    id: "locale"
-                  }}
-                >
-                  <MenuItem value={this.state.locale} disabled>
-                    {this.state.country}
-                  </MenuItem>
-                  {countriesOptions}
-                </Select>
-              </FormControl>
-              <FormControl className={classes.input}>
-                <InputLabel htmlFor="lang" className={classes.select}>
-                  <FormattedMessage id="user.langLabel" />
-                </InputLabel>
-                <Select
-                  className={classes.select}
-                  value={this.state.lang}
-                  onChange={this.onChangeHandler}
-                  displayEmpty
-                  inputProps={{
-                    name: "lang",
-                    id: "lang"
-                  }}
-                >
-                  <MenuItem value="en-US">English</MenuItem>
-                  <MenuItem value="ru-RU">Русский</MenuItem>
-                  <MenuItem value="uk">Українська</MenuItem>
-                </Select>
-              </FormControl>
-            </div>
+                displayEmpty
+                inputProps={{
+                  name: "locale",
+                  id: "locale"
+                }}
+              >
+                <MenuItem value={this.state.locale} disabled>
+                  {this.state.country}
+                </MenuItem>
+                {countriesOptions}
+              </Select>
+            </FormControl>
+            <FormControl className={classes.input}>
+              <InputLabel htmlFor="lang" className={classes.select}>
+                <FormattedMessage id="user.langLabel" />
+              </InputLabel>
+              <Select
+                className={classes.select}
+                value={this.state.lang}
+                onChange={this.onChangeHandler}
+                displayEmpty
+                inputProps={{
+                  name: "lang",
+                  id: "lang"
+                }}
+              >
+                <MenuItem value="en-US">English</MenuItem>
+                <MenuItem value="ru-RU">Русский</MenuItem>
+                <MenuItem value="uk">Українська</MenuItem>
+              </Select>
+            </FormControl>
             <Button
               variant="contained"
               color="primary"
