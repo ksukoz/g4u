@@ -39,7 +39,21 @@ const styles = theme => ({
     }),
     [theme.breakpoints.up("md")]: {
       width: drawerWidth
-    }
+    },
+    "&::-webkit-scrollbar-track": {
+      boxShadow: "inset 0 0 6px rgba(0,0,0,0.3)"
+    },
+    "&::-webkit-scrollbar-thumb": {
+      backgroundColor: "#43A047",
+      outline: "1px solid slategrey"
+    },
+    "&::-webkit-scrollbar": {
+      width: 5
+    },
+    transition: theme.transitions.create("width", {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen
+    })
   },
   drawerPaperClose: {
     overflowX: "hidden",
@@ -53,7 +67,6 @@ const styles = theme => ({
     }
   },
   wrapper: {
-    position: "fixed",
     height: "100vh",
     boxShadow: "inset 0 0 1px rgba(0, 0, 0, 0.8)"
   },
@@ -247,7 +260,7 @@ class Navigation extends React.Component {
 
             <Link
               className={classes.nav_link}
-              to="/in-progress"
+              to="/appointments"
               onClick={this.onClickHandler.bind(
                 this,
                 <FormattedMessage id="nav.appointments" />

@@ -62,15 +62,15 @@ const styles = {
     })
   },
   appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
+    width: `calc(100vw - 170px)`,
+    marginLeft: 171,
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen
     }),
-    [theme.breakpoints.up("xs")]: {
-      width: `calc(100vw - 170px)`,
-      marginLeft: 171
+    [theme.breakpoints.up("md")]: {
+      marginLeft: drawerWidth,
+      width: `calc(100% - ${drawerWidth}px)`
     }
   },
   hide: {
