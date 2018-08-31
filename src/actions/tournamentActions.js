@@ -1,7 +1,7 @@
 import axios from "axios";
 import { GET_APPOINT } from "./types";
 
-export const getLeagues = () => dispatch => {
+export const getAppoints = () => dispatch => {
   axios
     .get("http://api.mygame4u.com/user/myasgmt", {
       headers: {
