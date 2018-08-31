@@ -21,3 +21,5 @@ export const GET_POSITIONS = "GET_POSITIONS";
 export const GET_PLAYER = "GET_PLAYER";
 
 export const GET_APPOINT = "GET_APPOINT";
+
+export const GET_CURRENT_GAME = "GET_CURRENT_GAME";

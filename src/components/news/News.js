@@ -62,15 +62,15 @@ class News extends Component {
       <div className="News">
         {JSON.parse(localStorage.getItem("user")).personal === 1 ||
         JSON.parse(localStorage.getItem("user")).personal === 7 ? (
-          <Button
-            variant="extendedFab"
-            aria-label="Delete"
-            className={classes.button}
-          >
-            <Link className={classes.button_link} to="/add-news">
+          <Link className={classes.button_link} to="/add-news">
+            <Button
+              variant="extendedFab"
+              aria-label="Delete"
+              className={classes.button}
+            >
               Добавить новость
-            </Link>
-          </Button>
+            </Button>
+          </Link>
         ) : (
           ""
         )}

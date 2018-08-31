@@ -9,6 +9,7 @@ import playerReducer from "./playerReducer";
 import commonReducer from "./commonReducer";
 import userReducer from "./userReducer";
 import tournamentReducer from "./tournamentReducer";
+import gameReducer from "./gameReducer";
 
 export default combineReducers({
   lang: languageReducer,
@@ -20,5 +21,6 @@ export default combineReducers({
   players: playerReducer,
   common: commonReducer,
   users: userReducer,
-  tournaments: tournamentReducer
+  tournaments: tournamentReducer,
+  games: gameReducer
 });

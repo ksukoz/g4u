@@ -22,6 +22,7 @@ import Navigation from "./components/layout/Navigation";
 import InProgress from "./components/layout/InProgress";
 import Appointments from "./components/appointments/Appointments";
 import AppointGame from "./components/appointments/AppointGame";
+import AddEvent from "./components/appointments/AddEvent";
 
 if (localStorage.user) {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -80,6 +81,13 @@ class App extends Component {
                     exact
                     path="/game/:id"
                     component={AppointGame}
+                  />
+                </Switch>
+                <Switch>
+                  <PrivateRoute
+                    exact
+                    path="/event/add/:id"
+                    component={AddEvent}
                   />
                 </Switch>
                 <Switch>
