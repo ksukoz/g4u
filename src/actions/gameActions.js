@@ -1,5 +1,34 @@
 import axios from "axios";
-import { GET_CURRENT_GAME } from "../actions/types";
+import {
+  GET_CURRENT_GAME,
+  GET_EVENT_SETTINGS,
+  GET_ERRORS,
+  GET_MESSAGES
+} from "../actions/types";
+
+export const addGameEvent = (id, eventData) => dispatch => {
+  axios
+    .post(`http://api.mygame4u.com/game/addevent?gId=${id}`, eventData, {
+      headers: {
+        Authorization: `G4User ${
+          JSON.parse(localStorage.getItem("user")).token
+        }`
+      }
+    })
+    .then(res => {
+      if (res.data.error) {
+        dispatch({
+          type: GET_ERRORS,
+          payload: res.data.message
+        });
+      } else {
+        dispatch({
+          type: GET_MESSAGES,
+          payload: res.data.message
+        });
+      }
+    });
+};
 
 export const getCurrentGame = id => dispatch => {
   axios
@@ -13,6 +42,23 @@ export const getCurrentGame = id => dispatch => {
     .then(res => {
       dispatch({
         type: GET_CURRENT_GAME,
+        payload: res.data.answer
+      });
+    });
+};
+
+export const getEventSettings = id => dispatch => {
+  axios
+    .get(`http://api.mygame4u.com/game/event?gId=${id}`, {
+      headers: {
+        Authorization: `G4User ${
+          JSON.parse(localStorage.getItem("user")).token
+        }`
+      }
+    })
+    .then(res => {
+      dispatch({
+        type: GET_EVENT_SETTINGS,
         payload: res.data.answer
       });
     });

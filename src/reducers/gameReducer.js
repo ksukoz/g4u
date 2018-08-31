@@ -1,7 +1,8 @@
-import { GET_CURRENT_GAME } from "../actions/types";
+import { GET_CURRENT_GAME, GET_EVENT_SETTINGS } from "../actions/types";
 
 const initialState = {
-  currentGame: null
+  currentGame: null,
+  settings: null
 };
 
 export default function(state = initialState, action) {
@@ -10,6 +11,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         currentGame: action.payload
+      };
+    case GET_EVENT_SETTINGS:
+      return {
+        ...state,
+        settings: action.payload
       };
     default:
       return state;

@@ -105,7 +105,7 @@ class Appointments extends Component {
             ? this.state.matchesList.map(match => (
                 <Link
                   className={classes.button_link}
-                  to={`/game/${match.id}`}
+                  to={`/game/${match.game.id}`}
                   key={match.id}
                 >
                   <MenuItem className={classes.listItem} value={match.id}>
