@@ -37,9 +37,6 @@ const theme = createMuiTheme({
 const drawerWidth = 295;
 
 const styles = {
-  root: {
-    flexGrow: 1
-  },
   flex: {
     flexGrow: 1
   },

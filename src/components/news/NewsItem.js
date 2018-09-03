@@ -24,7 +24,7 @@ import Test from "./img/test_bg.png";
 const styles = theme => ({
   card: {
     position: "relative",
-    width: "99.5%",
+    width: "99%",
     borderRadius: 20,
     marginBottom: "1rem",
     border: "1px solid rgba(0,0,0,0.2)",
