@@ -27,6 +27,9 @@ import AddEvent from "./components/appointments/AddEvent";
 if (localStorage.user) {
   const user = JSON.parse(localStorage.getItem("user"));
   store.dispatch(setUser(user));
+  document.addEventListener("paste", e => e.preventDefault());
+  document.addEventListener("copy", e => e.preventDefault());
+  document.addEventListener("cut", e => e.preventDefault());
 }
 
 class App extends Component {
