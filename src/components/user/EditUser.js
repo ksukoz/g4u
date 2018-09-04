@@ -66,10 +66,17 @@ class EditUser extends Component {
   };
 
   onChangeHandler = e => {
-    this.setState({
-      ...this.state,
-      [e.target.name]: e.target.value.replace(/[^a-zA-Z0-9]+/, "")
-    });
+    if (e.target.name === "lang") {
+      this.setState({
+        ...this.state,
+        [e.target.name]: e.target.value
+      });
+    } else {
+      this.setState({
+        ...this.state,
+        [e.target.name]: e.target.value.replace(/[^a-zA-Z0-9]+/, "")
+      });
+    }
   };
 
   onSubmitHandler = e => {
