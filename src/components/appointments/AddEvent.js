@@ -123,17 +123,22 @@ class AddEvent extends Component {
   };
 
   onChangeHandler = e => {
-    if (e.target.name === "comment" && e.target.value.length > 500) {
-      this.setState({
-        ...this.state,
-        [e.target.name]: e.target.value
-          .replace(/[^a-zA-Z0-9]+/, "")
-          .slice(0, 500)
-      });
+    if (e.target.name === "comment") {
+      if (e.target.value.length > 500) {
+        this.setState({
+          ...this.state,
+          [e.target.name]: e.target.value.slice(0, 500)
+        });
+      } else {
+        this.setState({
+          ...this.state,
+          [e.target.name]: e.target.value
+        });
+      }
     } else {
       this.setState({
         ...this.state,
-        [e.target.name]: e.target.value.replace(/[^a-zA-Z0-9]+/, "")
+        [e.target.name]: e.target.value.replace(/[а-я]+/gi, "")
       });
     }
   };
