@@ -60,8 +60,8 @@ class News extends Component {
     }
     return (
       <div className="News">
-        {JSON.parse(localStorage.getItem("user")).personal === 1 ||
-        JSON.parse(localStorage.getItem("user")).personal === 7 ? (
+        {+JSON.parse(localStorage.getItem("user")).personal_type === 1 ||
+        +JSON.parse(localStorage.getItem("user")).personal_type === 7 ? (
           <Link className={classes.button_link} to="/add-news">
             <Button
               variant="extendedFab"

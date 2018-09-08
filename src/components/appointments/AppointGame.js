@@ -117,8 +117,8 @@ class AppointGame extends Component {
     const { classes } = this.props;
     return (
       <div>
-        {JSON.parse(localStorage.getItem("user")).personal === 1 ||
-        JSON.parse(localStorage.getItem("user")).personal === 7 ? (
+        {+JSON.parse(localStorage.getItem("user")).personal_type === 1 ||
+        +JSON.parse(localStorage.getItem("user")).personal_type === 7 ? (
           <Link
             to={`/event/add/${this.state.gameId}`}
             className={classes.button_link}
