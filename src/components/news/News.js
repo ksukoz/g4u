@@ -18,12 +18,14 @@ const styles = theme => ({
     background: "#fff",
     border: "1px solid #55a462",
     boxShadow: "none",
-    "&:hover,&:active": {
-      background: "#55a462"
+    "&:hover, &:active": {
+      backgroundColor: "#55a462",
+      color: "#fff"
     },
 
-    "&:hover a,&:active": {
-      color: "#fff"
+    "&:hover,&:active": {},
+    [theme.breakpoints.up("md")]: {
+      fontSize: "1.5rem"
     }
   },
   button_link: {

@@ -20,6 +20,18 @@ const styles = theme => ({
   heading: {
     fontSize: theme.typography.pxToRem(15),
     fontWeight: theme.typography.fontWeightRegular
+  },
+  expDetails: {
+    margin: "0 2rem",
+
+    [theme.breakpoints.up("md")]: {
+      fontSize: "1.5rem"
+    }
+  },
+  expSummary: {
+    [theme.breakpoints.up("md")]: {
+      fontSize: "1.5rem"
+    }
   }
 });
 
@@ -40,12 +52,18 @@ class Location extends Component {
     if (location) {
       citiesList = location.map(locationItem => (
         <ExpansionPanel key={locationItem.name}>
-          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+          <ExpansionPanelSummary
+            expandIcon={<ExpandMoreIcon />}
+            className={classes.expSummary}
+          >
             {locationItem.name} ({locationItem.city.length})
           </ExpansionPanelSummary>
           {locationItem.city
             ? locationItem.city.map(cityItem => (
-                <ExpansionPanelDetails key={cityItem.cId}>
+                <ExpansionPanelDetails
+                  key={cityItem.cId}
+                  className={classes.expDetails}
+                >
                   <Link to={`/tournaments/${cityItem.cId}`}>
                     {cityItem.name} ({cityItem.count})
                   </Link>

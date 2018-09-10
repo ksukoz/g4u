@@ -33,7 +33,13 @@ const styles = theme => ({
   },
   input: {
     width: "100%",
-    marginBottom: ".5rem"
+    marginBottom: ".5rem",
+
+    "& label, & input, & div": {
+      [theme.breakpoints.up("md")]: {
+        fontSize: "1.5rem"
+      }
+    }
   },
   select: {
     width: "100%"
@@ -46,13 +52,23 @@ const styles = theme => ({
     "&:hover, &:active": {
       backgroundColor: "#43A047",
       color: "#fff"
+    },
+    [theme.breakpoints.up("md")]: {
+      fontSize: "1.5rem"
     }
   },
   submit: {
     backgroundColor: "#43A047",
     borderRadius: 40,
     color: "#fff",
-    marginBottom: "1rem"
+    marginBottom: "1rem",
+    "&:hover, &:active": {
+      border: "1px solid #43A047",
+      color: "rgba(0,0,0,.5)"
+    },
+    [theme.breakpoints.up("md")]: {
+      fontSize: "1.5rem"
+    }
   },
   chip: {
     backgroundColor: "#effcf1",
@@ -143,7 +159,7 @@ class AddPlayer extends Component {
 
   onChangeHandler = e => {
     this.setState({
-      [e.target.name]: e.target.value.replace(/[а-я]+/ig, "")
+      [e.target.name]: e.target.value.replace(/[а-я]+/gi, "")
     });
   };
 

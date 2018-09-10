@@ -58,6 +58,9 @@ const styles = theme => ({
     marginLeft: "auto",
     [theme.breakpoints.up("sm")]: {
       marginRight: -8
+    },
+    [theme.breakpoints.up("md")]: {
+      fontSize: "1.5rem"
     }
   },
   expandOpen: {
@@ -77,13 +80,19 @@ const styles = theme => ({
     })
   },
   text: {
-    fontSize: "1rem"
+    fontSize: "1rem",
+    [theme.breakpoints.up("md")]: {
+      fontSize: "1.5rem"
+    }
   },
   icon: {
     color: "#fff"
   },
   date: {
-    color: "#fff"
+    color: "#fff",
+    [theme.breakpoints.up("md")]: {
+      fontSize: "1.5rem"
+    }
   }
 });
 
@@ -140,7 +149,9 @@ class NewsItem extends React.Component {
                 variant="body2"
                 className={classes.text}
               />
-              <Typography>{this.props.name}</Typography>
+              <Typography className={classes.text}>
+                {this.props.name}
+              </Typography>
             </CardContent>
           </Collapse>
           <CardMedia

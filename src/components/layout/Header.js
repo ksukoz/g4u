@@ -76,7 +76,15 @@ const styles = {
   logout: {
     marginLeft: "auto",
     marginRight: "1rem",
-    color: "#fff"
+    color: "#fff",
+    [theme.breakpoints.up("md")]: {
+      fontSize: "1.5rem"
+    }
+  },
+  title: {
+    [theme.breakpoints.up("md")]: {
+      fontSize: "1.5rem"
+    }
   }
 };
 
@@ -117,7 +125,12 @@ class Header extends React.Component {
               >
                 <MenuIcon />
               </IconButton>
-              <Typography variant="title" color="inherit" noWrap>
+              <Typography
+                variant="title"
+                color="inherit"
+                noWrap
+                className={classes.title}
+              >
                 {/* {Mini variant drawer} */}
                 {this.props.common.activeLink
                   ? this.props.common.activeLink

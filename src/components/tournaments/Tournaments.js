@@ -10,29 +10,6 @@ import MenuItem from "@material-ui/core/MenuItem";
 
 import { getTournaments } from "../../actions/tournamentActions";
 const styles = theme => ({
-  root: {
-    display: "flex",
-    justifyContent: "space-between"
-  },
-  checkbox: {
-    color: "#43A047",
-    "&$checked": {
-      color: "#43A047"
-    }
-  },
-  checked: {},
-  input: {
-    width: "40%"
-  },
-  input_wrap: {
-    display: "flex",
-    justifyContent: "space-between",
-    marginBottom: "1rem"
-  },
-  select: {
-    width: "100%",
-    paddingTop: "1rem"
-  },
   button: {
     display: "block",
     marginBottom: "2rem",
@@ -62,7 +39,10 @@ const styles = theme => ({
     marginBottom: "1rem"
   },
   listItem: {
-    border: "1px solid rgba(0,0,0,.2)"
+    border: "1px solid rgba(0,0,0,.2)",
+    [theme.breakpoints.up("md")]: {
+      fontSize: "1.5rem"
+    }
   },
   success: {
     backgroundColor: "#43A047"

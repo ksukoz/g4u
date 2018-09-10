@@ -95,7 +95,13 @@ const styles = theme => ({
   nav_link: {
     display: "flex",
     alignItems: "center",
-    textDecoration: "none"
+    textDecoration: "none",
+
+    "& span": {
+      [theme.breakpoints.up("md")]: {
+        fontSize: "1.5rem"
+      }
+    }
   },
   nav_icon: {
     width: 20,

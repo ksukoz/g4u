@@ -75,6 +75,13 @@ const styles = theme => ({
   },
   error: {
     backgroundColor: "#ff5e5e"
+  },
+  expDetails: {
+    margin: "0 2rem",
+    fontSize: "1.5rem"
+  },
+  expSummary: {
+    fontSize: "1.5rem"
   }
 });
 class SubTournaments extends Component {
@@ -91,12 +98,18 @@ class SubTournaments extends Component {
     if (subTournaments) {
       subTourList = subTournaments.seasons.map(season => (
         <ExpansionPanel key={season.season_id}>
-          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+          <ExpansionPanelSummary
+            expandIcon={<ExpandMoreIcon />}
+            className={classes.expSummary}
+          >
             {season.title}
           </ExpansionPanelSummary>
           {season.tourney
             ? season.tourney.map(tourneyItem => (
-                <ExpansionPanelDetails key={tourneyItem.tourneyId}>
+                <ExpansionPanelDetails
+                  key={tourneyItem.tourneyId}
+                  className={classes.expDetails}
+                >
                   <Link to={`/tournaments/${tourneyItem.tourneyId}`}>
                     {tourneyItem.title}
                   </Link>
