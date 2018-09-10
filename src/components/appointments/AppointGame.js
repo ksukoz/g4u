@@ -44,11 +44,11 @@ const styles = theme => ({
     border: "1px solid #55a462",
     boxShadow: "none",
     "&:hover,&:active": {
-      background: "#55a462"
-    },
-
-    "&:hover a,&:active": {
+      background: "#55a462",
       color: "#fff"
+    },
+    [theme.breakpoints.up("md")]: {
+      fontSize: "1.5rem"
     }
   },
   button_link: {
@@ -65,7 +65,8 @@ const styles = theme => ({
     marginBottom: "1rem"
   },
   listItem: {
-    border: "1px solid rgba(0,0,0,.2)"
+    border: "1px solid rgba(0,0,0,.2)",
+    height: "auto"
   },
   success: {
     backgroundColor: "#43A047"
@@ -75,7 +76,16 @@ const styles = theme => ({
   },
   game_wrap: {
     display: "flex",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    flexWrap: "wrap"
+  },
+  list: {
+    width: "100%",
+    "& *": {
+      [theme.breakpoints.up("md")]: {
+        fontSize: "1.5rem"
+      }
+    }
   },
   game: {
     display: "flex",
@@ -140,6 +150,19 @@ class AppointGame extends Component {
               <img src={this.state.currentGame.info.out.logo} alt="" />
               <h3>{this.state.currentGame.info.out.title}</h3>
             </div>
+            <List className={classes.list}>
+              {this.state.currentGame.events.map((event, i) => (
+                <MenuItem className={classes.listItem} key={i}>
+                  <span style={{ marginRight: 8 }}>{event.minute}'</span>
+                  <span>{event.title}</span>
+                  <img
+                    src={event.logo}
+                    alt=""
+                    style={{ height: 50, marginLeft: "auto" }}
+                  />
+                </MenuItem>
+              ))}
+            </List>
           </div>
         ) : (
           ""

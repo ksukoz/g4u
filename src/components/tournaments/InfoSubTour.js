@@ -108,8 +108,8 @@ const styles = theme => ({
 });
 
 class InfoSubTour extends Component {
-  onClickHandler = (tourId, commId) => {
-    this.props.history.push(`/command/${tourId}:${commId}`);
+  onClickHandler = commId => {
+    this.props.history.push(`/command/${commId}`);
   };
 
   componentDidMount = () => {
@@ -126,11 +126,7 @@ class InfoSubTour extends Component {
         <TableRow
           key={command.comm.command_id}
           className={classes.row}
-          onClick={this.onClickHandler.bind(
-            this,
-            this.props.match.params.id,
-            command.comm.command_id
-          )}
+          onClick={this.onClickHandler.bind(this, command.comm.command_id)}
           hover
           style={{ cursor: "pointer" }}
         >
