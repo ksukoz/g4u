@@ -10,6 +10,8 @@ import Button from "@material-ui/core/Button";
 import { TextField } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 
+import Messages from "../common/Messages";
+
 const styles = {
   root: {
     width: "max-content",
@@ -37,14 +39,17 @@ const styles = {
       color: "rgba(0,0,0,.8)"
     }
   },
+  success: {
+    backgroundColor: "#43A047"
+  },
   error: {
-    color: "#ff5e5e",
-    paddingBottom: "2rem"
+    backgroundColor: "#ff5e5e"
   }
 };
 
 class Login extends Component {
   state = {
+    open: false,
     email: "",
     password: "",
     errors: ""
@@ -63,16 +68,21 @@ class Login extends Component {
 
   onChangeHandler = e => {
     this.setState({
-      [e.target.name]: e.target.value.replace(/[а-я]+/ig, "")
+      [e.target.name]: e.target.value.replace(/[а-я]+/gi, "")
     });
   };
 
+  handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    this.setState({ open: false });
+  };
+
   componentWillReceiveProps(nextProps) {
-    if (nextProps.errors.length > 0) {
-      this.setState({
-        ...this.state,
-        error: nextProps.errors
-      });
+    if (nextProps.errors || nextProps.messages) {
+      this.setState({ ...this.state, open: true });
     }
   }
 
@@ -85,48 +95,71 @@ class Login extends Component {
     }
 
     return (
-      <Paper className={classes.root}>
-        <h1>
-          <FormattedMessage id="login.heading" />
-        </h1>
-        <p>
-          <FormattedMessage id="login.text" />
-        </p>
-        <form onSubmit={this.onSubmitHandler}>
-          <div>
-            <TextField
-              className={classes.input}
-              type="email"
-              name="email"
-              value={this.state.email}
-              onChange={this.onChangeHandler}
-              label={<FormattedMessage id="login.emailLabel" />}
-            />
-          </div>
-          <div>
-            <TextField
-              className={classes.input}
-              type="password"
-              name="password"
-              label={<FormattedMessage id="login.passwordLabel" />}
-              value={this.state.password}
-              onChange={this.onChangeHandler}
-            />
-          </div>
-          <Button variant="contained" type="submit" className={classes.submit}>
-            <FormattedMessage id="login.submit" />
-          </Button>
-          <div className={classes.error}>
+      <div>
+        {this.props.errors ? (
+          <Messages
+            open={this.state.open}
+            message={this.props.errors}
+            onClose={this.handleClose}
+            classes={classes.error}
+          />
+        ) : this.props.messages ? (
+          <Messages
+            open={this.state.open}
+            message={this.props.messages}
+            onClose={this.handleClose}
+            classes={classes.success}
+          />
+        ) : (
+          ""
+        )}
+        <Paper className={classes.root}>
+          <h1>
+            <FormattedMessage id="login.heading" />
+          </h1>
+          <p>
+            <FormattedMessage id="login.text" />
+          </p>
+          <form onSubmit={this.onSubmitHandler}>
+            <div>
+              <TextField
+                className={classes.input}
+                type="email"
+                name="email"
+                value={this.state.email}
+                onChange={this.onChangeHandler}
+                label={<FormattedMessage id="login.emailLabel" />}
+              />
+            </div>
+            <div>
+              <TextField
+                className={classes.input}
+                type="password"
+                name="password"
+                label={<FormattedMessage id="login.passwordLabel" />}
+                value={this.state.password}
+                onChange={this.onChangeHandler}
+              />
+            </div>
+            <Button
+              variant="contained"
+              type="submit"
+              className={classes.submit}
+            >
+              <FormattedMessage id="login.submit" />
+            </Button>
+            {/* <div className={classes.error}>
             <small variant="caption" component="small">
               {this.state.error}
             </small>
-          </div>
-        </form>
+          </div> */}
+          </form>
 
-        <Link to="/register" className={classes.link}>
-          <FormattedMessage id="login.link" />
-        </Link>
-      </Paper>
+          <Link to="/register" className={classes.link}>
+            <FormattedMessage id="login.link" />
+          </Link>
+        </Paper>
+      </div>
     );
   }
 }

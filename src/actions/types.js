@@ -15,6 +15,7 @@ export const GET_LEAGUES = "GET_LEAGUES";
 
 export const ADD_NEWS = "ADD_NEWS";
 export const GET_NEWS = "GET_NEWS";
+export const GET_NEWS_ITEM = "GET_NEWS_ITEM";
 export const SET_LIKE = "SET_LIKE";
 
 export const GET_POSITIONS = "GET_POSITIONS";

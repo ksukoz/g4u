@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import compose from "recompose/compose";
 import { connect } from "react-redux";
 import { FormattedMessage } from "react-intl";
-import { addNews } from "../../actions/newsActions";
+import { addNews, getNewsItem } from "../../actions/newsActions";
 import CKEditor from "react-ckeditor-component";
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
@@ -11,6 +11,8 @@ import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
 import Chip from "@material-ui/core/Chip";
 import InputFile from "../common/InputFile";
+
+import Messages from "../common/Messages";
 
 const styles = theme => ({
   root: {
@@ -53,11 +55,18 @@ const styles = theme => ({
   },
   editor: {
     margin: "1rem 0"
+  },
+  success: {
+    backgroundColor: "#43A047"
+  },
+  error: {
+    backgroundColor: "#ff5e5e"
   }
 });
 
 class EditNews extends Component {
   state = {
+    open: false,
     title: "",
     text: "",
     photo: "",
@@ -138,6 +147,24 @@ class EditNews extends Component {
     this.props.addNews(addNews);
   };
 
+  handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    this.setState({ open: false });
+  };
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors || nextProps.messages) {
+      this.setState({ ...this.state, open: true });
+    }
+  }
+
+  componentDidMount = () => {
+    this.props.getNewsItem(this.props.match.url.replace(/\D/g, ""));
+  };
+
   render() {
     const { classes } = this.props;
     const { tags } = this.state;
@@ -157,6 +184,23 @@ class EditNews extends Component {
 
     return (
       <div className={classes.root}>
+        {this.props.errors ? (
+          <Messages
+            open={this.state.open}
+            message={this.props.errors}
+            onClose={this.handleClose}
+            classes={classes.error}
+          />
+        ) : this.props.messages ? (
+          <Messages
+            open={this.state.open}
+            message={this.props.messages}
+            onClose={this.handleClose}
+            classes={classes.success}
+          />
+        ) : (
+          ""
+        )}
         <div className={classes.form}>
           <form onSubmit={this.onSubmit}>
             <div>
@@ -272,13 +316,18 @@ class EditNews extends Component {
 }
 
 EditNews.propTypes = {
-  classes: PropTypes.object
+  classes: PropTypes.object,
+  news: PropTypes.object
 };
+
+const mapStateToProps = state => ({
+  news: state.news
+});
 
 export default compose(
   withStyles(styles),
   connect(
-    null,
-    { addNews }
+    mapStateToProps,
+    { addNews, getNewsItem }
   )
 )(EditNews);
