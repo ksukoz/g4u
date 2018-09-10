@@ -28,6 +28,7 @@ import AppointGame from "./components/appointments/AppointGame";
 import AddEvent from "./components/appointments/AddEvent";
 
 import Location from "./components/tournaments/Location";
+import Tournaments from "./components/tournaments/Tournaments";
 
 if (localStorage.user) {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -116,10 +117,13 @@ class App extends Component {
                   />
                 </Switch>
                 <Switch>
+                  <PrivateRoute exact path="/cities" component={Location} />
+                </Switch>
+                <Switch>
                   <PrivateRoute
                     exact
-                    path="/tournaments/cities"
-                    component={Location}
+                    path="/tournaments/:id"
+                    component={Tournaments}
                   />
                 </Switch>
               </div>

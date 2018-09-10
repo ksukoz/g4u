@@ -44,9 +44,11 @@ class Location extends Component {
             {locationItem.name} ({locationItem.city.length})
           </ExpansionPanelSummary>
           {locationItem.city
-            ? locationItem.city.map((cityItem, i) => (
-                <ExpansionPanelDetails key={i}>
-                  {cityItem.name} ({cityItem.count})
+            ? locationItem.city.map(cityItem => (
+                <ExpansionPanelDetails key={cityItem.cId}>
+                  <Link to={`/tournaments/${cityItem.cId}`}>
+                    {cityItem.name} ({cityItem.count})
+                  </Link>
                 </ExpansionPanelDetails>
               ))
             : ""}
