@@ -108,6 +108,10 @@ const styles = theme => ({
 });
 
 class InfoSubTour extends Component {
+  onClickHandler = (tourId, commId) => {
+    this.props.history.push(`/command/${tourId}:${commId}`);
+  };
+
   componentDidMount = () => {
     this.props.getSubCommands(this.props.match.params.id);
   };
@@ -119,7 +123,17 @@ class InfoSubTour extends Component {
 
     if (subCommands) {
       commandsList = subCommands.commands.map((command, i) => (
-        <TableRow key={command.comm.command_id} className={classes.row}>
+        <TableRow
+          key={command.comm.command_id}
+          className={classes.row}
+          onClick={this.onClickHandler.bind(
+            this,
+            this.props.match.params.id,
+            command.comm.command_id
+          )}
+          hover
+          style={{ cursor: "pointer" }}
+        >
           <TableCell className={classes.numberCell}>{i + 1}</TableCell>
           <TableCell component="th" scope="row" className={classes.flexCell}>
             <img
