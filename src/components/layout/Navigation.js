@@ -163,7 +163,7 @@ class Navigation extends React.Component {
             </Link>
             <Link
               className={classes.nav_link}
-              to="/in-progress"
+              to="/tournaments/cities"
               onClick={this.onClickHandler.bind(
                 this,
                 <FormattedMessage id="nav.tournaments" />

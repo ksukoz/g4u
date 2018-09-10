@@ -13,17 +13,21 @@ import { setUser } from "./actions/authActions";
 import "./App.css";
 import News from "./components/news/News";
 import AddNews from "./components/news/AddNews";
+import EditNews from "./components/news/EditNews";
+
 import ChooseLeague from "./components/auth/ChooseLeague";
 import AddPlayer from "./components/players/AddPlayer";
 import EditPlayer from "./components/players/EditPlayer";
 import EditUser from "./components/user/EditUser";
+
 import Header from "./components/layout/Header";
 import Navigation from "./components/layout/Navigation";
 import InProgress from "./components/layout/InProgress";
 import Appointments from "./components/appointments/Appointments";
 import AppointGame from "./components/appointments/AppointGame";
 import AddEvent from "./components/appointments/AddEvent";
-import EditNews from "./components/news/EditNews";
+
+import Location from "./components/tournaments/Location";
 
 if (localStorage.user) {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -109,6 +113,13 @@ class App extends Component {
                     exact
                     path="/in-progress"
                     component={InProgress}
+                  />
+                </Switch>
+                <Switch>
+                  <PrivateRoute
+                    exact
+                    path="/tournaments/cities"
+                    component={Location}
                   />
                 </Switch>
               </div>
