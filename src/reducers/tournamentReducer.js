@@ -3,7 +3,8 @@ import {
   GET_CITIES,
   GET_TOURNAMENTS,
   GET_SUB_TOURNAMENTS,
-  GET_SUB_COMMANDS
+  GET_SUB_COMMANDS,
+  GET_COMMANDS_INFO
 } from "../actions/types";
 
 const initialState = {
@@ -11,7 +12,8 @@ const initialState = {
   location: null,
   tournaments: null,
   subTournaments: null,
-  subCommands: null
+  subCommands: null,
+  commands: null
 };
 
 export default function(state = initialState, action) {
@@ -40,6 +42,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         subCommands: action.payload
+      };
+    case GET_COMMANDS_INFO:
+      return {
+        ...state,
+        commands: action.payload
       };
     default:
       return state;

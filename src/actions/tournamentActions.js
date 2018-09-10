@@ -4,7 +4,8 @@ import {
   GET_CITIES,
   GET_TOURNAMENTS,
   GET_SUB_TOURNAMENTS,
-  GET_SUB_COMMANDS
+  GET_SUB_COMMANDS,
+  GET_COMMANDS_INFO
 } from "./types";
 
 export const getAppoints = () => dispatch => {
@@ -87,6 +88,23 @@ export const getSubCommands = id => dispatch => {
     .then(res => {
       dispatch({
         type: GET_SUB_COMMANDS,
+        payload: res.data.answer
+      });
+    });
+};
+
+export const getCommandsInfo = id => dispatch => {
+  axios
+    .get(`http://api.mygame4u.com/tournaments/comminfo?commId=${id}`, {
+      headers: {
+        Authorization: `G4User ${
+          JSON.parse(localStorage.getItem("user")).token
+        }`
+      }
+    })
+    .then(res => {
+      dispatch({
+        type: GET_COMMANDS_INFO,
         payload: res.data.answer
       });
     });
