@@ -5,6 +5,9 @@ import { withStyles } from "@material-ui/core/styles";
 import compose from "recompose/compose";
 import { connect } from "react-redux";
 import classnames from "classnames";
+
+import { Link } from "react-router-dom";
+
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
@@ -18,6 +21,8 @@ import Favorite from "@material-ui/icons/Favorite";
 import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { getNews, setLike } from "../../actions/newsActions";
+
+import Pencil from "./img/pencil.svg";
 
 import Test from "./img/test_bg.png";
 
@@ -159,6 +164,16 @@ class NewsItem extends React.Component {
                   />
                 )}
               </IconButton>
+              {+this.props.maker ===
+              +JSON.parse(localStorage.getItem("user")).personal ? (
+                <Link to={`/news/edit/${this.props.id}`}>
+                  <IconButton aria-label="Add to favorites">
+                    <img src={Pencil} alt="" style={{ height: 20 }} />
+                  </IconButton>
+                </Link>
+              ) : (
+                ""
+              )}
               {/* <IconButton aria-label="Share">
                 <ShareIcon className={classes.icon} />
               </IconButton> */}

@@ -23,6 +23,7 @@ import InProgress from "./components/layout/InProgress";
 import Appointments from "./components/appointments/Appointments";
 import AppointGame from "./components/appointments/AppointGame";
 import AddEvent from "./components/appointments/AddEvent";
+import EditNews from "./components/news/EditNews";
 
 if (localStorage.user) {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -57,6 +58,13 @@ class App extends Component {
                 </Switch>
                 <Switch>
                   <PrivateRoute exact path="/add-news" component={AddNews} />
+                </Switch>
+                <Switch>
+                  <PrivateRoute
+                    exact
+                    path="/news/edit/:id"
+                    component={EditNews}
+                  />
                 </Switch>
                 <Switch>
                   <PrivateRoute

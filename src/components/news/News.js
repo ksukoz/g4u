@@ -55,6 +55,7 @@ class News extends Component {
           date={newsItem.date}
           image={newsItem.photo ? newsItem.photo : ""}
           liked={newsItem.liked}
+          maker={newsItem.maker}
         />
       ));
     }
