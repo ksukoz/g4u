@@ -8,7 +8,13 @@ import { withStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import MenuItem from "@material-ui/core/MenuItem";
 
-import { getTournaments } from "../../actions/tournamentActions";
+import ExpansionPanel from "@material-ui/core/ExpansionPanel";
+import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
+import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
+import Typography from "@material-ui/core/Typography";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+
+import { getSubTournaments } from "../../actions/tournamentActions";
 const styles = theme => ({
   root: {
     display: "flex",
@@ -71,33 +77,44 @@ const styles = theme => ({
     backgroundColor: "#ff5e5e"
   }
 });
-class Tournaments extends Component {
+class SubTournaments extends Component {
   componentDidMount = () => {
-    this.props.getTournaments(this.props.match.params.id);
+    this.props.getSubTournaments(this.props.match.params.id);
   };
 
   render() {
     const { classes } = this.props;
-    return (
-      <div>
-        <List>
-          {this.props.tournaments.tournaments
-            ? this.props.tournaments.tournaments.map(tournament => (
-                <Link
-                  className={classes.button_link}
-                  to={`/subtournaments/${tournament.tournament_id}`}
-                  key={tournament.tournament_id}
-                >
-                  <MenuItem
-                    className={classes.listItem}
-                    value={tournament.tournament_id}
-                  >
-                    {tournament.title}
-                  </MenuItem>
-                </Link>
+    const { subTournaments } = this.props.tournaments;
+
+    let subTourList;
+
+    if (subTournaments) {
+      subTourList = subTournaments.seasons.map(season => (
+        <ExpansionPanel key={season.season_id}>
+          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+            {season.title}
+          </ExpansionPanelSummary>
+          {season.tourney
+            ? season.tourney.map(tourneyItem => (
+                <ExpansionPanelDetails key={tourneyItem.tourneyId}>
+                  <Link to={`/tournaments/${tourneyItem.tourneyId}`}>
+                    {tourneyItem.title}
+                  </Link>
+                </ExpansionPanelDetails>
               ))
             : ""}
-        </List>
+        </ExpansionPanel>
+      ));
+    }
+
+    return (
+      <div>
+        {subTournaments ? (
+          <img src={subTournaments.logo} alt="" style={{ width: "100%" }} />
+        ) : (
+          ""
+        )}
+        <List>{subTourList}</List>
       </div>
     );
   }
@@ -111,6 +128,6 @@ export default compose(
   withStyles(styles),
   connect(
     mapStateToProps,
-    { getTournaments }
+    { getSubTournaments }
   )
-)(Tournaments);
+)(SubTournaments);
