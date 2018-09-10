@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import compose from "recompose/compose";
 import { connect } from "react-redux";
 import { FormattedMessage } from "react-intl";
-import { addNews, getNewsItem } from "../../actions/newsActions";
+import { editNews, getNewsItem } from "../../actions/newsActions";
 import CKEditor from "react-ckeditor-component";
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
@@ -137,19 +137,23 @@ class EditNews extends Component {
   onSubmit = e => {
     e.preventDefault();
 
-    const addNews = {
+    const editedNews = {
       title: this.state.title,
       text: this.state.text,
       photo: this.state.photo,
       tags: this.state.tags
     };
 
-    this.props.addNews(addNews);
+    this.props.editNews(editedNews, this.props.match.url.replace(/\D/g, ""));
   };
 
   handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
+    }
+
+    if (this.props.messages) {
+      this.setState({ open: false }, this.props.history.goBack());
     }
 
     this.setState({ open: false });
@@ -158,6 +162,17 @@ class EditNews extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors || nextProps.messages) {
       this.setState({ ...this.state, open: true });
+    } else if (nextProps.news.newsItem) {
+      this.setState({
+        ...this.state,
+        title: nextProps.news.newsItem.title,
+        text: nextProps.news.newsItem.text,
+        photo: nextProps.news.newsItem.photo,
+        tags:
+          nextProps.news.newsItem.tags.length > 0
+            ? nextProps.news.newsItem.tags.length
+            : []
+      });
     }
   }
 
@@ -317,17 +332,21 @@ class EditNews extends Component {
 
 EditNews.propTypes = {
   classes: PropTypes.object,
-  news: PropTypes.object
+  news: PropTypes.object,
+  errors: PropTypes.string,
+  messages: PropTypes.string
 };
 
 const mapStateToProps = state => ({
-  news: state.news
+  news: state.news,
+  errors: state.errors,
+  messages: state.messages
 });
 
 export default compose(
   withStyles(styles),
   connect(
     mapStateToProps,
-    { addNews, getNewsItem }
+    { editNews, getNewsItem }
   )
 )(EditNews);
