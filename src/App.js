@@ -30,6 +30,7 @@ import AddEvent from "./components/appointments/AddEvent";
 import Location from "./components/tournaments/Location";
 import Tournaments from "./components/tournaments/Tournaments";
 import SubTournaments from "./components/tournaments/SubTournaments";
+import InfoSubTour from "./components/tournaments/InfoSubTour";
 
 if (localStorage.user) {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -132,6 +133,13 @@ class App extends Component {
                     exact
                     path="/subtournaments/:id"
                     component={SubTournaments}
+                  />
+                </Switch>
+                <Switch>
+                  <PrivateRoute
+                    exact
+                    path="/subtourinfo/:id"
+                    component={InfoSubTour}
                   />
                 </Switch>
               </div>

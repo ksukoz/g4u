@@ -110,7 +110,7 @@ class SubTournaments extends Component {
                   key={tourneyItem.tourneyId}
                   className={classes.expDetails}
                 >
-                  <Link to={`/tournaments/${tourneyItem.tourneyId}`}>
+                  <Link to={`/subtourinfo/${tourneyItem.tourneyId}`}>
                     {tourneyItem.title}
                   </Link>
                 </ExpansionPanelDetails>

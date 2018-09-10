@@ -2,14 +2,16 @@ import {
   GET_APPOINT,
   GET_CITIES,
   GET_TOURNAMENTS,
-  GET_SUB_TOURNAMENTS
+  GET_SUB_TOURNAMENTS,
+  GET_SUB_COMMANDS
 } from "../actions/types";
 
 const initialState = {
   matches: null,
   location: null,
   tournaments: null,
-  subTournaments: null
+  subTournaments: null,
+  subCommands: null
 };
 
 export default function(state = initialState, action) {
@@ -33,6 +35,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         subTournaments: action.payload
+      };
+    case GET_SUB_COMMANDS:
+      return {
+        ...state,
+        subCommands: action.payload
       };
     default:
       return state;
