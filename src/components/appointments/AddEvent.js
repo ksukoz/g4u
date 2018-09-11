@@ -13,6 +13,8 @@ import {
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 
+import Messages from "../common/Messages";
+
 import Select from "@material-ui/core/Select";
 import FormControl from "@material-ui/core/FormControl";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -108,11 +110,18 @@ const styles = theme => ({
     "& img": {
       height: "25rem"
     }
+  },
+  success: {
+    backgroundColor: "#43A047"
+  },
+  error: {
+    backgroundColor: "#ff5e5e"
   }
 });
 
 class AddEvent extends Component {
   state = {
+    open: false,
     gameId: "",
     currentGame: null,
     minutes: "",
@@ -148,6 +157,18 @@ class AddEvent extends Component {
       ...this.state,
       command
     });
+  };
+
+  handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    if (this.props.messages) {
+      this.setState({ open: false }, this.props.history.goBack());
+    }
+
+    this.setState({ open: false });
   };
 
   onSubmitHandler = e => {
@@ -240,6 +261,23 @@ class AddEvent extends Component {
               value={this.state.currentGame.info.out.command_id}
             />
           </BottomNavigation>
+        ) : (
+          ""
+        )}
+        {this.props.errors ? (
+          <Messages
+            open={this.state.open}
+            message={this.props.errors}
+            onClose={this.handleClose}
+            classes={classes.error}
+          />
+        ) : this.props.messages ? (
+          <Messages
+            open={this.state.open}
+            message={this.props.messages}
+            onClose={this.handleClose}
+            classes={classes.success}
+          />
         ) : (
           ""
         )}
