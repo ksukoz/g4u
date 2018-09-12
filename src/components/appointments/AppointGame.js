@@ -5,7 +5,9 @@ import compose from "recompose/compose";
 import { FormattedMessage } from "react-intl";
 import { withStyles } from "@material-ui/core/styles";
 
-import { getCurrentGame } from "../../actions/gameActions";
+import Messages from "../common/Messages";
+
+import { getCurrentGame, deleteEvent } from "../../actions/gameActions";
 
 import List from "@material-ui/core/List";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -94,6 +96,9 @@ const styles = theme => ({
     "& img": {
       height: "25rem"
     }
+  },
+  cross: {
+    color: "#ff5e5e"
   }
 });
 
@@ -101,6 +106,21 @@ class AppointGame extends Component {
   state = {
     gameId: "",
     game: null
+  };
+
+  handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    if (this.props.messages) {
+      this.setState(
+        { open: false },
+        this.props.getCurrentGame(this.props.match.url.replace(/\D/g, ""))
+      );
+    }
+
+    this.setState({ open: false });
   };
 
   componentDidMount() {
@@ -140,6 +160,23 @@ class AppointGame extends Component {
         ) : (
           ""
         )}
+        {this.props.errors ? (
+          <Messages
+            open={this.state.open}
+            message={this.props.errors}
+            onClose={this.handleClose}
+            classes={classes.error}
+          />
+        ) : this.props.messages ? (
+          <Messages
+            open={this.state.open}
+            message={this.props.messages}
+            onClose={this.handleClose}
+            classes={classes.success}
+          />
+        ) : (
+          ""
+        )}
         {this.state.currentGame ? (
           <div className={classes.game_wrap}>
             <div className={classes.game}>
@@ -160,6 +197,12 @@ class AppointGame extends Component {
                     alt=""
                     style={{ height: 50, marginLeft: "auto" }}
                   />
+                  <Button
+                    className={classes.cross}
+                    onClick={() => this.props.deleteEvent(event.evId)}
+                  >
+                    &#10006;
+                  </Button>
                 </MenuItem>
               ))}
             </List>
@@ -182,6 +225,6 @@ export default compose(
   withStyles(styles),
   connect(
     mapStateToProps,
-    { getCurrentGame }
+    { getCurrentGame, deleteEvent }
   )
 )(AppointGame);
