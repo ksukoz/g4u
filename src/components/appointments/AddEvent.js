@@ -180,7 +180,7 @@ class AddEvent extends Component {
       command_id: this.state.command,
       player_id: this.state.player,
       comment: this.state.comment,
-      personal_id: this.state.assistant,
+      assist_id: this.state.assistant,
       minute: this.state.minutes
     };
 
