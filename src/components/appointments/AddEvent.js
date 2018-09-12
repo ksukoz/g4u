@@ -127,6 +127,7 @@ class AddEvent extends Component {
     minutes: "",
     type: "",
     command: "0",
+    player: "0",
     assistant: "0",
     comment: ""
   };
@@ -226,9 +227,9 @@ class AddEvent extends Component {
         </MenuItem>
       ));
 
-      assistantsList = settings.assistants.map(assistant => (
-        <MenuItem value={assistant.id} key={assistant.id}>
-          {assistant.type}
+      assistantsList = settings.players[this.state.command].map(player => (
+        <MenuItem value={player.plid} key={player.plid}>
+          #{player.number} {player.name}
         </MenuItem>
       ));
 
