@@ -35,6 +35,7 @@ import Command from "./components/tournaments/Command";
 import Commands from "./components/commands/Commands";
 import CommandItem from "./components/commands/CommandItem";
 import EditCommandPlayer from "./components/commands/EditCommandPlayer";
+import AddCommandPlayer from "./components/commands/AddCommandPlayer";
 
 if (localStorage.user) {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -92,6 +93,13 @@ class App extends Component {
                     exact
                     path="/player/:id"
                     component={EditCommandPlayer}
+                  />
+                </Switch>
+                <Switch>
+                  <PrivateRoute
+                    exact
+                    path="/commands/player/add"
+                    component={AddCommandPlayer}
                   />
                 </Switch>
                 <Switch>

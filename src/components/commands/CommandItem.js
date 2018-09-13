@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 import { FormattedMessage } from "react-intl";
 import { withStyles } from "@material-ui/core/styles";
 
+import Messages from "../common/Messages";
+
 import Avatar from "@material-ui/core/Avatar";
 import List from "@material-ui/core/List";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -14,6 +16,7 @@ import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import Button from "@material-ui/core/Button";
 
 import { getCommand } from "../../actions/commandActions";
 
@@ -75,6 +78,20 @@ const styles = theme => ({
     width: "100%",
     textDecoration: "none",
     color: "#000"
+  },
+  button: {
+    background: "transparent",
+    border: "1px solid #43A047",
+    color: "rgba(0,0,0,.5)",
+    borderRadius: 40,
+    transition: ".3s",
+    "&:hover, &:active": {
+      backgroundColor: "#43A047",
+      color: "#fff"
+    },
+    [theme.breakpoints.up("md")]: {
+      fontSize: "1.5rem"
+    }
   }
 });
 
@@ -144,7 +161,16 @@ class CommandItem extends Component {
               expandIcon={<ExpandMoreIcon />}
               className={classes.expSummary}
             >
-              Состав команды
+              <span style={{ alignSelf: "center", paddingRight: 8 }}>
+                Состав команды
+              </span>
+              <Button
+                size="large"
+                className={classes.button}
+                onClick={() => this.props.history.push("/commands/player/add")}
+              >
+                Добавить игрока
+              </Button>
             </ExpansionPanelSummary>
             {playersList}
           </ExpansionPanel>
