@@ -1,5 +1,10 @@
 import axios from "axios";
-import { GET_ERRORS, GET_POSITIONS, GET_PLAYER } from "../actions/types";
+import {
+  GET_ERRORS,
+  GET_POSITIONS,
+  GET_PLAYER,
+  GET_MESSAGES
+} from "../actions/types";
 
 export const getPositions = () => dispatch => {
   axios
@@ -108,6 +113,30 @@ export const updatePlayer = (stuffData, history) => dispatch => {
       } else {
         history.push("/edit-player");
         dispatch(getPlayer());
+      }
+    });
+};
+
+export const updateCommandPlayer = commandData => dispatch => {
+  axios
+    .post("http://api.mygame4u.com/command/playerupdate", commandData, {
+      headers: {
+        Authorization: `G4User ${
+          JSON.parse(localStorage.getItem("user")).token
+        }`
+      }
+    })
+    .then(res => {
+      if (res.data.error) {
+        dispatch({
+          type: GET_ERRORS,
+          payload: res.data.message
+        });
+      } else {
+        dispatch({
+          type: GET_MESSAGES,
+          payload: res.data.message
+        });
       }
     });
 };

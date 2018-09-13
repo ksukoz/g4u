@@ -4,10 +4,13 @@ import { connect } from "react-redux";
 import { FormattedMessage } from "react-intl";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
+
+import Messages from "../common/Messages";
+
 import {
   getCommandPlayer,
   getPositions,
-  updatePlayer,
+  updateCommandPlayer,
   separatePlayer
 } from "../../actions/playerActions";
 import { withStyles } from "@material-ui/core/styles";
@@ -90,12 +93,19 @@ const styles = theme => ({
     "&:focus": {
       backgroundColor: "#effcf1"
     }
+  },
+  success: {
+    backgroundColor: "#43A047"
+  },
+  error: {
+    backgroundColor: "#ff5e5e"
   }
 });
 
 class EditCommandPlayer extends Component {
   state = {
     open: false,
+    openCrop: false,
     name: "",
     surname: "",
     patronymic: "",
@@ -124,7 +134,7 @@ class EditCommandPlayer extends Component {
   onChangeFileHandler = e => {
     const reader = new FileReader();
     if (e.target.files[0]) {
-      this.setState({ ...this.state, open: true });
+      this.setState({ ...this.state, openCrop: true });
       reader.readAsDataURL(e.target.files[0]);
       reader.addEventListener(
         "load",
@@ -174,15 +184,25 @@ class EditCommandPlayer extends Component {
   };
 
   onChangeHandler = e => {
-    this.setState({
-      [e.target.name]: e.target.value.replace(/[а-я]+/gi, "")
-    });
+    if (e.target.name === "number") {
+      this.setState({
+        [e.target.name]: e.target.value
+      });
+    } else {
+      this.setState({
+        [e.target.name]: e.target.value.replace(/[а-я]+/gi, "")
+      });
+    }
   };
 
   onSubmitHandler = e => {
     e.preventDefault();
 
     const updatedPlayer = {
+      name: this.state.name,
+      surename: this.state.surname,
+      patronymic: this.state.patronymic,
+      position_id: this.state.position_id,
       photo: this.state.readyImage,
       leg: this.state.leg,
       stature: this.state.stature,
@@ -190,10 +210,12 @@ class EditCommandPlayer extends Component {
       phone: this.state.phone,
       FB: this.state.fb,
       VK: this.state.vk,
-      number: this.state.number
+      number: this.state.number,
+      player_id: this.props.match.params.id,
+      birthday: this.state.birthday
     };
 
-    this.props.updatePlayer(updatedPlayer, this.props.history);
+    this.props.updateCommandPlayer(updatedPlayer);
     this.setState({ ...this.state, image: null });
   };
 
@@ -204,7 +226,19 @@ class EditCommandPlayer extends Component {
     localStorage.setItem("user", JSON.stringify(user));
   };
 
-  handleClose = () => {
+  handleModalClose = () => {
+    this.setState({ openCrop: false });
+  };
+
+  handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    if (this.props.messages) {
+      this.setState({ open: false }, this.props.history.goBack());
+    }
+
     this.setState({ open: false });
   };
 
@@ -216,7 +250,9 @@ class EditCommandPlayer extends Component {
   componentWillReceiveProps(nextProps) {
     let player;
     let positions;
-    if (
+    if (nextProps.errors || nextProps.messages) {
+      this.setState({ ...this.state, open: true });
+    } else if (
       nextProps.players.player !== null &&
       nextProps.players.positions !== null
     ) {
@@ -240,13 +276,6 @@ class EditCommandPlayer extends Component {
         readyImage: player.photo,
         position: player.position,
         number: player.number
-      });
-    }
-
-    if (nextProps.errors.length > 0) {
-      this.setState({
-        ...this.state,
-        error: nextProps.errors
       });
     }
   }
@@ -275,207 +304,230 @@ class EditCommandPlayer extends Component {
     }
 
     return (
-      <div className={classes.root}>
-        <div className={classes.error}>
-          <small variant="caption" component="small">
-            {this.state.error}
-          </small>
-        </div>
-        <div className={classes.form}>
-          <form className="player__form" onSubmit={this.onSubmitHandler}>
-            <TextField
-              label={<FormattedMessage id="player.nameLabel" />}
-              name="name"
-              className={classes.input}
-              value={this.state.name}
-              onChange={this.onChangeHandler}
-              margin="normal"
-              disabled
-            />
-            <TextField
-              label={<FormattedMessage id="player.surnameLabel" />}
-              name="surname"
-              className={classes.input}
-              value={this.state.surname}
-              onChange={this.onChangeHandler}
-              margin="normal"
-              disabled
-            />
-            <TextField
-              label={<FormattedMessage id="player.patronymicLabel" />}
-              name="patronymic"
-              className={classes.input}
-              value={this.state.patronymic}
-              onChange={this.onChangeHandler}
-              margin="normal"
-              disabled
-            />
-            <FormControl className={classes.input}>
-              <InputLabel htmlFor="position_id">
-                <FormattedMessage id="player.positionLabel" />
-              </InputLabel>
-              <Select
-                className={classes.select}
-                value={this.state.position_id}
-                onChange={this.onChangeHandler}
-                inputProps={{
-                  name: "position_id",
-                  id: "position_id"
-                }}
-                disabled
-              >
-                <MenuItem value={this.state.position_id} disabled>
-                  {this.state.position}
-                </MenuItem>
-                {positionsList}
-              </Select>
-            </FormControl>
-            <FormControl className={classes.input}>
-              <InputLabel htmlFor="number">Номер игрока</InputLabel>
-              <Select
-                className={classes.select}
-                value={this.state.number}
-                onChange={this.onChangeHandler}
-                inputProps={{
-                  name: "number",
-                  id: "number"
-                }}
-              >
-                <MenuItem value={this.state.number} disabled>
-                  {this.state.number}
-                </MenuItem>
-                {numbersList}
-              </Select>
-            </FormControl>
-            <FormControl className={classes.input}>
-              <InputLabel htmlFor="leg">
-                {<FormattedMessage id="player.legLabel" />}
-              </InputLabel>
-              <Select
-                className={classes.select}
-                value={this.state.leg}
-                onChange={this.onChangeHandler}
-                inputProps={{
-                  name: "leg",
-                  id: "leg"
-                }}
-              >
-                <MenuItem value={this.state.leg} disabled>
-                  {this.state.leg === "left"
-                    ? "Левая"
-                      ? this.state.leg === "right"
-                      : "Правая"
-                    : "Обе"}
-                </MenuItem>
-                <MenuItem value="left">
-                  <FormattedMessage id="player.leftLeg" />
-                </MenuItem>
-                <MenuItem value="right">
-                  <FormattedMessage id="player.rightLeg" />
-                </MenuItem>
-                <MenuItem value="both">
-                  <FormattedMessage id="player.bothtLeg" />
-                </MenuItem>
-              </Select>
-            </FormControl>
-            <TextField
-              id="birthday"
-              label={<FormattedMessage id="player.birthdayLabel" />}
-              type="date"
-              name="birthday"
-              className={classes.input}
-              value={this.state.birthday}
-              onChange={this.onChangeHandler}
-              InputLabelProps={{
-                shrink: true
-              }}
-              disabled
-            />
-            <TextField
-              label={<FormattedMessage id="player.statureLabel" />}
-              type="number"
-              name="stature"
-              className={classes.input}
-              value={this.state.stature}
-              onChange={this.onChangeHandler}
-              margin="normal"
-            />
-            <TextField
-              label={<FormattedMessage id="player.weightLabel" />}
-              type="number"
-              name="weight"
-              className={classes.input}
-              value={this.state.weight}
-              onChange={this.onChangeHandler}
-              margin="normal"
-            />
-            <TextField
-              label={<FormattedMessage id="player.phoneLabel" />}
-              type="tel"
-              name="phone"
-              className={classes.input}
-              value={this.state.phone}
-              onChange={this.onChangeHandler}
-              margin="normal"
-            />
-            <TextField
-              label={<FormattedMessage id="player.fbLabel" />}
-              name="fb"
-              className={classes.input}
-              value={this.state.fb}
-              onChange={this.onChangeHandler}
-              margin="normal"
-            />
-            <TextField
-              label={<FormattedMessage id="player.vkLabel" />}
-              name="vk"
-              className={classes.input}
-              value={this.state.vk}
-              onChange={this.onChangeHandler}
-              margin="normal"
-            />
-            <InputFile
-              type="image"
-              className={classes.input}
-              name="photo"
-              onChange={this.onChangeFileHandler}
-            />
-
-            <Button size="large" type="submit" className={classes.submit}>
-              <FormattedMessage id="player.update" />
-            </Button>
-          </form>
-          <Dialog
-            open={this.state.open}
-            onClose={this.handleClose}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
+      <div>
+        <div>
+          <Button
+            size="large"
+            className={classes.button}
+            onClick={() => this.props.history.goBack()}
           >
-            <DialogContent>
-              {this.state.image && (
-                <ReactCrop
-                  style={{ width: "100%" }}
-                  ref="crop"
-                  src={this.state.image}
-                  crop={this.state.crop}
-                  onChange={this.imageLoaded}
-                  onComplete={this.getCroppedImg}
-                />
-              )}
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={this.handleClose} autoFocus>
-                <FormattedMessage id="player.close" />
-              </Button>
-            </DialogActions>
-          </Dialog>
-        </div>
-        <div className={classes.media}>
-          {this.state.readyImage !== null ? (
-            <img src={this.state.readyImage} className={classes.img} alt="" />
+            Назад
+          </Button>
+          {this.props.errors ? (
+            <Messages
+              open={this.state.open}
+              message={this.props.errors}
+              onClose={this.handleClose}
+              classes={classes.error}
+            />
+          ) : this.props.messages ? (
+            <Messages
+              open={this.state.open}
+              message={this.props.messages}
+              onClose={this.handleClose}
+              classes={classes.success}
+            />
           ) : (
             ""
           )}
+        </div>
+        <div className={classes.root}>
+          <div className={classes.form}>
+            <form className="player__form" onSubmit={this.onSubmitHandler}>
+              <TextField
+                label={<FormattedMessage id="player.nameLabel" />}
+                name="name"
+                className={classes.input}
+                value={this.state.name}
+                onChange={this.onChangeHandler}
+                margin="normal"
+                disabled
+              />
+              <TextField
+                label={<FormattedMessage id="player.surnameLabel" />}
+                name="surname"
+                className={classes.input}
+                value={this.state.surname}
+                onChange={this.onChangeHandler}
+                margin="normal"
+                disabled
+              />
+              <TextField
+                label={<FormattedMessage id="player.patronymicLabel" />}
+                name="patronymic"
+                className={classes.input}
+                value={this.state.patronymic}
+                onChange={this.onChangeHandler}
+                margin="normal"
+                disabled
+              />
+              <FormControl className={classes.input}>
+                <InputLabel htmlFor="position_id">
+                  <FormattedMessage id="player.positionLabel" />
+                </InputLabel>
+                <Select
+                  className={classes.select}
+                  value={this.state.position_id}
+                  onChange={this.onChangeHandler}
+                  inputProps={{
+                    name: "position_id",
+                    id: "position_id"
+                  }}
+                  disabled
+                >
+                  <MenuItem value={this.state.position_id} disabled>
+                    {this.state.position}
+                  </MenuItem>
+                  {positionsList}
+                </Select>
+              </FormControl>
+              <FormControl className={classes.input}>
+                <InputLabel htmlFor="number">Номер игрока</InputLabel>
+                <Select
+                  className={classes.select}
+                  value={this.state.number}
+                  onChange={this.onChangeHandler}
+                  inputProps={{
+                    name: "number",
+                    id: "number"
+                  }}
+                >
+                  <MenuItem value={this.state.number} disabled>
+                    {this.state.number}
+                  </MenuItem>
+                  {numbersList}
+                </Select>
+              </FormControl>
+              <FormControl className={classes.input}>
+                <InputLabel htmlFor="leg">
+                  {<FormattedMessage id="player.legLabel" />}
+                </InputLabel>
+                <Select
+                  className={classes.select}
+                  value={this.state.leg}
+                  onChange={this.onChangeHandler}
+                  inputProps={{
+                    name: "leg",
+                    id: "leg"
+                  }}
+                >
+                  <MenuItem value={this.state.leg} disabled>
+                    {this.state.leg === "left"
+                      ? "Левая"
+                        ? this.state.leg === "right"
+                        : "Правая"
+                      : "Обе"}
+                  </MenuItem>
+                  <MenuItem value="left">
+                    <FormattedMessage id="player.leftLeg" />
+                  </MenuItem>
+                  <MenuItem value="right">
+                    <FormattedMessage id="player.rightLeg" />
+                  </MenuItem>
+                  <MenuItem value="both">
+                    <FormattedMessage id="player.bothtLeg" />
+                  </MenuItem>
+                </Select>
+              </FormControl>
+              <TextField
+                id="birthday"
+                label={<FormattedMessage id="player.birthdayLabel" />}
+                type="date"
+                name="birthday"
+                className={classes.input}
+                value={this.state.birthday}
+                onChange={this.onChangeHandler}
+                InputLabelProps={{
+                  shrink: true
+                }}
+                disabled
+              />
+              <TextField
+                label={<FormattedMessage id="player.statureLabel" />}
+                type="number"
+                name="stature"
+                className={classes.input}
+                value={this.state.stature}
+                onChange={this.onChangeHandler}
+                margin="normal"
+              />
+              <TextField
+                label={<FormattedMessage id="player.weightLabel" />}
+                type="number"
+                name="weight"
+                className={classes.input}
+                value={this.state.weight}
+                onChange={this.onChangeHandler}
+                margin="normal"
+              />
+              <TextField
+                label={<FormattedMessage id="player.phoneLabel" />}
+                type="tel"
+                name="phone"
+                className={classes.input}
+                value={this.state.phone}
+                onChange={this.onChangeHandler}
+                margin="normal"
+              />
+              <TextField
+                label={<FormattedMessage id="player.fbLabel" />}
+                name="fb"
+                className={classes.input}
+                value={this.state.fb}
+                onChange={this.onChangeHandler}
+                margin="normal"
+              />
+              <TextField
+                label={<FormattedMessage id="player.vkLabel" />}
+                name="vk"
+                className={classes.input}
+                value={this.state.vk}
+                onChange={this.onChangeHandler}
+                margin="normal"
+              />
+              <InputFile
+                type="image"
+                className={classes.input}
+                name="photo"
+                onChange={this.onChangeFileHandler}
+              />
+
+              <Button size="large" type="submit" className={classes.submit}>
+                <FormattedMessage id="player.update" />
+              </Button>
+            </form>
+            <Dialog
+              open={this.state.openCrop}
+              onClose={this.handleModalClose}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <DialogContent>
+                {this.state.image && (
+                  <ReactCrop
+                    style={{ width: "100%" }}
+                    ref="crop"
+                    src={this.state.image}
+                    crop={this.state.crop}
+                    onChange={this.imageLoaded}
+                    onComplete={this.getCroppedImg}
+                  />
+                )}
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={this.handleClose} autoFocus>
+                  <FormattedMessage id="player.close" />
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </div>
+          <div className={classes.media}>
+            {this.state.readyImage !== null ? (
+              <img src={this.state.readyImage} className={classes.img} alt="" />
+            ) : (
+              ""
+            )}
+          </div>
         </div>
       </div>
     );
@@ -484,13 +536,14 @@ class EditCommandPlayer extends Component {
 
 const mapStateToProps = state => ({
   players: state.players,
-  errors: state.errors
+  errors: state.errors,
+  messages: state.messages
 });
 
 export default compose(
   withStyles(styles),
   connect(
     mapStateToProps,
-    { getCommandPlayer, getPositions, updatePlayer, separatePlayer }
+    { getCommandPlayer, getPositions, updateCommandPlayer, separatePlayer }
   )
 )(EditCommandPlayer);
