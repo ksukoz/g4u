@@ -110,6 +110,7 @@ class EditCommandPlayer extends Component {
     position: "",
     image: null,
     readyImage: "",
+    number: "",
     error: "",
     crop: {
       x: 30,
@@ -188,7 +189,8 @@ class EditCommandPlayer extends Component {
       weight: this.state.weight,
       phone: this.state.phone,
       FB: this.state.fb,
-      VK: this.state.vk
+      VK: this.state.vk,
+      number: this.state.number
     };
 
     this.props.updatePlayer(updatedPlayer, this.props.history);
@@ -236,7 +238,8 @@ class EditCommandPlayer extends Component {
         fb: player.FB,
         vk: player.VK,
         readyImage: player.photo,
-        position: player.position
+        position: player.position,
+        number: player.number
       });
     }
 
@@ -250,13 +253,23 @@ class EditCommandPlayer extends Component {
 
   render() {
     const { classes } = this.props;
-    const { positions } = this.props.players;
+    const { positions, player } = this.props.players;
 
     let positionsList;
+    let numbersList;
+
     if (positions !== null) {
       positionsList = positions.map(position => (
         <MenuItem key={position.position_id} value={position.position_id}>
           {position.type}
+        </MenuItem>
+      ));
+    }
+
+    if (player && player.numbers) {
+      numbersList = player.numbers.map(number => (
+        <MenuItem key={number} value={number}>
+          {number}
         </MenuItem>
       ));
     }
@@ -315,6 +328,23 @@ class EditCommandPlayer extends Component {
                   {this.state.position}
                 </MenuItem>
                 {positionsList}
+              </Select>
+            </FormControl>
+            <FormControl className={classes.input}>
+              <InputLabel htmlFor="number">Номер игрока</InputLabel>
+              <Select
+                className={classes.select}
+                value={this.state.number}
+                onChange={this.onChangeHandler}
+                inputProps={{
+                  name: "number",
+                  id: "number"
+                }}
+              >
+                <MenuItem value={this.state.number} disabled>
+                  {this.state.number}
+                </MenuItem>
+                {numbersList}
               </Select>
             </FormControl>
             <FormControl className={classes.input}>
@@ -413,14 +443,6 @@ class EditCommandPlayer extends Component {
 
             <Button size="large" type="submit" className={classes.submit}>
               <FormattedMessage id="player.update" />
-            </Button>
-            <Button
-              size="large"
-              type="button"
-              className={classes.button}
-              onClick={this.onClickHandler}
-            >
-              <FormattedMessage id="player.untie" />
             </Button>
           </form>
           <Dialog
