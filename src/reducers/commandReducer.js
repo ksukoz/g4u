@@ -1,7 +1,8 @@
-import { GET_COMMANDS } from "../actions/types";
+import { GET_COMMANDS, GET_COMMAND } from "../actions/types";
 
 const initialState = {
-  commands: null
+  commands: null,
+  command: null
 };
 
 export default function(state = initialState, action) {
@@ -10,6 +11,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         commands: action.payload
+      };
+    case GET_COMMAND:
+      return {
+        ...state,
+        command: action.payload
       };
     default:
       return state;

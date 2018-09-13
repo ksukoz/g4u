@@ -71,6 +71,9 @@ const styles = theme => ({
       [theme.breakpoints.up("md")]: {
         fontSize: "1.5rem"
       }
+    },
+    "& a": {
+      textDecoration: "none"
     }
   }
 });
@@ -99,17 +102,17 @@ class Commands extends Component {
     let allCommandsList;
 
     if (this.props.commands && commands) {
-      myCommandsList = (
-        <Link to={`/command/${command.cId}`} key={command.cId}>
+      myCommandsList = commands.my.map(command => (
+        <Link to={`/commands/${command.cId}`} key={command.cId}>
           <MenuItem className={classes.listItem}>
-            <img src={commands.my.logo} alt="" />
-            {commands.my.title}
+            <img src={command.logo} alt="" />
+            {command.title}
           </MenuItem>
         </Link>
-      );
+      ));
 
       favoriteCommandsList = commands.liked.map(command => (
-        <Link to={`/command/${command.cId}`} key={command.cId}>
+        <Link to={`/commands/${command.cId}`} key={command.cId}>
           <MenuItem className={classes.listItem}>
             <img src={command.logo} alt="" />
             {command.title}
@@ -118,7 +121,7 @@ class Commands extends Component {
       ));
 
       allCommandsList = commands.all.map(command => (
-        <Link to={`/command/${command.cId}`} key={command.cId}>
+        <Link to={`/commands/${command.cId}`} key={command.cId}>
           <MenuItem className={classes.listItem}>
             <img
               src={command.logo}
