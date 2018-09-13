@@ -3,6 +3,8 @@ import compose from "recompose/compose";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 
+import { getCommands } from "../../actions/commandActions";
+
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
 
@@ -23,7 +25,12 @@ const styles = theme => ({
     width: "100%"
   },
   input: {
-    width: "100%"
+    width: "100%",
+    "& label, & input": {
+      [theme.breakpoints.up("md")]: {
+        fontSize: "1.5rem"
+      }
+    }
   },
   button: {
     margin: theme.spacing.unit,
@@ -62,6 +69,10 @@ class Commands extends Component {
       ...this.state,
       [e.target.name]: e.target.value
     });
+  };
+
+  componentDidMount = () => {
+    this.props.getCommands();
   };
 
   render() {
@@ -103,6 +114,6 @@ export default compose(
   withStyles(styles),
   connect(
     null,
-    null
+    { getCommands }
   )
 )(Commands);

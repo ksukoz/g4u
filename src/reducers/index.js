@@ -10,6 +10,7 @@ import commonReducer from "./commonReducer";
 import userReducer from "./userReducer";
 import tournamentReducer from "./tournamentReducer";
 import gameReducer from "./gameReducer";
+import commandReducer from "./commandReducer";
 
 export default combineReducers({
   lang: languageReducer,
@@ -22,5 +23,6 @@ export default combineReducers({
   common: commonReducer,
   users: userReducer,
   tournaments: tournamentReducer,
-  games: gameReducer
+  games: gameReducer,
+  commands: commandReducer
 });
