@@ -66,6 +66,30 @@ export const getPlayer = () => dispatch => {
     });
 };
 
+export const getCommandPlayer = id => dispatch => {
+  axios
+    .get(`http://api.mygame4u.com/command/playerinfo/${id}`, {
+      headers: {
+        Authorization: `G4User ${
+          JSON.parse(localStorage.getItem("user")).token
+        }`
+      }
+    })
+    .then(res => {
+      if (res.data.error) {
+        dispatch({
+          type: GET_ERRORS,
+          payload: res.data.message
+        });
+      } else {
+        dispatch({
+          type: GET_PLAYER,
+          payload: res.data.answer
+        });
+      }
+    });
+};
+
 export const updatePlayer = (stuffData, history) => dispatch => {
   axios
     .post("http://api.mygame4u.com/user/updateplayer", stuffData, {
