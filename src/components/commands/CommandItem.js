@@ -130,7 +130,11 @@ class CommandItem extends Component {
         >
           <Link to={`/player/${player.player_id}`} className={classes.link}>
             <MenuItem className={classes.listItem}>
-              <img src={player.photo} alt="" />
+              <img
+                src={player.photo}
+                alt=""
+                style={{ height: 50, marginRight: 8 }}
+              />
               {player.name} ({player.status})
             </MenuItem>
           </Link>
@@ -142,6 +146,7 @@ class CommandItem extends Component {
         <Button
           size="large"
           className={classes.button}
+          style={{ marginBottom: "1rem" }}
           onClick={() => this.props.history.goBack()}
         >
           Назад
