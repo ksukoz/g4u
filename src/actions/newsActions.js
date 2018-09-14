@@ -27,7 +27,7 @@ export const addNews = newsData => dispatch => {
 
 export const editNews = (newsData, id) => dispatch => {
   axios
-    .post(`http://api.mygame4u.com//news/update?nId=${id}`, newsData, {
+    .post(`http://api.mygame4u.com//news/update/${id}`, newsData, {
       headers: {
         Authorization: `G4User ${
           JSON.parse(localStorage.getItem("user")).token
@@ -75,7 +75,7 @@ export const getNews = () => dispatch => {
 
 export const getNewsItem = id => dispatch => {
   axios
-    .get(`http://api.mygame4u.com/news?id=${id}`, {
+    .get(`http://api.mygame4u.com/news/${id}`, {
       headers: {
         Authorization: `G4User ${
           JSON.parse(localStorage.getItem("user")).token

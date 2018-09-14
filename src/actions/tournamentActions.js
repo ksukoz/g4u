@@ -44,7 +44,7 @@ export const getCities = () => dispatch => {
 
 export const getTournaments = id => dispatch => {
   axios
-    .get(`http://api.mygame4u.com/tournaments/listtours?cId=${id}`, {
+    .get(`http://api.mygame4u.com/tournaments/listtours/${id}`, {
       headers: {
         Authorization: `G4User ${
           JSON.parse(localStorage.getItem("user")).token
@@ -61,7 +61,7 @@ export const getTournaments = id => dispatch => {
 
 export const getSubTournaments = id => dispatch => {
   axios
-    .get(`http://api.mygame4u.com/tournaments/listsubtours?tId=${id}`, {
+    .get(`http://api.mygame4u.com/tournaments/listsubtours/${id}`, {
       headers: {
         Authorization: `G4User ${
           JSON.parse(localStorage.getItem("user")).token
@@ -78,7 +78,7 @@ export const getSubTournaments = id => dispatch => {
 
 export const getSubCommands = id => dispatch => {
   axios
-    .get(`http://api.mygame4u.com/tournaments/listsubcomm?tourId=${id}`, {
+    .get(`http://api.mygame4u.com/tournaments/listsubcomm/${id}`, {
       headers: {
         Authorization: `G4User ${
           JSON.parse(localStorage.getItem("user")).token
@@ -95,7 +95,7 @@ export const getSubCommands = id => dispatch => {
 
 export const getCommandsInfo = id => dispatch => {
   axios
-    .get(`http://api.mygame4u.com/tournaments/comminfo?commId=${id}`, {
+    .get(`http://api.mygame4u.com/tournaments/comminfo/${id}`, {
       headers: {
         Authorization: `G4User ${
           JSON.parse(localStorage.getItem("user")).token

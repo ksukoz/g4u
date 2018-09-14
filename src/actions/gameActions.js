@@ -8,7 +8,7 @@ import {
 
 export const addGameEvent = (id, eventData) => dispatch => {
   axios
-    .post(`http://api.mygame4u.com/game/addevent?gId=${id}`, eventData, {
+    .post(`http://api.mygame4u.com/game/addevent/${id}`, eventData, {
       headers: {
         Authorization: `G4User ${
           JSON.parse(localStorage.getItem("user")).token
@@ -32,7 +32,7 @@ export const addGameEvent = (id, eventData) => dispatch => {
 
 export const getCurrentGame = id => dispatch => {
   axios
-    .get(`http://api.mygame4u.com/game?gId=${id}`, {
+    .get(`http://api.mygame4u.com/game/${id}`, {
       headers: {
         Authorization: `G4User ${
           JSON.parse(localStorage.getItem("user")).token
@@ -49,7 +49,7 @@ export const getCurrentGame = id => dispatch => {
 
 export const getEventSettings = id => dispatch => {
   axios
-    .get(`http://api.mygame4u.com/game/event?gId=${id}`, {
+    .get(`http://api.mygame4u.com/game/event/${id}`, {
       headers: {
         Authorization: `G4User ${
           JSON.parse(localStorage.getItem("user")).token
