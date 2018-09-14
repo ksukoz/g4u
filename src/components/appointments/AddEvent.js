@@ -37,12 +37,23 @@ const styles = theme => ({
     }
   },
   rounds: {
-    width: 500,
     margin: "0 auto",
-    marginBottom: "1rem"
+    marginBottom: "1rem",
+    display: "flex",
+    flexDirection: "column",
+    height: 100,
+    width: "100%",
+    [theme.breakpoints.up("md")]: {
+      width: 500,
+      flexDirection: "row"
+    }
   },
   roundsBtn: {
-    border: "1px solid #43A047"
+    border: "1px solid #43A047",
+    maxWidth: "100%",
+    [theme.breakpoints.up("md")]: {
+      width: "auto"
+    }
   },
   selected: {
     backgroundColor: "#43A047",
@@ -253,6 +264,14 @@ class AddEvent extends Component {
 
     return (
       <div>
+        <Button
+          size="large"
+          className={classes.button}
+          style={{ marginBottom: "1rem" }}
+          onClick={() => this.props.history.goBack()}
+        >
+          Назад
+        </Button>
         {this.state.currentGame !== null ? (
           <BottomNavigation
             value={this.state.command}

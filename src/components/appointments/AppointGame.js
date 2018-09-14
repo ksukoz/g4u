@@ -94,7 +94,12 @@ const styles = theme => ({
     flexDirection: "column",
     alignItems: "center",
     "& img": {
-      height: "25rem"
+      width: 50,
+      height: 50,
+      [theme.breakpoints.up("md")]: {
+        height: "25rem",
+        width: "auto"
+      }
     }
   },
   cross: {
@@ -180,11 +185,19 @@ class AppointGame extends Component {
         {this.state.currentGame ? (
           <div className={classes.game_wrap}>
             <div className={classes.game}>
-              <img src={this.state.currentGame.info.in.logo} alt="" />
+              <img
+                src={this.state.currentGame.info.in.logo}
+                alt=""
+                className={classes.commandImg}
+              />
               <h3>{this.state.currentGame.info.in.title}</h3>
             </div>
             <div className={classes.game}>
-              <img src={this.state.currentGame.info.out.logo} alt="" />
+              <img
+                src={this.state.currentGame.info.out.logo}
+                alt=""
+                className={classes.commandImg}
+              />
               <h3>{this.state.currentGame.info.out.title}</h3>
             </div>
             <List className={classes.list}>
