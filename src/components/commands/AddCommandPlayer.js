@@ -7,11 +7,9 @@ import "react-image-crop/dist/ReactCrop.css";
 
 import Messages from "../common/Messages";
 
-import {
-  getPositions,
-  updateCommandPlayer,
-  separatePlayer
-} from "../../actions/playerActions";
+import { getPositions, updateCommandPlayer } from "../../actions/playerActions";
+import { getFreeNumbers } from "../../actions/commandActions";
+
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -242,6 +240,7 @@ class AddCommandPlayer extends Component {
 
   componentDidMount() {
     this.props.getPositions();
+    this.props.getFreeNumbers();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -255,6 +254,7 @@ class AddCommandPlayer extends Component {
   render() {
     const { classes } = this.props;
     const { positions, player } = this.props.players;
+    const { freeNumbers } = this.props.commands;
 
     let positionsList;
     let numbersList;
@@ -267,8 +267,8 @@ class AddCommandPlayer extends Component {
       ));
     }
 
-    if (player && player.numbers) {
-      numbersList = player.numbers.map(number => (
+    if (freeNumbers) {
+      numbersList = freeNumbers.map(number => (
         <MenuItem key={number} value={number}>
           {number}
         </MenuItem>
@@ -503,6 +503,7 @@ class AddCommandPlayer extends Component {
 
 const mapStateToProps = state => ({
   players: state.players,
+  commands: state.commands,
   errors: state.errors,
   messages: state.messages
 });
@@ -511,6 +512,6 @@ export default compose(
   withStyles(styles),
   connect(
     mapStateToProps,
-    { getPositions, updateCommandPlayer, separatePlayer }
+    { getFreeNumbers, updateCommandPlayer, getPositions }
   )
 )(AddCommandPlayer);

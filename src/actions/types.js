@@ -33,3 +33,4 @@ export const GET_EVENT_SETTINGS = "GET_EVENT_SETTINGS";
 
 export const GET_COMMANDS = "GET_COMMANDS";
 export const GET_COMMAND = "GET_COMMAND";
+export const GET_FREE_NUMBERS = "GET_FREE_NUMBERS";
