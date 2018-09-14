@@ -126,6 +126,7 @@ class AddEvent extends Component {
     currentGame: null,
     minutes: "",
     type: "",
+    assistevent: "0",
     command: "0",
     player: "0",
     assistant: "0",
@@ -181,7 +182,8 @@ class AddEvent extends Component {
       player_id: this.state.player,
       comment: this.state.comment,
       assist_id: this.state.assistant,
-      minute: this.state.minutes
+      minute: this.state.minutes,
+      assist_type_id: this.state.assistevent
     };
 
     this.props.addGameEvent(this.state.gameId, newEvent);
@@ -219,6 +221,7 @@ class AddEvent extends Component {
     let settingsList;
     let playersList;
     let assistantsList;
+    let assistanteventsList;
 
     if (settings !== null) {
       settingsList = settings.type.map(option => (
@@ -230,6 +233,12 @@ class AddEvent extends Component {
       assistantsList = settings.players[this.state.command].map(player => (
         <MenuItem value={player.plid} key={player.plid}>
           #{player.number} {player.name}
+        </MenuItem>
+      ));
+
+      assistanteventsList = settings.assistevent.map(event => (
+        <MenuItem value={event.type_event_id} key={event.type_event_id}>
+          {event.title}
         </MenuItem>
       ));
 
@@ -318,8 +327,22 @@ class AddEvent extends Component {
                 id: "player"
               }}
             >
-              <MenuItem value="0">Неизвестно</MenuItem>
               {playersList}
+            </Select>
+          </FormControl>
+          <FormControl className={classes.input}>
+            <InputLabel htmlFor="assistevent">Тип события</InputLabel>
+            <Select
+              value={this.state.assistevent}
+              className={classes.select}
+              onChange={this.onChangeHandler}
+              inputProps={{
+                name: "assistevent",
+                id: "assistevent"
+              }}
+            >
+              <MenuItem value="0" />
+              {assistanteventsList}
             </Select>
           </FormControl>
           <FormControl className={classes.input}>

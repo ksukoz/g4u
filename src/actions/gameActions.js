@@ -32,7 +32,7 @@ export const addGameEvent = (id, eventData) => dispatch => {
 
 export const getCurrentGame = id => dispatch => {
   axios
-    .get(`http://api.mygame4u.com/game/${id}`, {
+    .get(`http://api.mygame4u.com/game/id/${id}`, {
       headers: {
         Authorization: `G4User ${
           JSON.parse(localStorage.getItem("user")).token
