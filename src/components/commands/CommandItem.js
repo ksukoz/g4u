@@ -139,6 +139,13 @@ class CommandItem extends Component {
     }
     return (
       <div>
+        <Button
+          size="large"
+          className={classes.button}
+          onClick={() => this.props.history.goBack()}
+        >
+          Назад
+        </Button>
         {command ? (
           <div className={classes.flexDiv}>
             <Avatar alt="" src={command.info.logo} className={classes.avatar} />
