@@ -138,7 +138,7 @@ class AddEvent extends Component {
     minutes: "",
     type: "",
     assistevent: "0",
-    command: "0",
+    command: "",
     player: "0",
     assistant: "0",
     comment: ""
@@ -206,8 +206,8 @@ class AddEvent extends Component {
       gameId: this.props.match.url.replace(/\D/g, "")
     });
 
-    this.props.getCurrentGame(this.props.match.url.replace(/\D/g, ""));
-    this.props.getEventSettings(this.props.match.url.replace(/\D/g, ""));
+    this.props.getCurrentGame(this.props.match.params.id);
+    this.props.getEventSettings(this.props.match.params.id);
   }
 
   componentWillReceiveProps = nextProps => {
@@ -234,26 +234,25 @@ class AddEvent extends Component {
     let assistantsList;
     let assistanteventsList;
 
-    if (settings !== null) {
-      settingsList = settings.type.map(option => (
-        <MenuItem value={option.type_event_id} key={option.type_event_id}>
-          {option.title}
-        </MenuItem>
-      ));
+    if (this.state.command) {
+      if (settings !== null) {
+        settingsList = settings.type.map(option => (
+          <MenuItem value={option.type_event_id} key={option.type_event_id}>
+            {option.title}
+          </MenuItem>
+        ));
 
-      assistantsList = settings.players[this.state.command].map(player => (
-        <MenuItem value={player.plid} key={player.plid}>
-          #{player.number} {player.name}
-        </MenuItem>
-      ));
+        assistantsList = settings.players[this.state.command].map(player => (
+          <MenuItem value={player.plid} key={player.plid}>
+            #{player.number} {player.name}
+          </MenuItem>
+        ));
 
-      assistanteventsList = settings.assistevent.map(event => (
-        <MenuItem value={event.type_event_id} key={event.type_event_id}>
-          {event.title}
-        </MenuItem>
-      ));
-
-      if (this.state.command) {
+        assistanteventsList = settings.assistevent.map(event => (
+          <MenuItem value={event.type_event_id} key={event.type_event_id}>
+            {event.title}
+          </MenuItem>
+        ));
         playersList = settings.players[this.state.command].map(player => (
           <MenuItem value={player.plid} key={player.plid}>
             #{player.number} {player.name}
