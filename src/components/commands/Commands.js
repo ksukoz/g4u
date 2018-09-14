@@ -105,7 +105,11 @@ class Commands extends Component {
       myCommandsList = commands.my.map(command => (
         <Link to={`/commands/${command.cId}`} key={command.cId}>
           <MenuItem className={classes.listItem}>
-            <img src={command.logo} alt="" />
+            <img
+              src={command.logo}
+              alt=""
+              style={{ height: 100, marginRight: 8 }}
+            />
             {command.title}
           </MenuItem>
         </Link>
@@ -114,7 +118,11 @@ class Commands extends Component {
       favoriteCommandsList = commands.liked.map(command => (
         <Link to={`/commands/${command.cId}`} key={command.cId}>
           <MenuItem className={classes.listItem}>
-            <img src={command.logo} alt="" />
+            <img
+              src={command.logo}
+              alt=""
+              style={{ width: 50, marginRight: 8, maxHeight: 50 }}
+            />
             {command.title}
           </MenuItem>
         </Link>
@@ -126,7 +134,7 @@ class Commands extends Component {
             <img
               src={command.logo}
               alt=""
-              style={{ width: 50, marginRight: 8 }}
+              style={{ width: 50, marginRight: 8, maxHeight: 50 }}
             />
             {command.title}
           </MenuItem>

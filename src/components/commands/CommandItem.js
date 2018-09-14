@@ -164,13 +164,20 @@ class CommandItem extends Component {
               <span style={{ alignSelf: "center", paddingRight: 8 }}>
                 Состав команды
               </span>
-              <Button
-                size="large"
-                className={classes.button}
-                onClick={() => this.props.history.push("/commands/player/add")}
-              >
-                Добавить игрока
-              </Button>
+
+              {command && command.edit ? (
+                <Button
+                  size="large"
+                  className={classes.button}
+                  onClick={() =>
+                    this.props.history.push("/commands/player/add")
+                  }
+                >
+                  Добавить игрока
+                </Button>
+              ) : (
+                ""
+              )}
             </ExpansionPanelSummary>
             {playersList}
           </ExpansionPanel>
