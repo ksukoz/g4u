@@ -24,7 +24,13 @@ import { getSubCommands } from "../../actions/tournamentActions";
 const styles = theme => ({
   root: {
     display: "flex",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    [theme.breakpoints.up("xs")]: {
+      flexDirection: "column"
+    },
+    [theme.breakpoints.up("md")]: {
+      flexDirection: "row"
+    }
   },
   checkbox: {
     color: "#43A047",
@@ -52,12 +58,20 @@ const styles = theme => ({
     background: "#fff",
     border: "1px solid #55a462",
     boxShadow: "none",
+    fontSize: "1.5rem",
+    height: "auto",
     "&:hover,&:active": {
       background: "#55a462"
     },
 
     "&:hover a,&:active": {
       color: "#fff"
+    },
+    [theme.breakpoints.up("xs")]: {
+      width: "100%"
+    },
+    [theme.breakpoints.up("md")]: {
+      width: "23%"
     }
   },
   button_link: {
@@ -77,6 +91,13 @@ const styles = theme => ({
     border: "1px solid rgba(0,0,0,.2)"
   },
   row: {
+    "& td, & th": {
+      padding: "4px 24px 4px 24px"
+    },
+    "& td:first-child, & th:first-child": {
+      padding: "4px 15px",
+      width: "max-content"
+    },
     "& *": {
       [theme.breakpoints.up("md")]: {
         fontSize: "1.5rem"
@@ -91,6 +112,9 @@ const styles = theme => ({
     "& span": {
       alignSelf: "center"
     }
+  },
+  rightCell: {
+    textAlign: "right"
   },
   success: {
     backgroundColor: "#43A047"
@@ -139,6 +163,11 @@ class InfoSubTour extends Component {
             />
             <span>{command.comm.title}</span>
           </TableCell>
+          <TableCell component="th" scope="row" className={classes.rightCell}>
+            <span>
+              {command.pts} ({command.goals})
+            </span>
+          </TableCell>
           {/* <TableCell component="th" scope="row" className={classes.cell}>
             {member.position}
           </TableCell>
@@ -151,12 +180,47 @@ class InfoSubTour extends Component {
 
     return (
       <div>
+        <div className={classes.root}>
+          {/* <Link
+            to={`/event/add/${this.state.gameId}`}
+            className={classes.button_link}
+          > */}
+          <Button className={classes.button} variant="extendedFab">
+            Получить набор графики
+          </Button>
+          {/* </Link> */}
+          {/* <Link
+            to={`/event/add/${this.state.gameId}`}
+            className={classes.button_link}
+          > */}
+          <Button className={classes.button} variant="extendedFab">
+            Трансферное окно
+          </Button>
+          {/* </Link> */}
+          {/* <Link
+            to={`/event/add/${this.state.gameId}`}
+            className={classes.button_link}
+          > */}
+          <Button className={classes.button} variant="extendedFab">
+            Дисквалификация
+          </Button>
+          {/* </Link> */}
+          {/* <Link
+            to={`/event/add/${this.state.gameId}`}
+            className={classes.button_link}
+          > */}
+          <Button className={classes.button} variant="extendedFab">
+            Set Labels
+          </Button>
+          {/* </Link> */}
+        </div>
         {commandsList ? (
           <Table className={classes.table}>
             <TableHead>
               <TableRow className={classes.row}>
                 <TableCell>№</TableCell>
                 <TableCell>Команда</TableCell>
+                <TableCell className={classes.rightCell}>Pts(goals)</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>{commandsList}</TableBody>
