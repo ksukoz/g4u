@@ -133,7 +133,7 @@ const styles = theme => ({
 
 class InfoSubTour extends Component {
   onClickHandler = commId => {
-    this.props.history.push(`/command/${commId}`);
+    this.props.history.push(`/command/${this.props.match.params.id}:${commId}`);
   };
 
   componentDidMount = () => {

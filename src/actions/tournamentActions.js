@@ -95,7 +95,7 @@ export const getSubCommands = id => dispatch => {
 
 export const getCommandsInfo = id => dispatch => {
   axios
-    .get(`http://api.mygame4u.com/tournaments/comminfo/${id}`, {
+    .get(`http://api.mygame4u.com/tournaments/comminfo?id=${id}`, {
       headers: {
         Authorization: `G4User ${
           JSON.parse(localStorage.getItem("user")).token
