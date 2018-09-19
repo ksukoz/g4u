@@ -28,6 +28,17 @@ const styles = theme => ({
       fontSize: "1.5rem"
     }
   },
+  listItemPlayers: {
+    display: "flex",
+    justifyContent: "space-between",
+    border: "1px solid rgba(0,0,0,.2)",
+    "& strong": {
+      padding: "0 2rem"
+    },
+    [theme.breakpoints.up("md")]: {
+      fontSize: "1.5rem"
+    }
+  },
   success: {
     backgroundColor: "#43A047"
   },
@@ -63,13 +74,19 @@ class Command extends Component {
   render() {
     const { classes } = this.props;
     const { commands } = this.props.tournaments;
-    let tournamentsList;
+    let playersList;
     let lastMatches;
 
     if (commands) {
-      tournamentsList = commands.subtours.map(subtour => (
-        <MenuItem className={classes.listItem} key={subtour.tourId}>
-          {subtour.title}
+      playersList = commands.players.map((player, i) => (
+        <MenuItem className={classes.listItemPlayers} key={i}>
+          <span>{player.player.name}</span>
+          <span>
+            И:
+            {player.stat.games} Г:
+            {player.stat.goal} П:
+            {player.stat.assist}
+          </span>
         </MenuItem>
       ));
 
@@ -110,8 +127,8 @@ class Command extends Component {
           <List>{lastMatches}</List>
         </div>
         <div>
-          <h2>Турниры</h2>
-          <List>{tournamentsList}</List>
+          <h2>Игроки</h2>
+          <List>{playersList}</List>
         </div>
       </div>
     );
