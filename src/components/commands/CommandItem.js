@@ -44,7 +44,8 @@ const styles = theme => ({
     backgroundColor: "#ff5e5e"
   },
   flexDiv: {
-    display: "flex"
+    display: "flex",
+    marginBottom: "2rem"
   },
   centered: {
     display: "flex",
@@ -64,7 +65,7 @@ const styles = theme => ({
   },
   expDetails: {
     margin: "0 2rem",
-
+    padding: 0,
     [theme.breakpoints.up("md")]: {
       fontSize: "1.5rem"
     }
