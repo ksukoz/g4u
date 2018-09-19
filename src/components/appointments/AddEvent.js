@@ -130,6 +130,19 @@ const styles = theme => ({
   }
 });
 
+const initialState = {
+  open: false,
+  gameId: "",
+  // currentGame: null,
+  // minutes: "",
+  type: "",
+  assistevent: "0",
+  // command: "",
+  player: "0",
+  assistant: "0",
+  comment: ""
+};
+
 class AddEvent extends Component {
   state = {
     open: false,
@@ -178,7 +191,7 @@ class AddEvent extends Component {
     }
 
     if (this.props.messages) {
-      this.setState({ open: false }, this.props.history.goBack());
+      this.setState(initialState);
     }
 
     this.setState({ open: false });

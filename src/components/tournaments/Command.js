@@ -63,6 +63,17 @@ const styles = theme => ({
   avatar: {
     height: 150,
     width: 150
+  },
+  tablesWrap: {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "space-between"
+  },
+  tablesCol: {
+    width: "100%",
+    [theme.breakpoints.up("md")]: {
+      width: "49%"
+    }
   }
 });
 
@@ -79,13 +90,13 @@ class Command extends Component {
 
     if (commands) {
       playersList = commands.players.map((player, i) => (
-        <MenuItem className={classes.listItemPlayers} key={i}>
-          <span>{player.player.name}</span>
+        <MenuItem className={classes.listItemPlayers} key={player.id}>
+          <span>{player.name}</span>
           <span>
             И:
-            {player.stat.games} Г:
-            {player.stat.goal} П:
-            {player.stat.assist}
+            {player.games} Г:
+            {player.goal} П:
+            {player.assist}
           </span>
         </MenuItem>
       ));
@@ -122,13 +133,15 @@ class Command extends Component {
         ) : (
           ""
         )}
-        <div>
-          <h2>Последние игры</h2>
-          <List>{lastMatches}</List>
-        </div>
-        <div>
-          <h2>Игроки</h2>
-          <List>{playersList}</List>
+        <div className={classes.tablesWrap}>
+          <div className={classes.tablesCol}>
+            <h2>Последние игры</h2>
+            <List>{lastMatches}</List>
+          </div>
+          <div className={classes.tablesCol}>
+            <h2>Игроки</h2>
+            <List>{playersList}</List>
+          </div>
         </div>
       </div>
     );
