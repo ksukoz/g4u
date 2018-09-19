@@ -74,6 +74,22 @@ const styles = theme => ({
     [theme.breakpoints.up("md")]: {
       width: "49%"
     }
+  },
+  tablesColStat: {
+    width: "100%",
+    [theme.breakpoints.up("md")]: {
+      width: "50%"
+    }
+  },
+  colorWrap: {
+    display: "flex"
+  },
+  colorBlock: {
+    width: 15,
+    height: 15,
+    border: "1px solid rgba(0,0,0,.5)",
+    borderRadius: 5,
+    margin: "0 10px"
   }
 });
 
@@ -87,6 +103,7 @@ class Command extends Component {
     const { commands } = this.props.tournaments;
     let playersList;
     let lastMatches;
+    let statsList;
 
     if (commands) {
       playersList = commands.players.map((player, i) => (
@@ -108,6 +125,54 @@ class Command extends Component {
           <span>{game.outTitle}</span>
         </MenuItem>
       ));
+
+      statsList = (
+        <List className={classes.tablesWrap}>
+          <div className={classes.tablesColStat}>
+            <MenuItem className={classes.listItemPlayers}>
+              <span>Позиция</span>
+              <span>{+commands.stat.position + 1}</span>
+            </MenuItem>
+            <MenuItem className={classes.listItemPlayers}>
+              <span>Очки</span>
+              <span>{commands.stat.pts}</span>
+            </MenuItem>
+            <MenuItem className={classes.listItemPlayers}>
+              <span>Игры</span>
+              <span>{commands.stat.cGame}</span>
+            </MenuItem>
+          </div>
+          <div className={classes.tablesColStat}>
+            <MenuItem className={classes.listItemPlayers}>
+              <span>В-Н-П</span>
+              <span>{commands.stat.stat}</span>
+            </MenuItem>
+            <MenuItem className={classes.listItemPlayers}>
+              <span>З-П</span>
+              <span>
+                {commands.stat.scored}-{commands.stat.missed} (
+                {+commands.stat.diff > 0
+                  ? `+${commands.stat.diff}`
+                  : commands.stat.diff}
+                )
+              </span>
+            </MenuItem>
+            <MenuItem className={classes.listItemPlayers}>
+              <span>Форма</span>
+              <span className={classes.colorWrap}>
+                <div
+                  className={classes.colorBlock}
+                  style={{ background: commands.info.colorIn }}
+                />
+                <div
+                  className={classes.colorBlock}
+                  style={{ background: commands.info.colorOut }}
+                />
+              </span>
+            </MenuItem>
+          </div>
+        </List>
+      );
     }
 
     const id = this.props.match.params.id;
@@ -121,18 +186,14 @@ class Command extends Component {
               className={classes.avatar}
             />
             <h1 className={classes.centered}>{commands.info.title}</h1>
-            <div className={classes.centered}>
-              <h2>Всего игроков:</h2>
-              <span>{commands.countPl}</span>
-            </div>
-            <div className={classes.centered}>
-              <h2>Средний возраст:</h2>
-              <span>{commands.average}</span>
-            </div>
           </div>
         ) : (
           ""
         )}
+        <div>
+          <h2>Статистика</h2>
+          {statsList}
+        </div>
         <div className={classes.tablesWrap}>
           <div className={classes.tablesCol}>
             <h2>Последние игры</h2>
