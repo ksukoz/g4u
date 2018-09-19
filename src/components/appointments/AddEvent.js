@@ -132,7 +132,7 @@ const styles = theme => ({
 
 const initialState = {
   open: false,
-  gameId: "",
+  // gameId: "",
   // currentGame: null,
   // minutes: "",
   type: "",
