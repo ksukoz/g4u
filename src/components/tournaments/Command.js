@@ -119,7 +119,19 @@ class Command extends Component {
       ));
 
       lastMatches = commands.lastgame.map(game => (
-        <MenuItem className={classes.listItem} key={game.game_id}>
+        <MenuItem
+          className={classes.listItem}
+          key={game.game_id}
+          style={{
+            background:
+              +game.score.split(":")[0] === +game.score.split(":")[1]
+                ? "rgba(255, 243, 67, .2)"
+                : game.winId === commands.info.cId
+                  ? "rgba(67, 160, 71, .2)"
+                  : "rgba(255, 94, 94, .2)"
+          }}
+        >
+          {/* {console.log(game.score.split(":"))} */}
           <span>{game.inTitle}</span>
           <strong>{game.score}</strong>
           <span>{game.outTitle}</span>
@@ -160,14 +172,24 @@ class Command extends Component {
             <MenuItem className={classes.listItemPlayers}>
               <span>Форма</span>
               <span className={classes.colorWrap}>
-                <div
-                  className={classes.colorBlock}
-                  style={{ background: commands.info.colorIn }}
-                />
-                <div
+                {commands.lastgame.splice(0, 5).map(game => (
+                  <div
+                    className={classes.colorBlock}
+                    style={{
+                      background:
+                        +game.score.split(":")[0] === +game.score.split(":")[1]
+                          ? "rgba(255, 243, 67, 1)"
+                          : game.winId === commands.info.cId
+                            ? "rgba(67, 160, 71, 1)"
+                            : "rgba(255, 94, 94, 1)"
+                    }}
+                  />
+                ))}
+
+                {/* <div
                   className={classes.colorBlock}
                   style={{ background: commands.info.colorOut }}
-                />
+                /> */}
               </span>
             </MenuItem>
           </div>
