@@ -93,6 +93,17 @@ const styles = theme => ({
     [theme.breakpoints.up("md")]: {
       fontSize: "1.5rem"
     }
+  },
+  tablesWrap: {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "space-between"
+  },
+  tablesCol: {
+    width: "100%",
+    [theme.breakpoints.up("md")]: {
+      width: "49%"
+    }
   }
 });
 
@@ -169,7 +180,7 @@ class CommandItem extends Component {
           ""
         )}
         <div>
-          <ExpansionPanel>
+          <ExpansionPanel style={{ marginBottom: "2rem" }}>
             <ExpansionPanelSummary
               expandIcon={<ExpandMoreIcon />}
               className={classes.expSummary}
@@ -195,13 +206,15 @@ class CommandItem extends Component {
             {playersList}
           </ExpansionPanel>
         </div>
-        <div>
-          <h2>Последние игры</h2>
-          <List>{lastMatches}</List>
-        </div>
-        <div>
-          <h2>Турниры</h2>
-          <List>{tournamentsList}</List>
+        <div className={classes.tablesWrap}>
+          <div className={classes.tablesCol}>
+            <h2>Последние игры</h2>
+            <List>{lastMatches}</List>
+          </div>
+          <div className={classes.tablesCol}>
+            <h2>Турниры</h2>
+            <List>{tournamentsList}</List>
+          </div>
         </div>
       </div>
     );
