@@ -13,6 +13,7 @@ import List from "@material-ui/core/List";
 import MenuItem from "@material-ui/core/MenuItem";
 
 import Button from "@material-ui/core/Button";
+import { Paper } from "@material-ui/core";
 
 const styles = theme => ({
   root: {
@@ -39,11 +40,13 @@ const styles = theme => ({
     paddingTop: "1rem"
   },
   button: {
-    display: "block",
+    display: "inline-block",
     marginBottom: "2rem",
     padding: "1rem 5rem",
     background: "#fff",
     border: "1px solid #55a462",
+
+    borderRadius: 40,
     boxShadow: "none",
     "&:hover,&:active": {
       background: "#55a462",
@@ -54,8 +57,8 @@ const styles = theme => ({
     }
   },
   button_link: {
-    display: "block",
-    width: "100%",
+    display: "inline-block",
+    marginLeft: "2rem",
     color: "#000",
     textDecoration: "none",
     transition: ".3s"
@@ -67,7 +70,7 @@ const styles = theme => ({
     marginBottom: "1rem"
   },
   listItem: {
-    border: "1px solid rgba(0,0,0,.2)",
+    borderBottom: "1px solid rgba(0,0,0,.2)",
     height: "auto"
   },
   success: {
@@ -82,7 +85,7 @@ const styles = theme => ({
     flexWrap: "wrap"
   },
   list: {
-    width: "100%",
+    // width: "100%",
     "& *": {
       [theme.breakpoints.up("md")]: {
         fontSize: "1.5rem"
@@ -93,6 +96,7 @@ const styles = theme => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    marginBottom: "2rem",
     "& img": {
       width: 50,
       height: 50,
@@ -104,6 +108,10 @@ const styles = theme => ({
   },
   cross: {
     color: "#ff5e5e"
+  },
+  paper: {
+    width: "100%",
+    padding: "2rem"
   }
 });
 
@@ -152,19 +160,29 @@ class AppointGame extends Component {
     const { classes } = this.props;
     return (
       <div>
-        {+JSON.parse(localStorage.getItem("user")).personal_type === 1 ||
-        +JSON.parse(localStorage.getItem("user")).personal_type === 7 ? (
-          <Link
-            to={`/event/add/${this.state.gameId}`}
-            className={classes.button_link}
+        <div>
+          <Button
+            size="large"
+            className={classes.button}
+            style={{ marginBottom: "1rem" }}
+            onClick={() => this.props.history.goBack()}
           >
-            <Button className={classes.button} variant="extendedFab">
-              Создать событие
-            </Button>
-          </Link>
-        ) : (
-          ""
-        )}
+            Назад
+          </Button>
+          {+JSON.parse(localStorage.getItem("user")).personal_type === 1 ||
+          +JSON.parse(localStorage.getItem("user")).personal_type === 7 ? (
+            <Link
+              to={`/event/add/${this.state.gameId}`}
+              className={classes.button_link}
+            >
+              <Button className={classes.button} variant="extendedFab">
+                Создать событие
+              </Button>
+            </Link>
+          ) : (
+            ""
+          )}
+        </div>
         {this.props.errors ? (
           <Messages
             open={this.state.open}
@@ -200,25 +218,28 @@ class AppointGame extends Component {
               />
               <h3>{this.state.currentGame.info.out.title}</h3>
             </div>
-            <List className={classes.list}>
-              {this.state.currentGame.events.map((event, i) => (
-                <MenuItem className={classes.listItem} key={i}>
-                  <span style={{ marginRight: 8 }}>{event.minute}'</span>
-                  <span>{event.title}</span>
-                  <img
-                    src={event.logo}
-                    alt=""
-                    style={{ height: 50, marginLeft: "auto" }}
-                  />
-                  <Button
-                    className={classes.cross}
-                    onClick={() => this.props.deleteEvent(event.evId)}
-                  >
-                    &#10006;
-                  </Button>
-                </MenuItem>
-              ))}
-            </List>
+            <Paper className={classes.paper}>
+              <h2>События игры</h2>
+              <List className={classes.list}>
+                {this.state.currentGame.events.map((event, i) => (
+                  <MenuItem className={classes.listItem} key={i}>
+                    <span style={{ marginRight: 8 }}>{event.minute}'</span>
+                    <span>{event.title}</span>
+                    <img
+                      src={event.logo}
+                      alt=""
+                      style={{ height: 50, marginLeft: "auto" }}
+                    />
+                    <Button
+                      className={classes.cross}
+                      onClick={() => this.props.deleteEvent(event.evId)}
+                    >
+                      &#10006;
+                    </Button>
+                  </MenuItem>
+                ))}
+              </List>
+            </Paper>
           </div>
         ) : (
           ""

@@ -133,12 +133,8 @@ const styles = theme => ({
 
 const initialState = {
   open: false,
-  // gameId: "",
-  // currentGame: null,
-  // minutes: "",
   type: "",
   assistevent: "0",
-  // command: "",
   player: "0",
   assistant: "0",
   comment: ""
