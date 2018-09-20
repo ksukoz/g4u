@@ -53,16 +53,32 @@ const styles = theme => ({
     maxWidth: "100%",
     [theme.breakpoints.up("md")]: {
       width: "auto"
+    },
+    "& span": {
+      [theme.breakpoints.up("md")]: {
+        width: "auto",
+        fontSize: "1.5rem"
+      }
     }
   },
   selected: {
     backgroundColor: "#43A047",
-    color: "#fff"
+    color: "#fff",
+    // "& span": {
+    [theme.breakpoints.up("md")]: {
+      fontSize: "2rem!important"
+    }
+    // }
   },
   checked: {},
   input: {
     width: "100%",
-    marginBottom: "1rem"
+    marginBottom: "1rem",
+    "& *": {
+      [theme.breakpoints.up("md")]: {
+        fontSize: "1.5rem"
+      }
+    }
   },
   input_wrap: {
     display: "flex",
@@ -71,7 +87,12 @@ const styles = theme => ({
   },
   select: {
     width: "100%",
-    paddingTop: "1rem"
+    paddingTop: "1rem",
+    "& *": {
+      [theme.breakpoints.up("md")]: {
+        fontSize: "1.5rem"
+      }
+    }
   },
   button: {
     display: "block",
@@ -87,26 +108,32 @@ const styles = theme => ({
 
     "&:hover a,&:active": {
       color: "#fff"
+    },
+    [theme.breakpoints.up("md")]: {
+      width: "auto",
+      fontSize: "1.5rem"
     }
-  },
-  button_link: {
-    display: "block",
-    width: "100%",
-    color: "#000",
-    textDecoration: "none",
-    transition: ".3s"
   },
   submit: {
     backgroundColor: "#43A047",
     borderRadius: 40,
     color: "#fff",
-    marginBottom: "1rem"
+    marginBottom: "1rem",
+    [theme.breakpoints.up("md")]: {
+      width: "auto",
+      fontSize: "1.5rem"
+    }
   },
   listItem: {
-    border: "1px solid rgba(0,0,0,.2)"
+    [theme.breakpoints.up("md")]: {
+      fontSize: "1.5rem"
+    }
   },
   success: {
-    backgroundColor: "#43A047"
+    backgroundColor: "#43A047",
+    [theme.breakpoints.up("md")]: {
+      fontSize: "1.5rem"
+    }
   },
   error: {
     backgroundColor: "#ff5e5e"
@@ -247,24 +274,40 @@ class AddEvent extends Component {
     if (this.state.command) {
       if (settings !== null) {
         settingsList = settings.type.map(option => (
-          <MenuItem value={option.type_event_id} key={option.type_event_id}>
+          <MenuItem
+            value={option.type_event_id}
+            key={option.type_event_id}
+            className={classes.listItem}
+          >
             {option.title}
           </MenuItem>
         ));
 
         assistantsList = settings.players[this.state.command].map(player => (
-          <MenuItem value={player.plid} key={player.plid}>
+          <MenuItem
+            value={player.plid}
+            key={player.plid}
+            className={classes.listItem}
+          >
             #{player.number} {player.name}
           </MenuItem>
         ));
 
         assistanteventsList = settings.assistevent.map(event => (
-          <MenuItem value={event.type_event_id} key={event.type_event_id}>
+          <MenuItem
+            value={event.type_event_id}
+            key={event.type_event_id}
+            className={classes.listItem}
+          >
             {event.title}
           </MenuItem>
         ));
         playersList = settings.players[this.state.command].map(player => (
-          <MenuItem value={player.plid} key={player.plid}>
+          <MenuItem
+            value={player.plid}
+            key={player.plid}
+            className={classes.listItem}
+          >
             #{player.number} {player.name}
           </MenuItem>
         ));
