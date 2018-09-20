@@ -19,6 +19,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Button from "@material-ui/core/Button";
 
 import { getCommand } from "../../actions/commandActions";
+import { Paper } from "@material-ui/core";
 
 const styles = theme => ({
   button_link: {
@@ -29,7 +30,7 @@ const styles = theme => ({
     transition: ".3s"
   },
   listItem: {
-    border: "1px solid rgba(0,0,0,.2)",
+    borderBottom: "1px solid rgba(0,0,0,.2)",
     "& strong": {
       padding: "0 2rem"
     },
@@ -45,12 +46,19 @@ const styles = theme => ({
   },
   flexDiv: {
     display: "flex",
-    marginBottom: "2rem"
+    marginBottom: "2rem",
+    [theme.breakpoints.up("xs")]: {
+      flexDirection: "column"
+    },
+    [theme.breakpoints.up("md")]: {
+      flexDirection: "row"
+    }
   },
   centered: {
     display: "flex",
     alignSelf: "center",
     margin: "0 2rem",
+    marginBottom: "2rem",
     "& span": {
       alignSelf: "center",
       paddingLeft: "2rem",
@@ -101,6 +109,9 @@ const styles = theme => ({
   },
   tablesCol: {
     width: "100%",
+    "& ul, & h2": {
+      padding: "0 2rem"
+    },
     [theme.breakpoints.up("md")]: {
       width: "49%"
     }
@@ -180,7 +191,7 @@ class CommandItem extends Component {
           ""
         )}
         <div>
-          <ExpansionPanel style={{ marginBottom: "2rem" }}>
+          <ExpansionPanel style={{ marginBottom: "3rem" }}>
             <ExpansionPanelSummary
               expandIcon={<ExpandMoreIcon />}
               className={classes.expSummary}
@@ -207,14 +218,14 @@ class CommandItem extends Component {
           </ExpansionPanel>
         </div>
         <div className={classes.tablesWrap}>
-          <div className={classes.tablesCol}>
+          <Paper className={classes.tablesCol}>
             <h2>Последние игры</h2>
             <List>{lastMatches}</List>
-          </div>
-          <div className={classes.tablesCol}>
+          </Paper>
+          <Paper className={classes.tablesCol}>
             <h2>Турниры</h2>
             <List>{tournamentsList}</List>
-          </div>
+          </Paper>
         </div>
       </div>
     );

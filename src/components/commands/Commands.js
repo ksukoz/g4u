@@ -13,6 +13,7 @@ import List from "@material-ui/core/List";
 import MenuItem from "@material-ui/core/MenuItem";
 
 import SearchIcon from "@material-ui/icons/Search";
+import { Paper } from "@material-ui/core";
 
 const styles = theme => ({
   root: {
@@ -30,6 +31,7 @@ const styles = theme => ({
   },
   input: {
     width: "100%",
+    marginBottom: "2rem",
     "& label, & input": {
       [theme.breakpoints.up("md")]: {
         fontSize: "1.5rem"
@@ -51,18 +53,11 @@ const styles = theme => ({
     borderRadius: 40,
     color: "#fff"
   },
-  chip: {
-    backgroundColor: "#effcf1",
-    marginLeft: "1rem",
-    "&:focus": {
-      backgroundColor: "#effcf1"
-    }
-  },
   editor: {
     margin: "1rem 0"
   },
   listItem: {
-    border: "1px solid rgba(0,0,0,.2)",
+    borderBottom: "1px solid rgba(0,0,0,.2)",
     height: "auto"
   },
   list: {
@@ -75,6 +70,10 @@ const styles = theme => ({
     "& a": {
       textDecoration: "none"
     }
+  },
+  paper: {
+    padding: "2rem",
+    marginBottom: "2rem"
   }
 });
 
@@ -162,18 +161,18 @@ class Commands extends Component {
             )
           }}
         />
-        <div>
+        <Paper className={classes.paper}>
           <h2>Мои команды</h2>
           <List className={classes.list}>{myCommandsList}</List>
-        </div>
-        <div>
+        </Paper>
+        <Paper className={classes.paper}>
           <h2>Любимые команды</h2>
           <List className={classes.list}>{favoriteCommandsList}</List>
-        </div>
-        <div>
+        </Paper>
+        <Paper className={classes.paper}>
           <h2>Команды</h2>
           <List className={classes.list}>{allCommandsList}</List>
-        </div>
+        </Paper>
       </div>
     );
   }
