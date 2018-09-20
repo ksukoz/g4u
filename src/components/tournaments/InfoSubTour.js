@@ -149,23 +149,50 @@ class InfoSubTour extends Component {
     if (subCommands) {
       commandsList = subCommands.commands.map((command, i) => (
         <TableRow
-          key={command.comm.command_id}
+          key={command.command_id}
           className={classes.row}
-          onClick={this.onClickHandler.bind(this, command.comm.command_id)}
+          onClick={this.onClickHandler.bind(this, command.command_id)}
           hover
           style={{ cursor: "pointer" }}
         >
           <TableCell className={classes.numberCell}>{i + 1}</TableCell>
           <TableCell component="th" scope="row" className={classes.flexCell}>
             <img
-              src={command.comm.logo}
+              src={command.logo}
               alt=""
               style={{ height: 50, marginRight: 8 }}
             />
-            <span>{command.comm.title}</span>
+            <span>{command.title}</span>
           </TableCell>
           <TableCell component="th" scope="row" className={classes.rightCell}>
             <span>
+              {command.status === "up" ? (
+                <i
+                  style={{
+                    color: "rgba(67, 160, 71, 1)",
+                    fontSize: "4rem",
+                    transform: "rotate(-90deg)",
+                    display: "inline-block",
+                    verticalAlign: "middle"
+                  }}
+                >
+                  &#x2023;
+                </i>
+              ) : command.status === "down" ? (
+                <i
+                  style={{
+                    color: "rgba(255, 94, 94, 1)",
+                    fontSize: "4rem",
+                    transform: "rotate(90deg)",
+                    display: "inline-block",
+                    verticalAlign: "sub"
+                  }}
+                >
+                  &#x2023;
+                </i>
+              ) : (
+                ""
+              )}{" "}
               {command.pts} ({command.goals})
             </span>
           </TableCell>
