@@ -90,6 +90,14 @@ const styles = theme => ({
     border: "1px solid rgba(0,0,0,.5)",
     borderRadius: 5,
     margin: "0 10px"
+  },
+  listItemCommands: {
+    marginBottom: 30,
+    borderRadius: 5,
+    fontSize: "1.5rem",
+    "& strong": {
+      padding: "0 10px"
+    }
   }
 });
 
@@ -111,7 +119,7 @@ class Command extends Component {
           <span>{player.name}</span>
           <span>
             И:
-            {player.games} Г:
+            {player.game} Г:
             {player.goal} П:
             {player.assist}
           </span>
@@ -120,15 +128,15 @@ class Command extends Component {
 
       lastMatches = commands.lastgame.map(game => (
         <MenuItem
-          className={classes.listItem}
+          className={classes.listItemCommands}
           key={game.game_id}
           style={{
             background:
               +game.score.split(":")[0] === +game.score.split(":")[1]
-                ? "rgba(255, 243, 67, .2)"
+                ? "rgba(255, 243, 67, .4)"
                 : game.winId === commands.info.cId
-                  ? "rgba(67, 160, 71, .2)"
-                  : "rgba(255, 94, 94, .2)"
+                  ? "rgba(67, 160, 71, .4)"
+                  : "rgba(255, 94, 94, .4)"
           }}
         >
           {/* {console.log(game.score.split(":"))} */}
