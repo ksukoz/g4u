@@ -30,7 +30,8 @@ const styles = theme => ({
   },
   button_link: {
     display: "block",
-    width: "100%",
+    width: "max-content",
+    marginLeft: "auto",
     color: "#000",
     textDecoration: "none",
     transition: ".3s"

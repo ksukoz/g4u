@@ -27,9 +27,34 @@ const styles = theme => ({
     width: "100%"
   },
   input: {
-    width: "100%"
+    width: "100%",
+    "& *": {
+      [theme.breakpoints.up("md")]: {
+        fontSize: "1.5rem"
+      }
+    }
   },
   button: {
+    display: "block",
+    marginBottom: "2rem",
+    padding: "1rem 5rem",
+    background: "#fff",
+    border: "1px solid #55a462",
+    borderRadius: 40,
+    boxShadow: "none",
+    "&:hover,&:active": {
+      background: "#55a462"
+    },
+
+    "&:hover a,&:active": {
+      color: "#fff"
+    },
+    [theme.breakpoints.up("md")]: {
+      width: "auto",
+      fontSize: "1.5rem"
+    }
+  },
+  buttonTag: {
     margin: theme.spacing.unit,
     background: "transparent",
     color: "rgba(0,0,0,.5)",
@@ -42,7 +67,11 @@ const styles = theme => ({
   submit: {
     backgroundColor: "#43A047",
     borderRadius: 40,
-    color: "#fff"
+    color: "#fff",
+    [theme.breakpoints.up("md")]: {
+      width: "auto",
+      fontSize: "1.5rem"
+    }
   },
   chip: {
     backgroundColor: "#effcf1",
@@ -156,115 +185,125 @@ class AddNews extends Component {
     }
 
     return (
-      <div className={classes.root}>
-        <div className={classes.form}>
-          <form onSubmit={this.onSubmit}>
-            <div>
-              <TextField
-                className={classes.input}
-                type="text"
-                name="title"
-                value={this.state.title}
-                onChange={this.onChange}
-                onInput={e => {
-                  e.target.value = e.target.value.slice(0, 60);
-                }}
-                label={<FormattedMessage id="news.titleLabel" />}
-                helperText={<FormattedMessage id="news.helper" />}
-              />
-            </div>
+      <div>
+        <Button
+          size="large"
+          className={classes.button}
+          style={{ marginBottom: "1rem" }}
+          onClick={() => this.props.history.goBack()}
+        >
+          Назад
+        </Button>
+        <div className={classes.root}>
+          <div className={classes.form}>
+            <form onSubmit={this.onSubmit}>
+              <div>
+                <TextField
+                  className={classes.input}
+                  type="text"
+                  name="title"
+                  value={this.state.title}
+                  onChange={this.onChange}
+                  onInput={e => {
+                    e.target.value = e.target.value.slice(0, 60);
+                  }}
+                  label={<FormattedMessage id="news.titleLabel" />}
+                  helperText={<FormattedMessage id="news.helper" />}
+                />
+              </div>
 
-            <div>
-              <CKEditor
-                activeClass={classes.editor}
-                content={this.state.text}
-                name="text"
-                events={{
-                  change: this.onEditorChange
-                }}
-                config={{
-                  toolbar: [
-                    ["Styles", "Format", "Font", "FontSize"],
-                    [
-                      "Bold",
-                      "Italic",
-                      "Underline",
-                      "StrikeThrough",
-                      "-",
-                      "Undo",
-                      "Redo",
-                      "-",
-                      "Cut",
-                      "Copy",
-                      "Paste",
-                      "Find",
-                      "Replace",
-                      "-",
-                      "Outdent",
-                      "Indent",
-                      "-",
-                      "Print"
-                    ],
-                    [
-                      "NumberedList",
-                      "BulletedList",
-                      "-",
-                      "JustifyLeft",
-                      "JustifyCenter",
-                      "JustifyRight",
-                      "JustifyBlock"
-                    ],
-                    [
-                      "Image",
-                      "Table",
-                      "-",
-                      "Flash",
-                      "Smiley",
-                      "TextColor",
-                      "BGColor"
+              <div>
+                <CKEditor
+                  activeClass={classes.editor}
+                  content={this.state.text}
+                  name="text"
+                  events={{
+                    change: this.onEditorChange
+                  }}
+                  config={{
+                    toolbar: [
+                      ["Styles", "Format", "Font", "FontSize"],
+                      [
+                        "Bold",
+                        "Italic",
+                        "Underline",
+                        "StrikeThrough",
+                        "-",
+                        "Undo",
+                        "Redo",
+                        "-",
+                        "Cut",
+                        "Copy",
+                        "Paste",
+                        "Find",
+                        "Replace",
+                        "-",
+                        "Outdent",
+                        "Indent",
+                        "-",
+                        "Print"
+                      ],
+                      [
+                        "NumberedList",
+                        "BulletedList",
+                        "-",
+                        "JustifyLeft",
+                        "JustifyCenter",
+                        "JustifyRight",
+                        "JustifyBlock"
+                      ],
+                      [
+                        "Image",
+                        "Table",
+                        "-",
+                        "Flash",
+                        "Smiley",
+                        "TextColor",
+                        "BGColor"
+                      ]
                     ]
-                  ]
-                }}
+                  }}
+                />
+              </div>
+              <InputFile
+                type="image"
+                name={this.state.photo}
+                onChange={this.onChangeFileHandler}
               />
-            </div>
-            <InputFile
-              type="image"
-              name={this.state.photo}
-              onChange={this.onChangeFileHandler}
-            />
-            <div>
-              <TextField
-                type="text"
-                name="tag"
-                value={this.state.tag}
-                onChange={this.onChange}
-                label={<FormattedMessage id="news.tagsLabel" />}
-              />
-              <Button
-                variant="fab"
-                mini
-                color="secondary"
-                aria-label="Add"
-                className={classes.button}
-                onClick={this.onClickHandler}
-              >
-                <AddIcon />
-              </Button>
-              {tagList}
-            </div>
-            <div>
-              <Button
-                variant="contained"
-                type="submit"
-                className={classes.submit}
-              >
-                <FormattedMessage id="news.submit" />
-              </Button>
-            </div>
-          </form>
-        </div>
-        <div className={classes.media}>
-          <img src={this.state.photo} className={classes.img} alt="" />
+              <div>
+                <TextField
+                  type="text"
+                  name="tag"
+                  value={this.state.tag}
+                  onChange={this.onChange}
+                  label={<FormattedMessage id="news.tagsLabel" />}
+                />
+                <Button
+                  variant="fab"
+                  mini
+                  color="secondary"
+                  aria-label="Add"
+                  className={classes.buttonTag}
+                  onClick={this.onClickHandler}
+                >
+                  <AddIcon />
+                </Button>
+                {tagList}
+              </div>
+              <div>
+                <Button
+                  variant="contained"
+                  type="submit"
+                  className={classes.submit}
+                >
+                  <FormattedMessage id="news.submit" />
+                </Button>
+              </div>
+            </form>
+          </div>
+          <div className={classes.media}>
+            <img src={this.state.photo} className={classes.img} alt="" />
+          </div>
         </div>
       </div>
     );
