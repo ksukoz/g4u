@@ -16,13 +16,24 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 
-const styles = {
+const styles = theme => ({
   root: {
     width: "max-content",
     margin: "0 auto",
     textAlign: "center",
     marginTop: "15vh",
-    padding: "2rem 5rem"
+    borderRadius: 20,
+    padding: "2rem 5rem",
+    "& *:not(h1)": {
+      [theme.breakpoints.up("md")]: {
+        fontSize: "1.5rem"
+      }
+    },
+    "& h1 span": {
+      [theme.breakpoints.up("md")]: {
+        fontSize: "2.5rem"
+      }
+    }
   },
   input: {
     width: 300,
@@ -47,7 +58,7 @@ const styles = {
     color: "#ff5e5e",
     paddingBottom: "2rem"
   }
-};
+});
 
 class Register extends Component {
   state = {
@@ -80,7 +91,7 @@ class Register extends Component {
 
   onChangeHandler = e => {
     this.setState({
-      [e.target.name]: e.target.value.replace(/[а-я]+/ig, "")
+      [e.target.name]: e.target.value.replace(/[а-я]+/gi, "")
     });
   };
 
