@@ -6,6 +6,7 @@ import { FormattedMessage } from "react-intl";
 import { withStyles } from "@material-ui/core/styles";
 
 import Avatar from "@material-ui/core/Avatar";
+import Paper from "@material-ui/core/Paper";
 import List from "@material-ui/core/List";
 import MenuItem from "@material-ui/core/MenuItem";
 import Button from "@material-ui/core/Button";
@@ -45,7 +46,7 @@ const styles = theme => ({
     transition: ".3s"
   },
   listItem: {
-    border: "1px solid rgba(0,0,0,.2)",
+    borderBottom: "1px solid rgba(0,0,0,.2)",
     "& strong": {
       padding: "0 2rem"
     },
@@ -56,7 +57,7 @@ const styles = theme => ({
   listItemPlayers: {
     display: "flex",
     justifyContent: "space-between",
-    border: "1px solid rgba(0,0,0,.2)",
+    borderBottom: "1px solid rgba(0,0,0,.2)",
     "& strong": {
       padding: "0 2rem"
     },
@@ -129,6 +130,15 @@ const styles = theme => ({
     "& strong": {
       padding: "0 10px"
     }
+  },
+  paper: {
+    marginBottom: "2rem",
+    "& ul": {
+      padding: " 0 2rem"
+    }
+  },
+  matchesList: {
+    padding: "15px 2rem!important"
   }
 });
 
@@ -261,16 +271,20 @@ class Command extends Component {
         )}
         <div>
           <h2>Статистика</h2>
-          {statsList}
+          <Paper className={classes.paper}>{statsList} </Paper>
         </div>
         <div className={classes.tablesWrap}>
           <div className={classes.tablesCol}>
             <h2>Последние игры</h2>
-            <List>{lastMatches}</List>
+            <Paper className={classes.paper}>
+              <List className={classes.matchesList}>{lastMatches}</List>
+            </Paper>
           </div>
           <div className={classes.tablesCol}>
             <h2>Игроки</h2>
-            <List>{playersList}</List>
+            <Paper className={classes.paper}>
+              <List>{playersList}</List>
+            </Paper>
           </div>
         </div>
       </div>
