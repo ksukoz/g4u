@@ -24,6 +24,14 @@ const styles = theme => ({
   expDetails: {
     margin: "0 2rem",
 
+    "& a": {
+      textDecoration: "none",
+      color: "#000"
+    },
+    "& a:hover": {
+      textDecoration: "underline"
+    },
+
     [theme.breakpoints.up("md")]: {
       fontSize: "1.5rem"
     }

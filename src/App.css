@@ -11,7 +11,7 @@
 .main .container {
   flex: 1;
   overflow: auto;
-  padding: 2rem;
+  padding: 2rem 10%;
   padding-top: calc(2rem + 64px);
   flex-grow: 1;
 }

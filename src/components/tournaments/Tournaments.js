@@ -7,6 +7,7 @@ import { withStyles } from "@material-ui/core/styles";
 
 import List from "@material-ui/core/List";
 import MenuItem from "@material-ui/core/MenuItem";
+import Button from "@material-ui/core/Button";
 
 import { getTournaments } from "../../actions/tournamentActions";
 const styles = theme => ({
@@ -16,6 +17,7 @@ const styles = theme => ({
     padding: "1rem 5rem",
     background: "#fff",
     border: "1px solid #55a462",
+    borderRadius: 40,
     boxShadow: "none",
     "&:hover,&:active": {
       background: "#55a462"
@@ -60,6 +62,14 @@ class Tournaments extends Component {
     const { classes } = this.props;
     return (
       <div>
+        <Button
+          size="large"
+          className={classes.button}
+          style={{ marginBottom: "1rem" }}
+          onClick={() => this.props.history.goBack()}
+        >
+          Назад
+        </Button>
         <List>
           {this.props.tournaments.tournaments
             ? this.props.tournaments.tournaments.map(tournament => (

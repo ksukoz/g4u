@@ -57,6 +57,7 @@ const styles = theme => ({
     padding: "1rem 5rem",
     background: "#fff",
     border: "1px solid #55a462",
+    borderRadius: 40,
     boxShadow: "none",
     fontSize: "1.5rem",
     height: "auto",
@@ -180,6 +181,14 @@ class InfoSubTour extends Component {
 
     return (
       <div>
+        <Button
+          size="large"
+          className={classes.button}
+          style={{ marginBottom: "1rem" }}
+          onClick={() => this.props.history.goBack()}
+        >
+          Назад
+        </Button>
         <div className={classes.root}>
           {/* <Link
             to={`/event/add/${this.state.gameId}`}

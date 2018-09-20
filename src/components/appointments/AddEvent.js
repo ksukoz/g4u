@@ -79,6 +79,7 @@ const styles = theme => ({
     padding: "1rem 5rem",
     background: "#fff",
     border: "1px solid #55a462",
+    borderRadius: 40,
     boxShadow: "none",
     "&:hover,&:active": {
       background: "#55a462"

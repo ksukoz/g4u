@@ -13,6 +13,7 @@ import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import Button from "@material-ui/core/Button";
 
 import { getSubTournaments } from "../../actions/tournamentActions";
 const styles = theme => ({
@@ -45,6 +46,7 @@ const styles = theme => ({
     padding: "1rem 5rem",
     background: "#fff",
     border: "1px solid #55a462",
+    borderRadius: 40,
     boxShadow: "none",
     "&:hover,&:active": {
       background: "#55a462"
@@ -78,7 +80,15 @@ const styles = theme => ({
   },
   expDetails: {
     margin: "0 2rem",
-    fontSize: "1.5rem"
+    fontSize: "1.5rem",
+
+    "& a": {
+      textDecoration: "none",
+      color: "#000"
+    },
+    "& a:hover": {
+      textDecoration: "underline"
+    }
   },
   expSummary: {
     fontSize: "1.5rem"
@@ -122,6 +132,14 @@ class SubTournaments extends Component {
 
     return (
       <div>
+        <Button
+          size="large"
+          className={classes.button}
+          style={{ marginBottom: "1rem" }}
+          onClick={() => this.props.history.goBack()}
+        >
+          Назад
+        </Button>
         {subTournaments ? (
           <img src={subTournaments.logo} alt="" style={{ width: "100%" }} />
         ) : (
