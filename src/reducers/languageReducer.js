@@ -13,10 +13,10 @@ const initialState = {
   locale:
     localStorage.user && JSON.parse(localStorage.getItem("user")).lang
       ? JSON.parse(localStorage.getItem("user")).lang
-      : (navigator.languages && navigator.languages[0]) ||
-        navigator.language ||
-        navigator.userLanguage ||
-        "en-US",
+      : (navigator.languages && navigator.languages[0].slice(0, 2)) ||
+        navigator.language.slice(0, 2) ||
+        navigator.userLanguage.slice(0, 2) ||
+        "en",
   messages: ""
 };
 
@@ -31,7 +31,9 @@ export default function(state = initialState, action) {
     default:
       return {
         ...state,
-        messages: flattenMessages(messages[state.locale])
+        messages: messages[state.locale]
+          ? flattenMessages(messages[state.locale])
+          : ""
       };
   }
 }
