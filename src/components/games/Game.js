@@ -14,8 +14,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-
-import { getGameInfo } from '../../actions/gameActions';
+import GameInfo from './GameInfo';
 
 const styles = (theme) => ({
 	button: {
@@ -158,28 +157,20 @@ class Game extends Component {
 		this.setState({ ...this.state, value });
 	};
 
-	componentDidMount = () => {
-		this.props.getGameInfo(this.props.match.params.id);
-	};
-
 	render() {
 		const { classes } = this.props;
 		return (
 			<div>
 				<Tabs value={this.state.value} onChange={this.handleChange} centered>
-					<Tab value={0} label="Item One" />
-					<Tab value={1} label="Item Two" />
+					<Tab value={0} label="Информация" />
+					<Tab value={1} label="Трансляция" />
 				</Tabs>
 
-				{this.state.value === 0 && <div>Item One</div>}
+				{this.state.value === 0 && <GameInfo id={this.props.match.params.id} />}
 				{this.state.value === 1 && <AppontGame id={this.props.match.params.id} />}
 			</div>
 		);
 	}
 }
 
-const mapStateToProps = (state) => ({
-	games: state.games
-});
-
-export default compose(withStyles(styles), connect(mapStateToProps, { getGameInfo }))(Game);
+export default compose(withStyles(styles))(Game);
