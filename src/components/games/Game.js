@@ -5,11 +5,15 @@ import compose from 'recompose/compose';
 import { FormattedMessage } from 'react-intl';
 import { withStyles } from '@material-ui/core/styles';
 
+import AppontGame from '../appointments/AppointGame';
+
 import Avatar from '@material-ui/core/Avatar';
 import Paper from '@material-ui/core/Paper';
 import List from '@material-ui/core/List';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 
 import { getGameInfo } from '../../actions/gameActions';
 
@@ -146,13 +150,31 @@ const styles = (theme) => ({
 });
 
 class Game extends Component {
+	state = {
+		value: 0
+	};
+
+	handleChange = (e, value) => {
+		this.setState({ ...this.state, value });
+	};
+
 	componentDidMount = () => {
 		this.props.getGameInfo(this.props.match.params.id);
 	};
 
 	render() {
 		const { classes } = this.props;
-		return <div>hi</div>;
+		return (
+			<div>
+				<Tabs value={this.state.value} onChange={this.handleChange} centered>
+					<Tab value={0} label="Item One" />
+					<Tab value={1} label="Item Two" />
+				</Tabs>
+
+				{this.state.value === 0 && <div>Item One</div>}
+				{this.state.value === 1 && <AppontGame id={this.props.match.params.id} />}
+			</div>
+		);
 	}
 }
 
