@@ -19,15 +19,23 @@ const styles = (theme) => ({
 	gameWrap: {
 		display: 'flex',
 		alignItems: 'center',
-		justifyContent: 'space-between'
+		justifyContent: 'space-between',
+		flexWrap: 'wrap',
+		[theme.breakpoints.up('md')]: {
+			flexWrap: 'nowrap'
+		}
 	},
 	colWrap: {
 		display: 'flex',
 		justifyContent: 'space-between',
-		width: '50%',
+		width: '100%',
 		alignItems: 'center',
 		fontSize: '1.6rem',
-		boxShadow: '0 0 0 1px rgba(0,0,0,.1)'
+		boxShadow: '0 0 0 1px rgba(0,0,0,.1)',
+		marginBottom: '2rem',
+		[theme.breakpoints.up('md')]: {
+			width: '50%'
+		}
 	},
 	scoreTitle: {
 		fontSize: '4rem'
@@ -36,11 +44,15 @@ const styles = (theme) => ({
 		display: 'flex',
 		justifyContent: 'space-between',
 		flexDirection: 'column',
-		width: '50%',
+		width: '100%',
 		alignItems: 'center',
 		alignSelf: 'baseline',
 		fontSize: '1.6rem',
 		boxShadow: '0 0 0 1px rgba(0,0,0,.1)',
+		marginBottom: '2rem',
+		[theme.breakpoints.up('md')]: {
+			width: '50%'
+		},
 		'& ul, & h3': {
 			width: '100%'
 		},
@@ -48,8 +60,28 @@ const styles = (theme) => ({
 			paddingLeft: '2rem'
 		},
 		'& li': {
+			height: 'auto',
 			fontSize: '1.4rem'
 		}
+	},
+	commandImg: {
+		width: 100,
+		minWidth: 100,
+		minHeight: 100,
+		height: 100,
+		[theme.breakpoints.up('md')]: {
+			width: 200,
+			minWidth: 200,
+			minHeight: 200,
+			height: 200
+		}
+	},
+	card: {
+		display: 'inline-block',
+		width: 35,
+		height: 35,
+		marginLeft: 10,
+		borderRadius: 5
 	}
 });
 
@@ -68,20 +100,12 @@ class GameInfo extends Component {
 					<div>
 						<div className={classes.gameWrap}>
 							<div className={classes.commandWrap}>
-								<img
-									src={gameInfo.info.in.logo}
-									style={{ width: 200, minWidth: 200, minHeight: 200, height: 200 }}
-									alt=""
-								/>
+								<img className={classes.commandImg} src={gameInfo.info.in.logo} alt="" />
 								<h2>{gameInfo.info.in.title}</h2>
 							</div>
 							<h2 className={classes.scoreTitle}>{gameInfo.score}</h2>
 							<div className={classes.commandWrap}>
-								<img
-									src={gameInfo.info.out.logo}
-									style={{ width: 200, minWidth: 200, minHeight: 200, height: 200 }}
-									alt=""
-								/>
+								<img className={classes.commandImg} src={gameInfo.info.out.logo} alt="" />
 								<h2>{gameInfo.info.out.title}</h2>
 							</div>
 						</div>
@@ -109,11 +133,43 @@ class GameInfo extends Component {
 									{gameInfo.event_in.map((event) => (
 										<MenuItem key={event.plId} className={classes.gameWrap}>
 											<h4>{event.name}</h4>
-											<span>{`${event.yellow ? `Ж:${event.yellow}` : ''} ${event.red
-												? `К:${event.red}`
-												: ''} ${event.goal ? `Г:${event.goal}` : ''} ${event.assist
-												? `П:${event.assist}`
-												: ''}`}</span>
+											<span>
+												{event.yellow ? (
+													<span
+														className={classes.card}
+														style={{ background: 'rgba(255, 243, 67, 1)' }}
+													/>
+												) : (
+													''
+												)}{' '}
+												{event.red ? (
+													<span
+														className={classes.card}
+														style={{ background: 'rgba(255, 94, 94, 1)' }}
+													/>
+												) : (
+													''
+												)}{' '}
+												{event.goal ? (
+													<span
+														className={classes.card}
+														style={{
+															verticalAlign: 'bottom'
+														}}
+													>
+														Г:{event.goal}
+													</span>
+												) : (
+													''
+												)}{' '}
+												{event.assist ? (
+													<span className={classes.card} style={{ verticalAlign: 'bottom' }}>
+														П:{event.assist}
+													</span>
+												) : (
+													''
+												)}
+											</span>
 										</MenuItem>
 									))}
 								</List>

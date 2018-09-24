@@ -161,7 +161,7 @@ class Game extends Component {
 		const { classes } = this.props;
 		return (
 			<div>
-				<Tabs value={this.state.value} onChange={this.handleChange} centered>
+				<Tabs style={{ marginBottom: '2rem' }} value={this.state.value} onChange={this.handleChange} centered>
 					<Tab value={0} label="Информация" />
 					<Tab value={1} label="Трансляция" />
 				</Tabs>
