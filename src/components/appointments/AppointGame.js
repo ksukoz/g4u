@@ -253,7 +253,7 @@ class AppointGame extends Component {
 							</div>
 							<div className={classes.listCol}>
 								<img
-									src={this.state.currentGame.info.in.logo}
+									src={this.state.currentGame.info.out.logo}
 									alt=""
 									style={{ width: 60, height: 60, marginLeft: '2rem' }}
 								/>
