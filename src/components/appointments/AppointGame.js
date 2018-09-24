@@ -239,7 +239,7 @@ class AppointGame extends Component {
 											for (let key in item) {
 												itemBlock = (
 													<MenuItem className={classes.listStatsItem} key={i}>
-														<span>{key}'</span>
+														<span>{key}</span>
 														<span>{item[key]}</span>
 													</MenuItem>
 												);
@@ -265,7 +265,7 @@ class AppointGame extends Component {
 											for (let key in item) {
 												itemBlock = (
 													<MenuItem className={classes.listStatsItem} key={i}>
-														<span>{key}'</span>
+														<span>{key}</span>
 														<span>{item[key]}</span>
 													</MenuItem>
 												);

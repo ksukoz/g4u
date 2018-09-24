@@ -180,11 +180,43 @@ class GameInfo extends Component {
 									{gameInfo.event_out.map((event) => (
 										<MenuItem key={event.plId} className={classes.gameWrap}>
 											<h4>{event.name}</h4>
-											<span>{`${event.yellow ? `Ж:${event.yellow}` : ''} ${event.red
-												? `К:${event.red}`
-												: ''} ${event.goal ? `Г:${event.goal}` : ''} ${event.assist
-												? `П:${event.assist}`
-												: ''}`}</span>
+											<span>
+												{event.yellow ? (
+													<span
+														className={classes.card}
+														style={{ background: 'rgba(255, 243, 67, 1)' }}
+													/>
+												) : (
+													''
+												)}{' '}
+												{event.red ? (
+													<span
+														className={classes.card}
+														style={{ background: 'rgba(255, 94, 94, 1)' }}
+													/>
+												) : (
+													''
+												)}{' '}
+												{event.goal ? (
+													<span
+														className={classes.card}
+														style={{
+															verticalAlign: 'bottom'
+														}}
+													>
+														Г:{event.goal}
+													</span>
+												) : (
+													''
+												)}{' '}
+												{event.assist ? (
+													<span className={classes.card} style={{ verticalAlign: 'bottom' }}>
+														П:{event.assist}
+													</span>
+												) : (
+													''
+												)}
+											</span>
 										</MenuItem>
 									))}
 								</List>
