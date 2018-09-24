@@ -114,7 +114,7 @@ class GameInfo extends Component {
 							<List className={classes.gameWrap}>
 								<MenuItem className={classes.colWrap}>
 									<h6>Стадион:</h6>
-									<span>{gameInfo.stadium.title}</span>
+									<span>{gameInfo.stadium ? gameInfo.stadium.title : ''}</span>
 								</MenuItem>
 								<MenuItem className={classes.colWrap}>
 									<h6>Дата и время:</h6>

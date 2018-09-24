@@ -112,6 +112,19 @@ const styles = (theme) => ({
 	paper: {
 		width: '100%',
 		padding: '2rem'
+	},
+	listCol: {
+		width: '50%'
+	},
+	paperColsWrap: {
+		display: 'flex',
+		width: '100%'
+	},
+	listStatsItem: {
+		display: 'flex',
+		justifyContent: 'space-between',
+		fontSize: '1.4rem',
+		border: '1px solid rgba(0,0,0,.2)'
 	}
 });
 
@@ -211,13 +224,70 @@ class AppointGame extends Component {
 							<img src={this.state.currentGame.info.out.logo} alt="" className={classes.commandImg} />
 							<h3>{this.state.currentGame.info.out.title}</h3>
 						</div>
+						<Paper className={classes.paperColsWrap}>
+							<div className={classes.listCol}>
+								<img
+									src={this.state.currentGame.info.in.logo}
+									alt=""
+									style={{ width: 60, height: 60, marginLeft: '2rem' }}
+								/>
+								<List>
+									{this.state.currentGame.statistic ? (
+										this.state.currentGame.statistic.in.map((item, i) => {
+											let itemBlock;
+
+											for (let key in item) {
+												itemBlock = (
+													<MenuItem className={classes.listStatsItem} key={i}>
+														<span>{key}'</span>
+														<span>{item[key]}</span>
+													</MenuItem>
+												);
+											}
+											return itemBlock;
+										})
+									) : (
+										''
+									)}
+								</List>
+							</div>
+							<div className={classes.listCol}>
+								<img
+									src={this.state.currentGame.info.in.logo}
+									alt=""
+									style={{ width: 60, height: 60, marginLeft: '2rem' }}
+								/>
+								<List>
+									{this.state.currentGame.statistic ? (
+										this.state.currentGame.statistic.out.map((item, i) => {
+											let itemBlock;
+
+											for (let key in item) {
+												itemBlock = (
+													<MenuItem className={classes.listStatsItem} key={i}>
+														<span>{key}'</span>
+														<span>{item[key]}</span>
+													</MenuItem>
+												);
+											}
+											return itemBlock;
+										})
+									) : (
+										''
+									)}
+								</List>
+							</div>
+						</Paper>
 						<Paper className={classes.paper}>
 							<h2>События игры</h2>
 							<List className={classes.list}>
 								{this.state.currentGame.events.map((event, i) => (
 									<MenuItem className={classes.listItem} key={i}>
 										<span style={{ marginRight: 8 }}>{event.minute}'</span>
-										<span>{event.title}</span>
+										<div>
+											<h3>{event.title}</h3>
+											<p>{event.comment}</p>
+										</div>
 										<img src={event.logo} alt="" style={{ height: 50, marginLeft: 'auto' }} />
 										<Button
 											className={classes.cross}
