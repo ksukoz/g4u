@@ -9,6 +9,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Button from '@material-ui/core/Button';
 import CommandsList from './CommandsList';
+import MatchesList from './MatchesList';
 
 const styles = (theme) => ({
 	root: {
@@ -134,6 +135,10 @@ class InfoSubTour extends Component {
 		this.props.history.push(`/command/${this.props.match.params.id}:${commId}`);
 	};
 
+	// componentDidMount = () => {
+	// 	this.props.getSubtourGames(this.props.match.params.id);
+	// };
+
 	render() {
 		const { classes } = this.props;
 
@@ -156,8 +161,8 @@ class InfoSubTour extends Component {
 				{this.state.value === 0 && (
 					<CommandsList id={this.props.match.params.id} onClickHandler={this.onClickHandler} />
 				)}
-				{/* {this.state.value === 1 && <AppontGame id={this.props.match.params.id} />}
-				{this.state.value === 1 && <AppontGame id={this.props.match.params.id} />} */}
+				{this.state.value === 1 && <MatchesList id={this.props.match.params.id} />}
+				{/* {this.state.value === 1 && <AppontGame id={this.props.match.params.id} />} */}
 			</div>
 		);
 	}
