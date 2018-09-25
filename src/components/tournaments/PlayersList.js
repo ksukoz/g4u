@@ -19,7 +19,7 @@ import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Radio from '@material-ui/core/Radio';
 
-import { getSubtourGames } from '../../actions/tournamentActions';
+import { getSubtourPlayers } from '../../actions/tournamentActions';
 
 const styles = (theme) => ({
 	root: {
@@ -134,65 +134,65 @@ const styles = (theme) => ({
 	}
 });
 
-class MatchesList extends Component {
+class PlayersList extends Component {
 	componentDidMount = () => {
-		this.props.getSubtourGames(this.props.id);
+		this.props.getSubtourPlayers(this.props.id);
 	};
 
 	render() {
 		const { classes } = this.props;
-		const { matches } = this.props.tournaments;
-		let matchesList;
+		const { players } = this.props.tournaments;
+		let playersList;
 
-		if (matches) {
-			matchesList = matches.map((match, i) => (
-				<div key={match.date + i}>
-					<h2 style={{ textAlign: 'center', fontSize: '2rem' }}>{match.date}</h2>
-					<Table className={classes.table}>
-						<TableBody>
-							{match.games.map((game) => (
-								<TableRow
-									key={game.game_id}
-									className={classes.row}
-									onClick={this.props.onGameClickHandler.bind(this, game.game_id)}
-									hover
-									style={{ cursor: 'pointer' }}
-								>
-									<TableCell className={classes.numberCell}>{game.tour} тур</TableCell>
-									<TableCell component="th" scope="row">
-										<div className={classes.flexCell} style={{ justifyContent: 'flex-end' }}>
-											<span>{game.in.title}</span>
-											<img src={game.in.logo} alt="" style={{ height: 50, marginLeft: 8 }} />
-										</div>
-									</TableCell>
-									<TableCell
-										scope="row"
-										style={{
-											textAlign: 'center',
-											width: 70
-										}}
-									>
-										{game.score}
-									</TableCell>
-									<TableCell component="th" scope="row">
-										<div className={classes.flexCell}>
-											<img src={game.out.logo} alt="" style={{ height: 50, marginRight: 8 }} />
-											<span>{game.out.title}</span>
-										</div>
-									</TableCell>
-								</TableRow>
-							))}
-						</TableBody>
-					</Table>
-				</div>
-			));
+		if (players) {
+			// playersList = players.map((match, i) => (
+			// 	<div key={match.date + i}>
+			// 		<h2 style={{ textAlign: 'center', fontSize: '2rem' }}>{match.date}</h2>
+			// 		<Table className={classes.table}>
+			// 			<TableBody>
+			// 				{match.games.map((game) => (
+			// 					<TableRow
+			// 						key={game.game_id}
+			// 						className={classes.row}
+			// 						onClick={this.props.onGameClickHandler.bind(this, game.game_id)}
+			// 						hover
+			// 						style={{ cursor: 'pointer' }}
+			// 					>
+			// 						<TableCell className={classes.numberCell}>{game.tour} тур</TableCell>
+			// 						<TableCell component="th" scope="row">
+			// 							<div className={classes.flexCell} style={{ justifyContent: 'flex-end' }}>
+			// 								<span>{game.in.title}</span>
+			// 								<img src={game.in.logo} alt="" style={{ height: 50, marginLeft: 8 }} />
+			// 							</div>
+			// 						</TableCell>
+			// 						<TableCell
+			// 							scope="row"
+			// 							style={{
+			// 								textAlign: 'center',
+			// 								width: 70
+			// 							}}
+			// 						>
+			// 							{game.score}
+			// 						</TableCell>
+			// 						<TableCell component="th" scope="row">
+			// 							<div className={classes.flexCell}>
+			// 								<img src={game.out.logo} alt="" style={{ height: 50, marginRight: 8 }} />
+			// 								<span>{game.out.title}</span>
+			// 							</div>
+			// 						</TableCell>
+			// 					</TableRow>
+			// 				))}
+			// 			</TableBody>
+			// 		</Table>
+			// 	</div>
+			// ));
 		}
 
 		return (
 			<div>
 				{/* <div className={classes.root}>
 				</div> */}
-				{matchesList}
+				{playersList}
 			</div>
 		);
 	}
@@ -202,4 +202,4 @@ const mapStateToProps = (state) => ({
 	tournaments: state.tournaments
 });
 
-export default compose(withStyles(styles), connect(mapStateToProps, { getSubtourGames }))(MatchesList);
+export default compose(withStyles(styles), connect(mapStateToProps, { getSubtourPlayers }))(PlayersList);

@@ -10,8 +10,7 @@ import Tab from '@material-ui/core/Tab';
 import Button from '@material-ui/core/Button';
 import CommandsList from './CommandsList';
 import MatchesList from './MatchesList';
-
-import { getSubtourPlayers } from '../../actions/tournamentActions';
+import PlayersList from './PlayersList';
 
 const styles = (theme) => ({
 	root: {
@@ -141,9 +140,9 @@ class InfoSubTour extends Component {
 		this.props.history.push(`/game/${gameId}`);
 	};
 
-	componentDidMount = () => {
-		this.props.getSubtourPlayers(this.props.match.params.id);
-	};
+	// componentDidMount = () => {
+	// 	this.props.getSubtourPlayers(this.props.match.params.id);
+	// };
 
 	render() {
 		const { classes } = this.props;
@@ -170,7 +169,7 @@ class InfoSubTour extends Component {
 				{this.state.value === 1 && (
 					<MatchesList id={this.props.match.params.id} onGameClickHandler={this.onGameClickHandler} />
 				)}
-				{/* {this.state.value === 1 && <AppontGame id={this.props.match.params.id} />} */}
+				{this.state.value === 2 && <PlayersList id={this.props.match.params.id} />}
 			</div>
 		);
 	}
@@ -180,4 +179,4 @@ const mapStateToProps = (state) => ({
 	tournaments: state.tournaments
 });
 
-export default compose(withStyles(styles), connect(mapStateToProps, { getSubtourPlayers }))(InfoSubTour);
+export default compose(withStyles(styles), connect(mapStateToProps, null))(InfoSubTour);
