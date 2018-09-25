@@ -125,6 +125,9 @@ const styles = (theme) => ({
 		justifyContent: 'space-between',
 		fontSize: '1.4rem',
 		border: '1px solid rgba(0,0,0,.2)'
+	},
+	container: {
+		padding: '1rem 10%'
 	}
 });
 
@@ -171,7 +174,7 @@ class AppointGame extends Component {
 	render() {
 		const { classes } = this.props;
 		return (
-			<div>
+			<div className={classes.container}>
 				<div>
 					{this.props.id ? (
 						''

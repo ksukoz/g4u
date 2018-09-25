@@ -82,7 +82,10 @@ const styles = theme => ({
   },
   editor: {
     margin: "1rem 0"
-  }
+  },
+  container: {
+		padding: '1rem 10%'
+	}
 });
 
 class AddNews extends Component {
@@ -185,7 +188,7 @@ class AddNews extends Component {
     }
 
     return (
-      <div>
+      <div className={classes.container}>
         <Button
           size="large"
           className={classes.button}

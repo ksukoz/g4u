@@ -74,6 +74,9 @@ const styles = (theme) => ({
 	paper: {
 		padding: '2rem',
 		marginBottom: '2rem'
+	},
+	container: {
+		padding: '1rem 10%'
 	}
 });
 
@@ -130,7 +133,7 @@ class Commands extends Component {
 		}
 
 		return (
-			<div>
+			<div className={classes.container}>
 				<TextField
 					className={classes.input}
 					type="text"

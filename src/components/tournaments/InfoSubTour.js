@@ -120,6 +120,26 @@ const styles = (theme) => ({
 	},
 	expSummary: {
 		fontSize: '1.5rem'
+	},
+	container: {
+		padding: '0 10%'
+	},
+	tabs: {
+		marginBottom: '2rem',
+		backgroundColor: '#43A047',
+		color: '#fff',
+		boxShadow:
+			'0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)',
+
+		'& div + span': {
+			backgroundColor: '#fff'
+		}
+	},
+	tab: {
+		width: '30%',
+		'& span': {
+			fontSize: '1.5rem'
+		}
 	}
 });
 
@@ -149,27 +169,29 @@ class InfoSubTour extends Component {
 
 		return (
 			<div>
-				<Tabs style={{ marginBottom: '2rem' }} value={this.state.value} onChange={this.handleChange} centered>
-					<Tab value={0} label="Информация" />
-					<Tab value={1} label="Матчи" />
-					<Tab value={2} label="Игроки" />
+				<Tabs className={classes.tabs} value={this.state.value} onChange={this.handleChange} centered>
+					<Tab className={classes.tab} value={0} label="Информация" />
+					<Tab className={classes.tab} value={1} label="Матчи" />
+					<Tab className={classes.tab} value={2} label="Игроки" />
 				</Tabs>
-				<Button
-					size="large"
-					className={classes.button}
-					style={{ marginBottom: '1rem' }}
-					onClick={() => this.props.history.goBack()}
-				>
-					Назад
-				</Button>
+				<div className={classes.container}>
+					<Button
+						size="large"
+						className={classes.button}
+						style={{ marginBottom: '1rem' }}
+						onClick={() => this.props.history.goBack()}
+					>
+						Назад
+					</Button>
 
-				{this.state.value === 0 && (
-					<CommandsList id={this.props.match.params.id} onClickHandler={this.onClickHandler} />
-				)}
-				{this.state.value === 1 && (
-					<MatchesList id={this.props.match.params.id} onGameClickHandler={this.onGameClickHandler} />
-				)}
-				{this.state.value === 2 && <PlayersList id={this.props.match.params.id} />}
+					{this.state.value === 0 && (
+						<CommandsList id={this.props.match.params.id} onClickHandler={this.onClickHandler} />
+					)}
+					{this.state.value === 1 && (
+						<MatchesList id={this.props.match.params.id} onGameClickHandler={this.onGameClickHandler} />
+					)}
+					{this.state.value === 2 && <PlayersList id={this.props.match.params.id} />}
+				</div>
 			</div>
 		);
 	}

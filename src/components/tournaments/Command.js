@@ -142,6 +142,9 @@ const styles = (theme) => ({
 	},
 	matchesList: {
 		padding: '15px 2rem!important'
+	},
+	container: {
+		padding: '1rem 10%'
 	}
 });
 
@@ -257,7 +260,7 @@ class Command extends Component {
 
 		const id = this.props.match.params.id;
 		return (
-			<div>
+			<div className={classes.container}>
 				<Button
 					size="large"
 					className={classes.button}

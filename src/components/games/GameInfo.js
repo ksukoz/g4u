@@ -82,6 +82,9 @@ const styles = (theme) => ({
 		height: 35,
 		marginLeft: 10,
 		borderRadius: 5
+	},
+	container: {
+		padding: '1rem 10%'
 	}
 });
 
@@ -95,7 +98,7 @@ class GameInfo extends Component {
 		const { gameInfo } = this.props.games;
 
 		return (
-			<div>
+			<div className={classes.container}>
 				{gameInfo ? (
 					<div>
 						<div className={classes.gameWrap}>

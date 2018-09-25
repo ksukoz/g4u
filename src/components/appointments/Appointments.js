@@ -30,6 +30,9 @@ const styles = (theme) => ({
 	},
 	error: {
 		backgroundColor: '#ff5e5e'
+	},
+	container: {
+		padding: '1rem 10%'
 	}
 });
 
@@ -57,7 +60,7 @@ class Appointments extends Component {
 	render() {
 		const { classes } = this.props;
 		return (
-			<div>
+			<div className={classes.container}>
 				{' '}
 				<List>
 					{this.state.matchesList !== null ? (
