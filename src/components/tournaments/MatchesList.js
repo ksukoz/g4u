@@ -94,12 +94,7 @@ const styles = (theme) => ({
 	row: {
 		'& td, & th': {
 			padding: '4px 24px 4px 24px',
-			width: '50%'
-		},
-		'& td:first-child, & th:first-child': {
-			padding: '4px 15px',
-			width: 70,
-			textAlign: 'center'
+			width: '35%'
 		},
 		'& *': {
 			[theme.breakpoints.up('md')]: {
@@ -169,7 +164,6 @@ class MatchesList extends Component {
 									hover
 									style={{ cursor: 'pointer' }}
 								>
-									<TableCell className={classes.numberCell}>{game.tour} тур</TableCell>
 									<TableCell component="th" scope="row">
 										<div className={classes.flexCell} style={{ justifyContent: 'flex-end' }}>
 											<span>{game.in.title}</span>
@@ -180,7 +174,7 @@ class MatchesList extends Component {
 										scope="row"
 										style={{
 											textAlign: 'center',
-											width: 70
+											width: '20%'
 										}}
 									>
 										{game.score}
