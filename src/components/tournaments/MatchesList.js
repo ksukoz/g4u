@@ -147,7 +147,18 @@ class MatchesList extends Component {
 		if (matches) {
 			matchesList = matches.map((match, i) => (
 				<div key={match.date + i}>
-					<h2 style={{ textAlign: 'center', fontSize: '2rem' }}>{match.date}</h2>
+					<h2
+						style={{
+							textAlign: 'center',
+							fontSize: '2rem',
+							color: 'rgba(0,0,0,0.8)',
+							background: 'rgba(67, 160, 71, 0.1)',
+							padding: match.date ? '2rem 0' : '',
+							borderRadius: 10
+						}}
+					>
+						{match.date}
+					</h2>
 					<Table className={classes.table}>
 						<TableBody>
 							{match.games.map((game) => (

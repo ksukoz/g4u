@@ -94,7 +94,7 @@ const styles = (theme) => ({
 	row: {
 		'& td, & th': {
 			padding: '4px 24px 4px 24px',
-			width: '50%'
+			width: '90%'
 		},
 		'& td:first-child, & th:first-child': {
 			padding: '4px 15px',
@@ -145,47 +145,66 @@ class PlayersList extends Component {
 		let playersList;
 
 		if (players) {
-			// playersList = players.map((match, i) => (
-			// 	<div key={match.date + i}>
-			// 		<h2 style={{ textAlign: 'center', fontSize: '2rem' }}>{match.date}</h2>
-			// 		<Table className={classes.table}>
-			// 			<TableBody>
-			// 				{match.games.map((game) => (
-			// 					<TableRow
-			// 						key={game.game_id}
-			// 						className={classes.row}
-			// 						onClick={this.props.onGameClickHandler.bind(this, game.game_id)}
-			// 						hover
-			// 						style={{ cursor: 'pointer' }}
-			// 					>
-			// 						<TableCell className={classes.numberCell}>{game.tour} тур</TableCell>
-			// 						<TableCell component="th" scope="row">
-			// 							<div className={classes.flexCell} style={{ justifyContent: 'flex-end' }}>
-			// 								<span>{game.in.title}</span>
-			// 								<img src={game.in.logo} alt="" style={{ height: 50, marginLeft: 8 }} />
-			// 							</div>
-			// 						</TableCell>
-			// 						<TableCell
-			// 							scope="row"
-			// 							style={{
-			// 								textAlign: 'center',
-			// 								width: 70
-			// 							}}
-			// 						>
-			// 							{game.score}
-			// 						</TableCell>
-			// 						<TableCell component="th" scope="row">
-			// 							<div className={classes.flexCell}>
-			// 								<img src={game.out.logo} alt="" style={{ height: 50, marginRight: 8 }} />
-			// 								<span>{game.out.title}</span>
-			// 							</div>
-			// 						</TableCell>
-			// 					</TableRow>
-			// 				))}
-			// 			</TableBody>
-			// 		</Table>
-			// 	</div>
-			// ));
+			playersList = players.map((item, i) => (
+				<div key={item.type + i}>
+					<h2
+						style={{
+							textAlign: 'center',
+							fontSize: '2rem',
+							color: 'rgba(0,0,0,0.8)',
+							background: 'rgba(67, 160, 71, 0.1)',
+							padding: item.desc ? '2rem 0' : '',
+							borderRadius: 10
+						}}
+					>
+						{item.desc}
+					</h2>
+					<Table className={classes.table}>
+						<TableBody>
+							{item.players.map((player, i) => (
+								<TableRow
+									key={player.player.name}
+									className={classes.row}
+									// onClick={this.props.onGameClickHandler.bind(this, game.game_id)}
+									hover
+									style={{ cursor: 'pointer' }}
+								>
+									<TableCell className={classes.numberCell}>{i + 1}</TableCell>
+									<TableCell component="th" scope="row">
+										<div className={classes.flexCell}>
+											<img
+												src={player.player.photo}
+												alt=""
+												style={{ height: 50, marginRight: 8 }}
+											/>
+											<span>
+												{player.player.name} - {player.player.type} (№{player.command.number} -{' '}
+												{player.command.title})
+											</span>
+										</div>
+									</TableCell>
+
+									<TableCell
+										scope="row"
+										style={{
+											textAlign: 'center',
+											width: 70
+										}}
+									>
+										{player.goal}
+									</TableCell>
+									{/* <TableCell component="th" scope="row">
+										<div className={classes.flexCell}>
+											<img src={game.out.logo} alt="" style={{ height: 50, marginRight: 8 }} />
+											<span>{game.out.title}</span>
+										</div>
+									</TableCell> */}
+								</TableRow>
+							))}
+						</TableBody>
+					</Table>
+				</div>
+			));
 		}
 
 		return (
