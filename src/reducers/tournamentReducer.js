@@ -5,7 +5,8 @@ import {
 	GET_SUB_TOURNAMENTS,
 	GET_SUB_COMMANDS,
 	GET_COMMANDS_INFO,
-	GET_SUBTOUR_GAMES
+	GET_SUBTOUR_GAMES,
+	GET_SUBTOUR_PLAYERS
 } from '../actions/types';
 
 const initialState = {
@@ -14,7 +15,8 @@ const initialState = {
 	tournaments: null,
 	subTournaments: null,
 	subCommands: null,
-	commands: null
+	commands: null,
+	players: null
 };
 
 export default function(state = initialState, action) {
@@ -53,6 +55,11 @@ export default function(state = initialState, action) {
 			return {
 				...state,
 				matches: action.payload
+			};
+		case GET_SUBTOUR_PLAYERS:
+			return {
+				...state,
+				players: action.payload
 			};
 		default:
 			return state;

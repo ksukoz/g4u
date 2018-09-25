@@ -6,7 +6,8 @@ import {
 	GET_SUB_TOURNAMENTS,
 	GET_SUB_COMMANDS,
 	GET_COMMANDS_INFO,
-	GET_SUBTOUR_GAMES
+	GET_SUBTOUR_GAMES,
+	GET_SUBTOUR_PLAYERS
 } from './types';
 
 export const getAppoints = () => (dispatch) => {
@@ -109,6 +110,21 @@ export const getSubtourGames = (id) => (dispatch) => {
 		.then((res) => {
 			dispatch({
 				type: GET_SUBTOUR_GAMES,
+				payload: res.data.answer
+			});
+		});
+};
+
+export const getSubtourPlayers = (id) => (dispatch) => {
+	axios
+		.get(`http://api.mygame4u.com/tournaments/listplayers/${id}`, {
+			headers: {
+				Authorization: `G4User ${JSON.parse(localStorage.getItem('user')).token}`
+			}
+		})
+		.then((res) => {
+			dispatch({
+				type: GET_SUBTOUR_PLAYERS,
 				payload: res.data.answer
 			});
 		});

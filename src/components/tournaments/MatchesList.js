@@ -93,11 +93,13 @@ const styles = (theme) => ({
 	},
 	row: {
 		'& td, & th': {
-			padding: '4px 24px 4px 24px'
+			padding: '4px 24px 4px 24px',
+			width: '50%'
 		},
 		'& td:first-child, & th:first-child': {
 			padding: '4px 15px',
-			width: 'max-content'
+			width: 70,
+			textAlign: 'center'
 		},
 		'& *': {
 			[theme.breakpoints.up('md')]: {
@@ -145,15 +147,8 @@ class MatchesList extends Component {
 		if (matches) {
 			matchesList = matches.map((match, i) => (
 				<div key={match.date + i}>
-					<h3>{match.date}</h3>
+					<h2 style={{ textAlign: 'center' }}>{match.date}</h2>
 					<Table className={classes.table}>
-						{/* <TableHead>
-							<TableRow className={classes.row}>
-								<TableCell>Тур</TableCell>
-								<TableCell>Команда</TableCell>
-								<TableCell className={classes.rightCell}>Pts(g)</TableCell>
-							</TableRow>
-						</TableHead> */}
 						<TableBody>
 							{match.games.map((game) => (
 								<TableRow
@@ -170,7 +165,13 @@ class MatchesList extends Component {
 											<img src={game.in.logo} alt="" style={{ height: 50, marginLeft: 8 }} />
 										</div>
 									</TableCell>
-									<TableCell scope="row" style={{ textAlign: 'center' }}>
+									<TableCell
+										scope="row"
+										style={{
+											textAlign: 'center',
+											width: 70
+										}}
+									>
 										{game.score}
 									</TableCell>
 									<TableCell component="th" scope="row">
