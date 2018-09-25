@@ -170,7 +170,9 @@ class MatchesList extends Component {
 											<img src={game.in.logo} alt="" style={{ height: 50, marginLeft: 8 }} />
 										</div>
 									</TableCell>
-									<TableCell scope="row">{game.score}</TableCell>
+									<TableCell scope="row" style={{ textAlign: 'center' }}>
+										{game.score}
+									</TableCell>
 									<TableCell component="th" scope="row">
 										<div className={classes.flexCell}>
 											<img src={game.out.logo} alt="" style={{ height: 50, marginRight: 8 }} />
