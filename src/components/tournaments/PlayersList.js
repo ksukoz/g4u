@@ -160,6 +160,24 @@ class PlayersList extends Component {
 						{item.desc}
 					</h2>
 					<Table className={classes.table}>
+						<TableHead>
+							<TableRow className={classes.row}>
+								<TableCell className={classes.numberCell}>№</TableCell>
+								<TableCell component="th" scope="row">
+									Игрок
+								</TableCell>
+
+								<TableCell
+									scope="row"
+									style={{
+										textAlign: 'center',
+										width: 70
+									}}
+								>
+									Голы
+								</TableCell>
+							</TableRow>
+						</TableHead>
 						<TableBody>
 							{item.players.map((player, i) => (
 								<TableRow
