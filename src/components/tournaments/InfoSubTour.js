@@ -5,21 +5,10 @@ import compose from 'recompose/compose';
 import { FormattedMessage } from 'react-intl';
 import { withStyles } from '@material-ui/core/styles';
 
-import List from '@material-ui/core/List';
-import MenuItem from '@material-ui/core/MenuItem';
-
-import Messages from '../common/Messages';
-import TextField from '@material-ui/core/TextField';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 import Button from '@material-ui/core/Button';
-import Radio from '@material-ui/core/Radio';
-
-import { getSubCommands } from '../../actions/tournamentActions';
+import CommandsList from './CommandsList';
 
 const styles = (theme) => ({
 	root: {
@@ -133,77 +122,28 @@ const styles = (theme) => ({
 });
 
 class InfoSubTour extends Component {
+	state = {
+		value: 0
+	};
+
+	handleChange = (e, value) => {
+		this.setState({ ...this.state, value });
+	};
+
 	onClickHandler = (commId) => {
 		this.props.history.push(`/command/${this.props.match.params.id}:${commId}`);
 	};
 
-	componentDidMount = () => {
-		this.props.getSubCommands(this.props.match.params.id);
-	};
-
 	render() {
 		const { classes } = this.props;
-		const { subCommands } = this.props.tournaments;
-		let commandsList;
-
-		if (subCommands) {
-			commandsList = subCommands.commands.map((command, i) => (
-				<TableRow
-					key={command.command_id}
-					className={classes.row}
-					onClick={this.onClickHandler.bind(this, command.command_id)}
-					hover
-					style={{ cursor: 'pointer' }}
-				>
-					<TableCell className={classes.numberCell}>{i + 1}</TableCell>
-					<TableCell component="th" scope="row" className={classes.flexCell}>
-						<img src={command.logo} alt="" style={{ height: 50, marginRight: 8 }} />
-						<span>{command.title}</span>
-					</TableCell>
-					<TableCell component="th" scope="row" className={classes.rightCell}>
-						<span>
-							{command.status === 'up' ? (
-								<i
-									style={{
-										color: 'rgba(67, 160, 71, 1)',
-										fontSize: '4rem',
-										transform: 'rotate(-90deg)',
-										display: 'inline-block',
-										verticalAlign: 'middle'
-									}}
-								>
-									&#x2023;
-								</i>
-							) : command.status === 'down' ? (
-								<i
-									style={{
-										color: 'rgba(255, 94, 94, 1)',
-										fontSize: '4rem',
-										transform: 'rotate(90deg)',
-										display: 'inline-block',
-										verticalAlign: 'sub'
-									}}
-								>
-									&#x2023;
-								</i>
-							) : (
-								''
-							)}{' '}
-							{command.pts} ({command.games})
-						</span>
-					</TableCell>
-					{/* <TableCell component="th" scope="row" className={classes.cell}>
-            {member.position}
-          </TableCell>
-          <TableCell className={classes.cell}>
-            <img src={member.photo} style={{ width: "50px" }} alt="" />
-          </TableCell> */}
-				</TableRow>
-			));
-		}
 
 		return (
 			<div>
+				<Tabs style={{ marginBottom: '2rem' }} value={this.state.value} onChange={this.handleChange} centered>
+					<Tab value={0} label="Информация" />
+					<Tab value={1} label="Матчи" />
+					<Tab value={2} label="Игроки" />
+				</Tabs>
 				<Button
 					size="large"
 					className={classes.button}
@@ -212,54 +152,12 @@ class InfoSubTour extends Component {
 				>
 					Назад
 				</Button>
-				<div className={classes.root}>
-					{/* <Link
-            to={`/event/add/${this.state.gameId}`}
-            className={classes.button_link}
-          > */}
-					<Button className={classes.button} variant="extendedFab">
-						Получить набор графики
-					</Button>
-					{/* </Link> */}
-					{/* <Link
-            to={`/event/add/${this.state.gameId}`}
-            className={classes.button_link}
-          > */}
-					<Button className={classes.button} variant="extendedFab">
-						Трансферное окно
-					</Button>
-					{/* </Link> */}
-					{/* <Link
-            to={`/event/add/${this.state.gameId}`}
-            className={classes.button_link}
-          > */}
-					<Button className={classes.button} variant="extendedFab">
-						Дисквалификация
-					</Button>
-					{/* </Link> */}
-					{/* <Link
-            to={`/event/add/${this.state.gameId}`}
-            className={classes.button_link}
-          > */}
-					<Button className={classes.button} variant="extendedFab">
-						Set Labels
-					</Button>
-					{/* </Link> */}
-				</div>
-				{commandsList ? (
-					<Table className={classes.table}>
-						<TableHead>
-							<TableRow className={classes.row}>
-								<TableCell>№</TableCell>
-								<TableCell>Команда</TableCell>
-								<TableCell className={classes.rightCell}>Pts(g)</TableCell>
-							</TableRow>
-						</TableHead>
-						<TableBody>{commandsList}</TableBody>
-					</Table>
-				) : (
-					''
+
+				{this.state.value === 0 && (
+					<CommandsList id={this.props.match.params.id} onClickHandler={this.onClickHandler} />
 				)}
+				{/* {this.state.value === 1 && <AppontGame id={this.props.match.params.id} />}
+				{this.state.value === 1 && <AppontGame id={this.props.match.params.id} />} */}
 			</div>
 		);
 	}
@@ -269,4 +167,4 @@ const mapStateToProps = (state) => ({
 	tournaments: state.tournaments
 });
 
-export default compose(withStyles(styles), connect(mapStateToProps, { getSubCommands }))(InfoSubTour);
+export default compose(withStyles(styles), connect(mapStateToProps, null))(InfoSubTour);
