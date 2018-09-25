@@ -159,7 +159,7 @@ class MatchesList extends Component {
 								<TableRow
 									key={game.game_id}
 									className={classes.row}
-									// onClick={this.props.onClickHandler.bind(this, command.comId)}
+									onClick={this.props.onGameClickHandler.bind(this, game.game_id)}
 									hover
 									style={{ cursor: 'pointer' }}
 								>

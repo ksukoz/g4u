@@ -135,6 +135,10 @@ class InfoSubTour extends Component {
 		this.props.history.push(`/command/${this.props.match.params.id}:${commId}`);
 	};
 
+	onGameClickHandler = (gameId) => {
+		this.props.history.push(`/game/${gameId}`);
+	};
+
 	// componentDidMount = () => {
 	// 	this.props.getSubtourGames(this.props.match.params.id);
 	// };
@@ -161,7 +165,9 @@ class InfoSubTour extends Component {
 				{this.state.value === 0 && (
 					<CommandsList id={this.props.match.params.id} onClickHandler={this.onClickHandler} />
 				)}
-				{this.state.value === 1 && <MatchesList id={this.props.match.params.id} />}
+				{this.state.value === 1 && (
+					<MatchesList id={this.props.match.params.id} onGameClickHandler={this.onGameClickHandler} />
+				)}
 				{/* {this.state.value === 1 && <AppontGame id={this.props.match.params.id} />} */}
 			</div>
 		);
