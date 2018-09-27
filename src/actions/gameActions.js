@@ -31,6 +31,28 @@ export const addGameEvent = (id, eventData) => (dispatch) => {
 		});
 };
 
+export const addGamesPlayers = (id, array) => (dispatch) => {
+	axios
+		.post(`http://api.mygame4u.com/game/inviteingame/${id}`, array, {
+			headers: {
+				Authorization: `G4User ${JSON.parse(localStorage.getItem('user')).token}`
+			}
+		})
+		.then((res) => {
+			if (res.data.error) {
+				dispatch({
+					type: GET_ERRORS,
+					payload: res.data.message
+				});
+			} else {
+				dispatch({
+					type: GET_MESSAGES,
+					payload: res.data.message
+				});
+			}
+		});
+};
+
 export const getCurrentGame = (id) => (dispatch) => {
 	axios
 		.get(`http://api.mygame4u.com/game/relay/${id}`, {
