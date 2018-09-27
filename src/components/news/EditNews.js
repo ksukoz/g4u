@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { editNews, getNewsItem } from '../../actions/newsActions';
+import { editNews, getNewsItem, deleteNews } from '../../actions/newsActions';
 import CKEditor from 'react-ckeditor-component';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -69,6 +69,8 @@ const styles = (theme) => ({
 	submit: {
 		backgroundColor: '#43A047',
 		borderRadius: 40,
+		marginBottom: '2rem',
+		marginRight: '1rem',
 		color: '#fff',
 		[theme.breakpoints.up('md')]: {
 			fontSize: '1.5rem'
@@ -329,9 +331,16 @@ class EditNews extends Component {
 								</Button>
 								{tagList}
 							</div>
-							<div>
+							<div style={{ display: 'flex' }}>
 								<Button variant="contained" type="submit" className={classes.submit}>
 									<FormattedMessage id="news.submit" />
+								</Button>
+								<Button
+									variant="contained"
+									className={classes.button}
+									onClick={() => this.props.deleteNews(this.props.match.params.id)}
+								>
+									Удалить новость
 								</Button>
 							</div>
 						</form>
@@ -358,4 +367,4 @@ const mapStateToProps = (state) => ({
 	messages: state.messages
 });
 
-export default compose(withStyles(styles), connect(mapStateToProps, { editNews, getNewsItem }))(EditNews);
+export default compose(withStyles(styles), connect(mapStateToProps, { editNews, getNewsItem, deleteNews }))(EditNews);

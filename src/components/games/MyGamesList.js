@@ -222,14 +222,14 @@ class MyGamesList extends Component {
 			gameList = currentGamesList.map((game, i) => (
 				<ExpansionPanel key={game.game_id}>
 					<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} className={classes.expSummary}>
-						<span>
-							{game.inTitle}
+						<span style={{ display: 'flex', alignItems: 'center' }}>
+							<span>{game.inTitle}</span>
 							<img src={game.inLogo} style={{ width: 50, height: 50, margin: '0 1rem' }} alt="" />
 						</span>
 						<strong>{game.score}</strong>
-						<span>
-							<img src={game.inLogo} style={{ width: 50, height: 50, margin: '0 1rem' }} alt="" />
-							{game.outTitle}
+						<span style={{ display: 'flex', alignItems: 'center' }}>
+							<img src={game.outLogo} style={{ width: 50, height: 50, margin: '0 1rem' }} alt="" />
+							<span>{game.outTitle}</span>
 						</span>
 						<div style={{ display: 'flex', marginLeft: 'auto' }}>
 							{game.cap === '1' ? (
@@ -260,9 +260,15 @@ class MyGamesList extends Component {
 			gameList = futureGamesList.map((game, i) => (
 				<ExpansionPanel key={game.game_id}>
 					<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} className={classes.expSummary}>
-						<span>{game.inTitle}</span>
+						<span style={{ display: 'flex', alignItems: 'center' }}>
+							<span>{game.inTitle}</span>
+							<img src={game.inLogo} style={{ width: 50, height: 50, margin: '0 1rem' }} alt="" />
+						</span>
 						<strong>{game.score}</strong>
-						<span>{game.outTitle}</span>
+						<span style={{ display: 'flex', alignItems: 'center' }}>
+							<img src={game.outLogo} style={{ width: 50, height: 50, margin: '0 1rem' }} alt="" />
+							<span>{game.outTitle}</span>
+						</span>
 						<div style={{ display: 'flex', marginLeft: 'auto' }}>
 							{game.cap === '1' ? (
 								<Button onClick={this.handleClickListItem(game.game_id)} className={classes.button}>
