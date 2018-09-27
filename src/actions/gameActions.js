@@ -1,5 +1,13 @@
 import axios from 'axios';
-import { GET_CURRENT_GAME, GET_GAME_INFO, GET_EVENT_SETTINGS, GET_ERRORS, GET_MESSAGES } from '../actions/types';
+import {
+	GET_CURRENT_GAME,
+	GET_CURRENT_GAMES_LIST,
+	GET_FUTURE_GAMES_LIST,
+	GET_GAME_INFO,
+	GET_EVENT_SETTINGS,
+	GET_ERRORS,
+	GET_MESSAGES
+} from '../actions/types';
 
 export const addGameEvent = (id, eventData) => (dispatch) => {
 	axios
@@ -33,6 +41,36 @@ export const getCurrentGame = (id) => (dispatch) => {
 		.then((res) => {
 			dispatch({
 				type: GET_CURRENT_GAME,
+				payload: res.data.answer
+			});
+		});
+};
+
+export const getCurrentGamesList = () => (dispatch) => {
+	axios
+		.get(`http://api.mygame4u.com/game/mycurgames`, {
+			headers: {
+				Authorization: `G4User ${JSON.parse(localStorage.getItem('user')).token}`
+			}
+		})
+		.then((res) => {
+			dispatch({
+				type: GET_CURRENT_GAMES_LIST,
+				payload: res.data.answer
+			});
+		});
+};
+
+export const getFutureGamesList = () => (dispatch) => {
+	axios
+		.get(`http://api.mygame4u.com/game/myfutgames`, {
+			headers: {
+				Authorization: `G4User ${JSON.parse(localStorage.getItem('user')).token}`
+			}
+		})
+		.then((res) => {
+			dispatch({
+				type: GET_FUTURE_GAMES_LIST,
 				payload: res.data.answer
 			});
 		});

@@ -5,7 +5,7 @@ import compose from 'recompose/compose';
 import { FormattedMessage } from 'react-intl';
 import { withStyles } from '@material-ui/core/styles';
 
-import AppontGame from '../appointments/AppointGame';
+import { getCurrentGamesList, getFutureGamesList } from '../../actions/gameActions';
 
 import Avatar from '@material-ui/core/Avatar';
 import Paper from '@material-ui/core/Paper';
@@ -15,6 +15,7 @@ import Button from '@material-ui/core/Button';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import GameInfo from './GameInfo';
+import MyGamesList from './MyGamesList';
 
 const styles = (theme) => ({
 	button: {
@@ -174,6 +175,11 @@ class MyGames extends Component {
 		this.setState({ ...this.state, value });
 	};
 
+	componentDidMount = () => {
+		this.props.getCurrentGamesList();
+		this.props.getFutureGamesList();
+	};
+
 	render() {
 		const { classes } = this.props;
 		return (
@@ -188,11 +194,15 @@ class MyGames extends Component {
 					<Tab className={classes.tab} value={0} label="Прошедшие игры" />
 					<Tab className={classes.tab} value={1} label="Будущие игры" />
 				</Tabs>
-				{/* {this.state.value === 0 && <GameInfo id={this.props.match.params.id} />}
-				{this.state.value === 1 && <AppontGame id={this.props.match.params.id} />} */}
+				{this.state.value === 0 && <MyGamesList type="current" />}
+				{this.state.value === 1 && <MyGamesList type="future" />}
 			</div>
 		);
 	}
 }
 
-export default compose(withStyles(styles))(MyGames);
+const mapStateToProps = (state) => ({});
+
+export default compose(withStyles(styles), connect(mapStateToProps, { getCurrentGamesList, getFutureGamesList }))(
+	MyGames
+);
