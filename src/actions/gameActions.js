@@ -3,6 +3,7 @@ import {
 	GET_CURRENT_GAME,
 	GET_CURRENT_GAMES_LIST,
 	GET_FUTURE_GAMES_LIST,
+	GET_GAME_PLAYER_LIST,
 	GET_GAME_INFO,
 	GET_EVENT_SETTINGS,
 	GET_ERRORS,
@@ -93,6 +94,21 @@ export const getFutureGamesList = () => (dispatch) => {
 		.then((res) => {
 			dispatch({
 				type: GET_FUTURE_GAMES_LIST,
+				payload: res.data.answer
+			});
+		});
+};
+
+export const getGamePlayerList = (id) => (dispatch) => {
+	axios
+		.get(`http://api.mygame4u.com/game/playersingame/${id}`, {
+			headers: {
+				Authorization: `G4User ${JSON.parse(localStorage.getItem('user')).token}`
+			}
+		})
+		.then((res) => {
+			dispatch({
+				type: GET_GAME_PLAYER_LIST,
 				payload: res.data.answer
 			});
 		});

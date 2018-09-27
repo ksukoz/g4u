@@ -9,6 +9,7 @@ import Messages from '../common/Messages';
 
 import Avatar from '@material-ui/core/Avatar';
 import List from '@material-ui/core/List';
+import MenuItem from '@material-ui/core/MenuItem';
 import Checkbox from '@material-ui/core/Checkbox';
 
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
@@ -18,8 +19,12 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Button from '@material-ui/core/Button';
 import { Paper } from '@material-ui/core';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogActions from '@material-ui/core/DialogActions';
+import Dialog from '@material-ui/core/Dialog';
 
-import { getCurrentGamesList, getFutureGamesList, addGamesPlayers } from '../../actions/gameActions';
+import { getCurrentGamesList, getFutureGamesList, addGamesPlayers, getGamePlayerList } from '../../actions/gameActions';
 
 const styles = (theme) => ({
 	button_link: {
@@ -104,7 +109,7 @@ const styles = (theme) => ({
 		color: 'rgba(0,0,0,.8)',
 		textDecoration: 'none',
 		padding: '1rem 2rem!important',
-		marginLeft: 'auto',
+
 		'&:hover, &:active': {
 			backgroundColor: '#43A047',
 			color: '#fff'
@@ -140,25 +145,68 @@ const styles = (theme) => ({
 });
 
 class MyGamesList extends Component {
-	state = {};
+	state = {
+		open: false,
+		openModal: false,
+		players: null,
+		game: ''
+	};
 
 	checkboxArray = [];
 
-	handleChange = (name) => (event, isChecked) => {
-		event.stopPropagation();
-		if (isChecked) {
-			this.checkboxArray.push(name);
-		} else {
-			this.checkboxArray.splice(this.checkboxArray.indexOf(name), 1);
-		}
-		console.log(event, isChecked, name, this.checkboxArray);
+	handleChange = (i) => (event) => {
+		let playersCopy = this.state.players;
+
+		playersCopy[i].status = !playersCopy[i].status;
+
+		this.setState({
+			...this.state,
+			players: playersCopy
+		});
 	};
 
-	onSubmitHandler = (name) => (e) => {
-		e.preventDefault();
-		this.props.addGamesPlayers(name, { listPl: this.checkboxArray });
-		this.checkboxArray = [];
+	// onSubmitHandler = (name) => (e) => {
+	// 	e.preventDefault();
+
+	// };
+
+	handleCancel = () => {
+		this.setState({ openModal: false });
 	};
+
+	handleOk = () => {
+		this.setState({ openModal: false });
+		this.props.addGamesPlayers(this.state.game, { listPl: this.state.players });
+	};
+
+	handleClickListItem = (name) => (e) => {
+		e.stopPropagation();
+		this.props.getGamePlayerList(name);
+		this.setState({ ...this.state, openModal: true, game: name });
+	};
+
+	handleClose = (event, reason) => {
+		if (reason === 'clickaway') {
+			return;
+		}
+
+		if (this.props.messages) {
+			this.setState(
+				{ open: false },
+				this.props.type === 'future' ? this.props.getFutureGamesList() : this.props.getCurrentGamesList()
+			);
+		}
+
+		this.setState({ open: false });
+	};
+
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.errors || nextProps.messages) {
+			this.setState({ ...this.state, open: true });
+		} else if (nextProps.games.playerList) {
+			this.setState({ ...this.state, players: nextProps.games.playerList });
+		}
+	}
 
 	componentDidMount = () => {
 		this.props.type === 'future' ? this.props.getFutureGamesList() : this.props.getCurrentGamesList();
@@ -174,109 +222,161 @@ class MyGamesList extends Component {
 			gameList = currentGamesList.map((game, i) => (
 				<ExpansionPanel key={game.game_id}>
 					<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} className={classes.expSummary}>
-						<span>{game.inTitle}</span>
+						<span>
+							{game.inTitle}
+							<img src={game.inLogo} style={{ width: 50, height: 50, margin: '0 1rem' }} alt="" />
+						</span>
 						<strong>{game.score}</strong>
-						<span>{game.outTitle}</span>
-						<Link to={`/game/${game.game_id}`} className={classes.button}>
-							Подробнее
-						</Link>
+						<span>
+							<img src={game.inLogo} style={{ width: 50, height: 50, margin: '0 1rem' }} alt="" />
+							{game.outTitle}
+						</span>
+						<div style={{ display: 'flex', marginLeft: 'auto' }}>
+							{game.cap === '1' ? (
+								<Button onClick={this.handleClickListItem(game.game_id)} className={classes.button}>
+									Изменить состав
+								</Button>
+							) : (
+								''
+							)}
+							<Link to={`/game/${game.game_id}`} className={classes.button}>
+								Подробнее
+							</Link>
+						</div>
 					</ExpansionPanelSummary>
 
-					<form onSubmit={this.onSubmitHandler(game.game_id)}>
-						{game.players ? (
-							game.players.map((player) => (
-								<ExpansionPanelDetails key={player.plid} className={classes.expDetails}>
-									{player.name}
-									{game.cap === '1' ? (
-										<FormControlLabel
-											control={
-												<Checkbox
-													name="status"
-													// checked={player.status}
-													onChange={this.handleChange(player.plid)}
-													value={player.status}
-													classes={{
-														root: classes.checkbox,
-														checked: classes.checked
-													}}
-												/>
-											}
-										/>
-									) : player.status ? (
-										<span>Заявлен</span>
-									) : (
-										''
-									)}
-								</ExpansionPanelDetails>
-							))
-						) : (
-							''
-						)}
-						{game.cap === '1' ? (
-							<Button type="submit" className={classes.button}>
-								Сохранить
-							</Button>
-						) : (
-							''
-						)}
-					</form>
-				</ExpansionPanel>
-				// <Link to={`/game/${game.game_id}`} className={classes.link} key={game.game_id}>
-				// 	<MenuItem className={classes.listItem} key={game.game_id}>
-
-				// 	</MenuItem>
-				// </Link>
-			));
-		} else if (this.props.type === 'future' && futureGamesList) {
-			gameList = futureGamesList.map((game, i) => (
-				<ExpansionPanel key={new Date() + i}>
-					<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} className={classes.expSummary}>
-						<span>{game.inTitle}</span>
-						<strong>{game.score}</strong>
-						<span>{game.outTitle}</span>
-						<Link to={`/game/${game.game_id}`} className={classes.button} key={game.game_id}>
-							Подробнее
-						</Link>
-					</ExpansionPanelSummary>
 					{game.players ? (
 						game.players.map((player) => (
 							<ExpansionPanelDetails key={player.plid} className={classes.expDetails}>
-								{/* <Link to={`/tournaments/${cityItem.cId}`}>
-									{cityItem.name} ({cityItem.count})
-                                </Link> */}
-								{player.name}
+								{`${player.name} (№${player.number} - ${player.type})`}
 							</ExpansionPanelDetails>
 						))
 					) : (
 						''
 					)}
-					{game.cap === '1' ? <Button className={classes.button}>Сохранить</Button> : ''}
+				</ExpansionPanel>
+			));
+		} else if (this.props.type === 'future' && futureGamesList) {
+			gameList = futureGamesList.map((game, i) => (
+				<ExpansionPanel key={game.game_id}>
+					<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} className={classes.expSummary}>
+						<span>{game.inTitle}</span>
+						<strong>{game.score}</strong>
+						<span>{game.outTitle}</span>
+						<div style={{ display: 'flex', marginLeft: 'auto' }}>
+							{game.cap === '1' ? (
+								<Button onClick={this.handleClickListItem(game.game_id)} className={classes.button}>
+									Изменить состав
+								</Button>
+							) : (
+								''
+							)}
+							<Link to={`/game/${game.game_id}`} className={classes.button}>
+								Подробнее
+							</Link>
+						</div>
+					</ExpansionPanelSummary>
+
+					{game.players ? (
+						game.players.map((player) => (
+							<ExpansionPanelDetails key={player.plid} className={classes.expDetails}>
+								{`${player.name} (№${player.number} - ${player.type})`}
+							</ExpansionPanelDetails>
+						))
+					) : (
+						''
+					)}
 				</ExpansionPanel>
 			));
 		}
 
 		return (
-			<List className={classes.container}>
-				{gameList}
-				{/* {props.gameList.map((game) => (
-              <Link to={`/game/${game.game_id}`} className={classes.link} key={game.game_id}>
-                  <MenuItem className={classes.listItem} key={game.game_id}>
-                      <span>{game.inTitle}</span>
-                      <strong>{game.score}</strong>
-                      <span>{game.outTitle}</span>
-                  </MenuItem>
-              </Link>
-          ))} */}
-			</List>
+			<div>
+				<div>
+					{this.props.errors ? (
+						<Messages
+							open={this.state.open}
+							message={this.props.errors}
+							onClose={this.handleClose}
+							classes={classes.error}
+						/>
+					) : this.props.messages ? (
+						<Messages
+							open={this.state.open}
+							message={this.props.messages}
+							onClose={this.handleClose}
+							classes={classes.success}
+						/>
+					) : (
+						''
+					)}
+				</div>
+				<List className={classes.container}>{gameList}</List>
+				<Dialog
+					disableBackdropClick
+					disableEscapeKeyDown
+					fullWidth
+					maxWidth="lg"
+					aria-labelledby="confirmation-dialog-title"
+					open={this.state.openModal}
+				>
+					<DialogTitle id="confirmation-dialog-title" style={{ textAlign: 'center' }}>
+						<span style={{ fontSize: '2.5rem' }}>Изменить состав</span>
+					</DialogTitle>
+					<DialogContent>
+						{this.state.players ? (
+							<List>
+								{this.state.players.map((player, i) => (
+									<MenuItem
+										key={player.plId}
+										className={classes.listItem}
+										style={{ display: 'flex', justifyContent: 'space-between' }}
+									>
+										{`${player.name} (№${player.number} - ${player.type})`}
+										{
+											<FormControlLabel
+												control={
+													<Checkbox
+														name="status"
+														checked={player.status}
+														onChange={this.handleChange(i)}
+														value={player.status}
+														classes={{
+															root: classes.checkbox,
+															checked: classes.checked
+														}}
+													/>
+												}
+											/>
+										}
+									</MenuItem>
+								))}
+							</List>
+						) : (
+							''
+						)}
+					</DialogContent>
+					<DialogActions>
+						<Button onClick={this.handleCancel} className={classes.button} color="primary">
+							Отменить
+						</Button>
+						<Button onClick={this.handleOk} className={classes.button}>
+							Подтвердить
+						</Button>
+					</DialogActions>
+				</Dialog>
+			</div>
 		);
 	}
 }
 
 const mapStateToProps = (state) => ({
-	games: state.games
+	games: state.games,
+	errors: state.errors,
+	messages: state.messages
 });
 
 export default compose(
 	withStyles(styles),
-	connect(mapStateToProps, { getCurrentGamesList, getFutureGamesList, addGamesPlayers })
+	connect(mapStateToProps, { getCurrentGamesList, getFutureGamesList, addGamesPlayers, getGamePlayerList })
 )(MyGamesList);
