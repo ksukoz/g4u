@@ -285,20 +285,26 @@ class AppointGame extends Component {
 							<h2>События игры</h2>
 							<List className={classes.list}>
 								{this.state.currentGame.events.map((event, i) => (
-									<MenuItem className={classes.listItem} key={i}>
-										<span style={{ marginRight: 8 }}>{event.minute}'</span>
-										<div>
-											<h3>{event.title}</h3>
-											<p>{event.comment}</p>
-										</div>
-										<img src={event.logo} alt="" style={{ height: 50, marginLeft: 'auto' }} />
-										<Button
-											className={classes.cross}
-											onClick={() => this.props.deleteEvent(event.evId)}
-										>
-											&#10006;
-										</Button>
-									</MenuItem>
+									<Link
+										to={`/event/edit/${event.evId}`}
+										key={event.evId}
+										style={{ textDecoration: 'none' }}
+									>
+										<MenuItem className={classes.listItem}>
+											<span style={{ marginRight: 8 }}>{event.minute}'</span>
+											<div>
+												<h3>{event.title}</h3>
+												<p>{event.comment}</p>
+											</div>
+											<img src={event.logo} alt="" style={{ height: 50, marginLeft: 'auto' }} />
+											<Button
+												className={classes.cross}
+												onClick={() => this.props.deleteEvent(event.evId)}
+											>
+												&#10006;
+											</Button>
+										</MenuItem>
+									</Link>
 								))}
 							</List>
 						</Paper>

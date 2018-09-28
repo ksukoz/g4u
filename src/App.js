@@ -38,6 +38,7 @@ import EditCommandPlayer from './components/commands/EditCommandPlayer';
 import AddCommandPlayer from './components/commands/AddCommandPlayer';
 import Game from './components/games/Game';
 import MyGames from './components/games/MyGames';
+import EditEvent from './components/appointments/EditEvent';
 
 if (localStorage.user) {
 	const user = JSON.parse(localStorage.getItem('user'));
@@ -108,6 +109,9 @@ class App extends Component {
 								</Switch>
 								<Switch>
 									<PrivateRoute exact path="/event/add/:id" component={AddEvent} />
+								</Switch>
+								<Switch>
+									<PrivateRoute exact path="/event/edit/:id" component={EditEvent} />
 								</Switch>
 								<Switch>
 									<PrivateRoute exact path="/edit-user" component={EditUser} />
