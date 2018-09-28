@@ -214,7 +214,7 @@ class EditEvent extends Component {
 		}
 
 		if (this.props.messages) {
-			this.setState(initialState);
+			this.setState({ open: false }, this.props.history.goBack());
 		}
 
 		this.setState({ open: false });

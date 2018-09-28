@@ -286,7 +286,7 @@ class AppointGame extends Component {
 							<List className={classes.list}>
 								{this.state.currentGame.events.map((event, i) => (
 									<Link
-										to={`/event/edit/${event.evId}:${this.props.match.params.id}`}
+										to={`/event/edit/${event.evId}:${this.state.gameId}`}
 										key={event.evId}
 										style={{ textDecoration: 'none' }}
 									>
