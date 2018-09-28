@@ -4,7 +4,8 @@ import {
 	GET_FUTURE_GAMES_LIST,
 	GET_GAME_PLAYER_LIST,
 	GET_GAME_INFO,
-	GET_EVENT_SETTINGS
+	GET_EVENT_SETTINGS,
+	GET_EVENT
 } from '../actions/types';
 
 const initialState = {
@@ -13,7 +14,8 @@ const initialState = {
 	futureGamesList: null,
 	playerList: null,
 	gameInfo: null,
-	settings: null
+	settings: null,
+	event: null
 };
 
 export default function(state = initialState, action) {
@@ -42,6 +44,11 @@ export default function(state = initialState, action) {
 			return {
 				...state,
 				settings: action.payload
+			};
+		case GET_EVENT:
+			return {
+				...state,
+				event: action.payload
 			};
 		case GET_GAME_INFO:
 			return {

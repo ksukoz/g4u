@@ -5,7 +5,7 @@ import compose from 'recompose/compose';
 import { FormattedMessage } from 'react-intl';
 import { withStyles } from '@material-ui/core/styles';
 
-import { getCurrentGame, getEventSettings, addGameEvent } from '../../actions/gameActions';
+import { getCurrentGame, getEventSettings, editGameEvent, getEvent } from '../../actions/gameActions';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 
@@ -223,7 +223,7 @@ class EditEvent extends Component {
 	onSubmitHandler = (e) => {
 		e.preventDefault();
 
-		const newEvent = {
+		const editedEvent = {
 			type_event_id: this.state.type,
 			command_id: this.state.command,
 			player_id: this.state.player,
@@ -233,31 +233,32 @@ class EditEvent extends Component {
 			assist_type_id: this.state.assistevent
 		};
 
-		this.props.addGameEvent(this.state.gameId, newEvent);
+		this.props.editGameEvent(this.props.match.params.id.split(':')[0], editedEvent);
 	};
 
-	componentDidMount() {
-		this.setState({
-			...this.state,
-			gameId: this.props.match.url.replace(/\D/g, '')
-		});
-
-		this.props.getCurrentGame(this.props.match.params.id);
-		this.props.getEventSettings(this.props.match.params.id);
+	componentWillMount() {
+		this.props.getCurrentGame(this.props.match.params.id.split(':')[1]);
+		this.props.getEventSettings(this.props.match.params.id.split(':')[1]);
+		this.props.getEvent(this.props.match.params.id.split(':')[0]);
 	}
 
 	componentWillReceiveProps = (nextProps) => {
 		if (nextProps.errors || nextProps.messages) {
 			this.setState({ ...this.state, open: true });
+		} else if (nextProps.games.currentGame !== null && nextProps.games.event !== null) {
+			this.setState({
+				...this.state,
+				currentGame: nextProps.games.currentGame,
+				command: nextProps.games.currentGame.info.in.command_id,
+				gameId: nextProps.games.event.game_id,
+				minutes: +nextProps.games.event.minute,
+				type: nextProps.games.event.type_event_id,
+				assistevent: nextProps.games.event.assist_type_id,
+				player: nextProps.games.event.player_id,
+				assistant: nextProps.games.event.assist_id,
+				comment: nextProps.games.event.comment
+			});
 		}
-		// else if (nextProps.games.currentGame !== null) {
-		// 	this.setState({
-		// 		...this.state,
-		// 		currentGame: nextProps.games.currentGame,
-		// 		minutes: ((Date.now() - Date.parse(nextProps.games.currentGame.date)) / 60000).toFixed(),
-		// 		command: nextProps.games.currentGame.info.in.command_id
-		// 	});
-		// }
 	};
 
 	render() {
@@ -379,6 +380,7 @@ class EditEvent extends Component {
 								id: 'player'
 							}}
 						>
+							<MenuItem value="0">Неизвестно</MenuItem>
 							{playersList}
 						</Select>
 					</FormControl>
@@ -440,5 +442,5 @@ const mapStateToProps = (state) => ({
 
 export default compose(
 	withStyles(styles),
-	connect(mapStateToProps, { getCurrentGame, getEventSettings, addGameEvent })
+	connect(mapStateToProps, { getCurrentGame, getEventSettings, editGameEvent, getEvent })
 )(EditEvent);

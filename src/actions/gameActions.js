@@ -6,6 +6,7 @@ import {
 	GET_GAME_PLAYER_LIST,
 	GET_GAME_INFO,
 	GET_EVENT_SETTINGS,
+	GET_EVENT,
 	GET_ERRORS,
 	GET_MESSAGES
 } from '../actions/types';
@@ -13,6 +14,28 @@ import {
 export const addGameEvent = (id, eventData) => (dispatch) => {
 	axios
 		.post(`http://api.mygame4u.com/game/addevent/${id}`, eventData, {
+			headers: {
+				Authorization: `G4User ${JSON.parse(localStorage.getItem('user')).token}`
+			}
+		})
+		.then((res) => {
+			if (res.data.error) {
+				dispatch({
+					type: GET_ERRORS,
+					payload: res.data.message
+				});
+			} else {
+				dispatch({
+					type: GET_MESSAGES,
+					payload: res.data.message
+				});
+			}
+		});
+};
+
+export const editGameEvent = (id, eventData) => (dispatch) => {
+	axios
+		.post(`http://api.mygame4u.com/game/updateevent/${id}`, eventData, {
 			headers: {
 				Authorization: `G4User ${JSON.parse(localStorage.getItem('user')).token}`
 			}
@@ -139,6 +162,21 @@ export const getEventSettings = (id) => (dispatch) => {
 		.then((res) => {
 			dispatch({
 				type: GET_EVENT_SETTINGS,
+				payload: res.data.answer
+			});
+		});
+};
+
+export const getEvent = (id) => (dispatch) => {
+	axios
+		.get(`http://api.mygame4u.com/game/getevent/${id}`, {
+			headers: {
+				Authorization: `G4User ${JSON.parse(localStorage.getItem('user')).token}`
+			}
+		})
+		.then((res) => {
+			dispatch({
+				type: GET_EVENT,
 				payload: res.data.answer
 			});
 		});
