@@ -3,6 +3,9 @@ import PropTypes from "prop-types";
 import compose from "recompose/compose";
 import { connect } from "react-redux";
 import { FormattedMessage } from "react-intl";
+
+import Messages from '../common/Messages';
+
 import { addNews } from "../../actions/newsActions";
 import CKEditor from "react-ckeditor-component";
 import { withStyles } from "@material-ui/core/styles";
@@ -82,11 +85,21 @@ const styles = theme => ({
   },
   editor: {
     margin: "1rem 0"
-  }
+  },
+  container: {
+		padding: '1rem 10%'
+  },
+  success: {
+		backgroundColor: '#43A047'
+	},
+	error: {
+		backgroundColor: '#ff5e5e'
+	},
 });
 
 class AddNews extends Component {
   state = {
+    open: false,
     title: "",
     text: "",
     photo: "",
@@ -167,6 +180,32 @@ class AddNews extends Component {
     this.props.addNews(addNews);
   };
 
+  
+	handleClose = (event, reason) => {
+		if (reason === 'clickaway') {
+			return;
+		}
+
+		if (this.props.messages) {
+			this.setState(
+				{ open: false,title: "",
+        text: "",
+        photo: "",
+        tag: "",
+        tags: [] }
+			);
+		}
+
+		this.setState({ open: false });
+	};
+
+  
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.errors || nextProps.messages) {
+			this.setState({ ...this.state, open: true });
+		}
+	}
+
   render() {
     const { classes } = this.props;
     const { tags } = this.state;
@@ -185,7 +224,24 @@ class AddNews extends Component {
     }
 
     return (
-      <div>
+      <div className={classes.container}>
+      <div>{this.props.errors ? (
+						<Messages
+							open={this.state.open}
+							message={this.props.errors}
+							onClose={this.handleClose}
+							classes={classes.error}
+						/>
+					) : this.props.messages ? (
+						<Messages
+							open={this.state.open}
+							message={this.props.messages}
+							onClose={this.handleClose}
+							classes={classes.success}
+						/>
+					) : (
+						''
+					)}</div>
         <Button
           size="large"
           className={classes.button}
@@ -310,6 +366,11 @@ class AddNews extends Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+	errors: state.errors,
+	messages: state.messages
+});
+
 AddNews.propTypes = {
   classes: PropTypes.object
 };
@@ -317,7 +378,7 @@ AddNews.propTypes = {
 export default compose(
   withStyles(styles),
   connect(
-    null,
+    mapStateToProps,
     { addNews }
   )
 )(AddNews);

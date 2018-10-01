@@ -1,23 +1,61 @@
-import { GET_CURRENT_GAME, GET_EVENT_SETTINGS } from "../actions/types";
+import {
+	GET_CURRENT_GAME,
+	GET_CURRENT_GAMES_LIST,
+	GET_FUTURE_GAMES_LIST,
+	GET_GAME_PLAYER_LIST,
+	GET_GAME_INFO,
+	GET_EVENT_SETTINGS,
+	GET_EVENT
+} from '../actions/types';
 
 const initialState = {
-  currentGame: null,
-  settings: null
+	currentGame: null,
+	currentGamesList: null,
+	futureGamesList: null,
+	playerList: null,
+	gameInfo: null,
+	settings: null,
+	event: null
 };
 
 export default function(state = initialState, action) {
-  switch (action.type) {
-    case GET_CURRENT_GAME:
-      return {
-        ...state,
-        currentGame: action.payload
-      };
-    case GET_EVENT_SETTINGS:
-      return {
-        ...state,
-        settings: action.payload
-      };
-    default:
-      return state;
-  }
+	switch (action.type) {
+		case GET_CURRENT_GAME:
+			return {
+				...state,
+				currentGame: action.payload
+			};
+		case GET_CURRENT_GAMES_LIST:
+			return {
+				...state,
+				currentGamesList: action.payload
+			};
+		case GET_FUTURE_GAMES_LIST:
+			return {
+				...state,
+				futureGamesList: action.payload
+			};
+		case GET_GAME_PLAYER_LIST:
+			return {
+				...state,
+				playerList: action.payload
+			};
+		case GET_EVENT_SETTINGS:
+			return {
+				...state,
+				settings: action.payload
+			};
+		case GET_EVENT:
+			return {
+				...state,
+				event: action.payload
+			};
+		case GET_GAME_INFO:
+			return {
+				...state,
+				gameInfo: action.payload
+			};
+		default:
+			return state;
+	}
 }

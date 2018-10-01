@@ -5,7 +5,6 @@ import { FormattedMessage } from "react-intl";
 import "react-image-crop/dist/ReactCrop.css";
 import { editUser, getUser } from "../../actions/userActions";
 import { getCountries } from "../../actions/commonActions";
-import { setLanguage } from "../../actions/languageActions";
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -22,14 +21,21 @@ const styles = theme => ({
     display: "flex",
     justifyContent: "space-between"
   },
+  // form: {
+  //   width: "49%"
+  // },
   media: {
     width: "49%"
   },
   img: {
     width: "100%"
   },
-  input: {
-    width: "100%",
+  // input: {
+  //   width: "24%"
+  // },
+  input_wrap: {
+    display: "flex",
+    justifyContent: "space-between",
     marginBottom: "1rem"
   },
   select: {
@@ -66,17 +72,7 @@ class EditUser extends Component {
   };
 
   onChangeHandler = e => {
-    if (e.target.name === "lang") {
-      this.setState({
-        ...this.state,
-        [e.target.name]: e.target.value
-      });
-    } else {
-      this.setState({
-        ...this.state,
-        [e.target.name]: e.target.value.replace(/[^a-zA-Z0-9]+/, "")
-      });
-    }
+    this.setState({ ...this.state, [e.target.name]: e.target.value });
   };
 
   onSubmitHandler = e => {
@@ -84,6 +80,7 @@ class EditUser extends Component {
 
     let user = JSON.parse(localStorage.getItem("user"));
     user.lang = this.state.lang;
+    console.log(user);
 
     const editUser = {
       nickname: this.state.nickname,
@@ -93,8 +90,8 @@ class EditUser extends Component {
     };
 
     this.props.editUser(editUser);
-    this.props.setLanguage(this.state.lang);
     localStorage.setItem("user", JSON.stringify(user));
+    window.location.reload();
   };
 
   componentWillMount() {
@@ -124,7 +121,11 @@ class EditUser extends Component {
     ) {
       user = nextProps.users.user;
       countries = nextProps.common.countries;
-      lang = nextProps.lang.locale;
+      lang =
+        // JSON.parse(localStorage.getItem("user")).lang !== null
+        //   ? JSON.parse(localStorage.getItem("user")).lang
+        //   :
+        nextProps.lang.locale;
 
       this.setState({
         ...this.state,
@@ -175,81 +176,83 @@ class EditUser extends Component {
       <div className={classes.root}>
         <div className={classes.form}>
           <form className="player__form" onSubmit={this.onSubmitHandler}>
-            <TextField
-              label={<FormattedMessage id="user.nickLabel" />}
-              name="nickname"
-              className={classes.input}
-              value={this.state.nickname}
-              onChange={this.onChangeHandler}
-              margin="normal"
-            />
-            <TextField
-              label={<FormattedMessage id="user.emailLabel" />}
-              name="email"
-              className={classes.input}
-              value={this.state.email}
-              onChange={this.onChangeHandler}
-              margin="normal"
-            />
-            <FormControl className={classes.input}>
-              <InputLabel htmlFor="league_id" className={classes.select}>
-                <FormattedMessage id="user.leagueLabel" />
-              </InputLabel>
-              <Select
-                className={classes.select}
-                value={this.state.league_id}
+            <div className={classes.input_wrap}>
+              <TextField
+                label={<FormattedMessage id="user.nickLabel" />}
+                name="nickname"
+                className={classes.input}
+                value={this.state.nickname}
                 onChange={this.onChangeHandler}
-                displayEmpty
-                inputProps={{
-                  name: "league_id",
-                  id: "league_id"
-                }}
-              >
-                <MenuItem value={this.state.league_id} disabled>
-                  {this.state.league}
-                </MenuItem>
-                {leaguesOptions}
-              </Select>
-            </FormControl>
-            <FormControl className={classes.input}>
-              <InputLabel htmlFor="locale" className={classes.select}>
-                <FormattedMessage id="user.localeLabel" />
-              </InputLabel>
-              <Select
-                className={classes.select}
-                value={this.state.locale}
+                margin="normal"
+              />
+              <TextField
+                label={<FormattedMessage id="user.emailLabel" />}
+                name="email"
+                className={classes.input}
+                value={this.state.email}
                 onChange={this.onChangeHandler}
-                displayEmpty
-                inputProps={{
-                  name: "locale",
-                  id: "locale"
-                }}
-              >
-                <MenuItem value={this.state.locale} disabled>
-                  {this.state.country}
-                </MenuItem>
-                {countriesOptions}
-              </Select>
-            </FormControl>
-            <FormControl className={classes.input}>
-              <InputLabel htmlFor="lang" className={classes.select}>
-                <FormattedMessage id="user.langLabel" />
-              </InputLabel>
-              <Select
-                className={classes.select}
-                value={this.state.lang}
-                onChange={this.onChangeHandler}
-                displayEmpty
-                inputProps={{
-                  name: "lang",
-                  id: "lang"
-                }}
-              >
-                <MenuItem value="en">English</MenuItem>
-                <MenuItem value="ru">Русский</MenuItem>
-                <MenuItem value="uk">Українська</MenuItem>
-              </Select>
-            </FormControl>
+                margin="normal"
+              />
+              <FormControl className={classes.input}>
+                <InputLabel htmlFor="league_id" className={classes.select}>
+                  <FormattedMessage id="user.leagueLabel" />
+                </InputLabel>
+                <Select
+                  className={classes.select}
+                  value={this.state.league_id}
+                  onChange={this.onChangeHandler}
+                  displayEmpty
+                  inputProps={{
+                    name: "league_id",
+                    id: "league_id"
+                  }}
+                >
+                  <MenuItem value={this.state.league_id} disabled>
+                    {this.state.league}
+                  </MenuItem>
+                  {leaguesOptions}
+                </Select>
+              </FormControl>
+              <FormControl className={classes.input}>
+                <InputLabel htmlFor="locale" className={classes.select}>
+                  <FormattedMessage id="user.localeLabel" />
+                </InputLabel>
+                <Select
+                  className={classes.select}
+                  value={this.state.locale}
+                  onChange={this.onChangeHandler}
+                  displayEmpty
+                  inputProps={{
+                    name: "locale",
+                    id: "locale"
+                  }}
+                >
+                  <MenuItem value={this.state.locale} disabled>
+                    {this.state.country}
+                  </MenuItem>
+                  {countriesOptions}
+                </Select>
+              </FormControl>
+              <FormControl className={classes.input}>
+                <InputLabel htmlFor="lang" className={classes.select}>
+                  <FormattedMessage id="user.langLabel" />
+                </InputLabel>
+                <Select
+                  className={classes.select}
+                  value={this.state.lang}
+                  onChange={this.onChangeHandler}
+                  displayEmpty
+                  inputProps={{
+                    name: "lang",
+                    id: "lang"
+                  }}
+                >
+                  <MenuItem value="en-US">English</MenuItem>
+                  <MenuItem value="ru-RU">Русский</MenuItem>
+                  <MenuItem value="uk">Українська</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
             <Button
               variant="contained"
               color="primary"
@@ -278,6 +281,6 @@ export default compose(
   withStyles(styles),
   connect(
     mapStateToProps,
-    { editUser, getLeagues, getUser, getCountries, setLanguage }
+    { editUser, getLeagues, getUser, getCountries }
   )
 )(EditUser);
