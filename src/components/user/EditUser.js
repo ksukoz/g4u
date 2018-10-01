@@ -245,8 +245,8 @@ class EditUser extends Component {
                   id: "lang"
                 }}
               >
-                <MenuItem value="en-US">English</MenuItem>
-                <MenuItem value="ru-RU">Русский</MenuItem>
+                <MenuItem value="en">English</MenuItem>
+                <MenuItem value="ru">Русский</MenuItem>
                 <MenuItem value="uk">Українська</MenuItem>
               </Select>
             </FormControl>
