@@ -27,6 +27,15 @@ const styles = theme => ({
     justifyContent: "space-between",
     flexWrap: "wrap"
   },
+  flexRow: {
+    display: "flex",
+    alignItems: "center",
+    "& span": {
+      [theme.breakpoints.up("md")]: {
+        fontSize: "1.5rem"
+      }
+    }
+  },
   imgWrap: {
     position: "relative",
     display: "flex",
@@ -183,7 +192,15 @@ class AddPhoto extends Component {
         ) : (
           ""
         )}
-        <div>
+        <div className={classes.flexRow}>
+          <Button
+            size="large"
+            className={classes.button}
+            style={{ marginBottom: "1rem", marginRight: "1rem" }}
+            onClick={() => this.props.history.goBack()}
+          >
+            Назад
+          </Button>
           <InputFile
             type="image"
             className={classes.input}
@@ -191,7 +208,7 @@ class AddPhoto extends Component {
             onChange={this.onChangeFileHandler}
             multiple={true}
           />
-          Добавить изображение
+          <span style={{ marginLeft: "1rem" }}>Добавить изображение</span>
         </div>
 
         {this.state.photoArray && this.state.photoArray.length > 0 ? (
@@ -229,7 +246,7 @@ class AddPhoto extends Component {
           {this.state.photoes && this.state.photoes.length > 0
             ? this.state.photoes.map((photo, i) => (
                 <div className={classes.imgWrap} key={photo.pId}>
-                  <img src={photo} alt="" />
+                  <img src={photo.src} alt="" />
                   <IconButton
                     className={classes.delete}
                     onClick={e =>
