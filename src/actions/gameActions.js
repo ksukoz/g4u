@@ -8,6 +8,7 @@ import {
   GET_EVENT_SETTINGS,
   GET_EVENT,
   GET_PHOTOES,
+  GET_VIDEOS,
   GET_ERRORS,
   GET_MESSAGES
 } from "../actions/types";
@@ -144,6 +145,72 @@ export const getPhotoes = id => dispatch => {
       } else {
         dispatch({
           type: GET_PHOTOES,
+          payload: res.data.answer
+        });
+      }
+    });
+};
+
+export const addVideo = (id, array) => dispatch => {
+  axios
+    .post(`http://api.mygame4u.com/game/addvideo/${id}`, array, {
+      headers: {
+        Authorization: `G4User ${
+          JSON.parse(localStorage.getItem("user")).token
+        }`
+      }
+    })
+    .then(res => {
+      if (res.data.error) {
+        dispatch({
+          type: GET_ERRORS,
+          payload: res.data.message
+        });
+      } else {
+        dispatch(getVideos(id));
+      }
+    });
+};
+
+export const deleteVideo = (id, pId) => dispatch => {
+  axios
+    .get(`http://api.mygame4u.com/game/delvideo/${pId}`, {
+      headers: {
+        Authorization: `G4User ${
+          JSON.parse(localStorage.getItem("user")).token
+        }`
+      }
+    })
+    .then(res => {
+      if (res.data.error) {
+        dispatch({
+          type: GET_ERRORS,
+          payload: res.data.message
+        });
+      } else {
+        dispatch(getVideos(id));
+      }
+    });
+};
+
+export const getVideos = id => dispatch => {
+  axios
+    .get(`http://api.mygame4u.com/game/getmedia/${id}?type=video`, {
+      headers: {
+        Authorization: `G4User ${
+          JSON.parse(localStorage.getItem("user")).token
+        }`
+      }
+    })
+    .then(res => {
+      if (res.data.error) {
+        dispatch({
+          type: GET_ERRORS,
+          payload: res.data.message
+        });
+      } else {
+        dispatch({
+          type: GET_VIDEOS,
           payload: res.data.answer
         });
       }

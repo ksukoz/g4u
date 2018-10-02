@@ -38,6 +38,7 @@ export const GET_GAME_INFO = "GET_GAME_INFO";
 export const GET_EVENT_SETTINGS = "GET_EVENT_SETTINGS";
 export const GET_EVENT = "GET_EVENT";
 export const GET_PHOTOES = "GET_PHOTOES";
+export const GET_VIDEOS = "GET_VIDEOS";
 
 export const GET_COMMANDS = "GET_COMMANDS";
 export const GET_COMMAND = "GET_COMMAND";

@@ -7,7 +7,7 @@ import "react-image-crop/dist/ReactCrop.css";
 
 import Messages from "../common/Messages";
 
-import { addPhoto, deletePhoto, getPhotoes } from "../../actions/gameActions";
+import { addVideo, deleteVideo, getVideos } from "../../actions/gameActions";
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -20,6 +20,8 @@ import DialogContent from "@material-ui/core/DialogContent";
 import InputFile from "../common/InputFile";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
+
+import YouTube from "react-youtube";
 
 const styles = theme => ({
   flexWrap: {
@@ -46,6 +48,10 @@ const styles = theme => ({
     textAlign: "center",
     transition: ".3s",
     marginBottom: "2rem",
+    "& iframe": {
+      width: "100%",
+      height: "auto"
+    },
     [theme.breakpoints.up("md")]: {
       width: "30%"
     }
@@ -124,36 +130,22 @@ const styles = theme => ({
   }
 });
 
-class AddPhoto extends Component {
+class AddVideo extends Component {
   state = {
     open: false,
-    photoes: [],
-    photo: ""
+    videosArray: [],
+    videos: [],
+    video: ""
   };
 
-  onChangeFileHandler = async e => {
-    const files = e.target.files;
-
-    for (let i = 0; i < files.length; i++) {
-      const reader = new FileReader();
-      reader.readAsDataURL(files[i]);
-      await reader.addEventListener(
-        "load",
-        () => {
-          this.setState({
-            ...this.state,
-            photoArray: [...this.state.photoArray, reader.result]
-          });
-        },
-        false
-      );
-    }
+  onChangeHandler = e => {
+    this.setState({ ...this.state, [e.target.name]: e.target.value });
   };
 
   onDeleteHandler = i => e => {
-    let arr = this.state.photoArray;
+    let arr = this.state.videosArray;
     arr.splice(i, 1);
-    this.setState({ ...this.state, photoArray: arr });
+    this.setState({ ...this.state, videosArray: arr });
   };
 
   handleClose = (event, reason) => {
@@ -165,22 +157,23 @@ class AddPhoto extends Component {
   };
 
   componentDidMount() {
-    this.props.getPhotoes(this.props.match.params.id);
+    this.props.getVideos(this.props.match.params.id);
   }
 
   componentWillReceiveProps = nextProps => {
     if (nextProps.errors || nextProps.messages) {
       this.setState({ ...this.state, open: true });
-    } else if (nextProps.games.photoes !== null) {
+    } else if (nextProps.games.videos !== null) {
       this.setState({
         ...this.state,
-        photoes: nextProps.games.photoes.photo
+        videos: nextProps.games.videos.video
       });
     }
   };
 
   render() {
     const { classes } = this.props;
+
     return (
       <div className={classes.container}>
         {this.props.errors ? (
@@ -209,58 +202,42 @@ class AddPhoto extends Component {
           >
             Назад
           </Button>
-          <InputFile
-            type="image"
+          <TextField
             className={classes.input}
-            name="photo"
-            onChange={this.onChangeFileHandler}
-            multiple={true}
+            name="video"
+            onChange={this.onChangeHandler}
+            value={this.state.video}
+            label="Введите id видео"
           />
-          <span style={{ marginLeft: "1rem" }}>Добавить изображение</span>
+          <Button
+            size="large"
+            className={classes.button}
+            style={{ marginBottom: "1rem", marginRight: "1rem" }}
+            onClick={e => {
+              this.props.addVideo(this.props.match.params.id, {
+                video: [this.state.video]
+              });
+              this.setState({ ...this.state, video: "" });
+            }}
+          >
+            Добавить видео
+          </Button>
         </div>
 
-        {this.state.photoArray && this.state.photoArray.length > 0 ? (
-          <div className={classes.flexWrap}>
-            {this.state.photoArray.map((photo, i) => (
-              <div className={classes.imgWrap} key={i}>
-                <img src={photo} alt="" />
-                <IconButton
-                  className={classes.delete}
-                  onClick={this.onDeleteHandler(i)}
-                >
-                  &#x2716;
-                </IconButton>
-              </div>
-            ))}
-            <Button
-              size="large"
-              className={classes.button}
-              style={{ marginBottom: "1rem" }}
-              onClick={e => {
-                this.props.addPhoto(this.props.match.params.id, {
-                  photo: this.state.photoArray
-                });
-                this.setState({ ...this.state, photoArray: [] });
-              }}
-            >
-              Сохранить
-            </Button>
-          </div>
-        ) : (
-          ""
-        )}
-
         <div className={classes.flexWrap}>
-          {this.state.photoes && this.state.photoes.length > 0
-            ? this.state.photoes.map((photo, i) => (
-                <div className={classes.imgWrap} key={photo.pId}>
-                  <img src={photo.src} alt="" />
+          {this.state.videos && this.state.videos.length > 0
+            ? this.state.videos.map((video, i) => (
+                <div className={classes.imgWrap} key={video.vId}>
+                  <YouTube
+                    videoId={video.youtube_id}
+                    style={{ width: "100%" }}
+                  />
                   <IconButton
                     className={classes.delete}
                     onClick={e =>
-                      this.props.deletePhoto(
+                      this.props.deleteVideo(
                         this.props.match.params.id,
-                        photo.pId
+                        video.vId
                       )
                     }
                   >
@@ -285,6 +262,6 @@ export default compose(
   withStyles(styles),
   connect(
     mapStateToProps,
-    { addPhoto, getPhotoes, deletePhoto }
+    { addVideo, getVideos, deleteVideo }
   )
-)(AddPhoto);
+)(AddVideo);
