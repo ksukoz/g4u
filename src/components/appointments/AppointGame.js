@@ -224,24 +224,36 @@ class AppointGame extends Component {
             >
               Получить набор графики
             </Button>
-            <Link
-              size="large"
-              className={classes.button_link}
-              to={`/addphoto/${this.state.gameId}`}
-            >
-              <Button className={classes.button} variant="extendedFab">
-                Добавить фото
-              </Button>
-            </Link>
-            <Link
-              size="large"
-              className={classes.button_link}
-              to={`/addvideo/${this.state.gameId}`}
-            >
-              <Button className={classes.button} variant="extendedFab">
-                Добавить видео
-              </Button>
-            </Link>
+            {+JSON.parse(localStorage.getItem("user")).personal_type === 1 ||
+            +JSON.parse(localStorage.getItem("user")).personal_type === 7 ||
+            +JSON.parse(localStorage.getItem("user")).personal_type === 5 ? (
+              <Link
+                size="large"
+                className={classes.button_link}
+                to={`/addphoto/${this.state.gameId}`}
+              >
+                <Button className={classes.button} variant="extendedFab">
+                  Добавить фото
+                </Button>
+              </Link>
+            ) : (
+              ""
+            )}
+            {+JSON.parse(localStorage.getItem("user")).personal_type === 1 ||
+            +JSON.parse(localStorage.getItem("user")).personal_type === 7 ||
+            +JSON.parse(localStorage.getItem("user")).personal_type === 5 ? (
+              <Link
+                size="large"
+                className={classes.button_link}
+                to={`/addvideo/${this.state.gameId}`}
+              >
+                <Button className={classes.button} variant="extendedFab">
+                  Добавить видео
+                </Button>
+              </Link>
+            ) : (
+              ""
+            )}
           </div>
         </div>
         {this.props.errors ? (
