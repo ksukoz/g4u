@@ -207,35 +207,22 @@ export const getGraphic = id => dispatch => {
   axios({
     url: `http://api.mygame4u.com/graf/game/${id}`,
     method: "GET",
-    // resType: "blob", // important
+    responseType: "arraybuffer",
     headers: {
       Authorization: `G4User ${JSON.parse(localStorage.getItem("user")).token}`
     }
-  })
-    // .get(`http://api.mygame4u.com/graf/game/${id}`, {
-    //   headers: {
-    //     Authorization: `G4User ${
-    //       JSON.parse(localStorage.getItem("user")).token
-    //     }`
-    //   }
-    // })
-    .then(res => {
-      const blob = new Blob([res.data], { type: "application/zip" });
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      const contentDisposition = res.headers["content-disposition"];
-      let fileName = "unknown";
-      if (contentDisposition) {
-        const fileNameMatch = contentDisposition.match(/filename="(.+)"/);
-        if (fileNameMatch.length === 2) fileName = fileNameMatch[1];
-      }
-      link.setAttribute("download", fileName);
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      window.URL.revokeObjectURL(url);
-    });
+  }).then(res => {
+    const blob = new Blob([res.data], { type: "application/zip" });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    let fileName = id;
+    link.setAttribute("download", fileName);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.URL.revokeObjectURL(url);
+  });
 };
 
 export const deleteEvent = id => dispatch => {

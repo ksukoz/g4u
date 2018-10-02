@@ -219,25 +219,28 @@ class AppointGame extends Component {
               size="large"
               className={classes.button}
               style={{ marginLeft: "1rem" }}
+              variant="extendedFab"
               onClick={() => this.props.getGraphic(this.state.gameId)}
             >
               Получить набор графики
             </Button>
             <Link
               size="large"
-              className={classes.button}
-              style={{ marginLeft: "1rem" }}
+              className={classes.button_link}
               to={`/addphoto/${this.state.gameId}`}
             >
-              Добавить фото
+              <Button className={classes.button} variant="extendedFab">
+                Добавить фото
+              </Button>
             </Link>
             <Link
               size="large"
-              className={classes.button}
-              style={{ marginLeft: "1rem" }}
+              className={classes.button_link}
               to={`/addvideo/${this.state.gameId}`}
             >
-              Добавить видео
+              <Button className={classes.button} variant="extendedFab">
+                Добавить видео
+              </Button>
             </Link>
           </div>
         </div>
