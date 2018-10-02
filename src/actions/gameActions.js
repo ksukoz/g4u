@@ -105,9 +105,9 @@ export const addPhoto = (id, array) => dispatch => {
     });
 };
 
-export const deletePhoto = (id, array) => dispatch => {
+export const deletePhoto = (id, pId) => dispatch => {
   axios
-    .post(`http://api.mygame4u.com/game/addphoto/${id}`, array, {
+    .get(`http://api.mygame4u.com/game/delphoto/${pId}`, {
       headers: {
         Authorization: `G4User ${
           JSON.parse(localStorage.getItem("user")).token

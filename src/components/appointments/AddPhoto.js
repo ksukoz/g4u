@@ -36,6 +36,7 @@ const styles = theme => ({
     border: "1px solid rgba(0,0,0,.2)",
     textAlign: "center",
     transition: ".3s",
+    marginBottom: "2rem",
     [theme.breakpoints.up("md")]: {
       width: "30%"
     }
@@ -66,11 +67,13 @@ const styles = theme => ({
     width: "100%"
   },
   button: {
+    display: "block",
     background: "transparent",
     border: "1px solid #43A047",
     color: "rgba(0,0,0,.5)",
     borderRadius: 40,
     transition: ".3s",
+    height: "max-content",
     "&:hover, &:active": {
       backgroundColor: "#43A047",
       color: "#fff"
@@ -128,7 +131,6 @@ class AddPhoto extends Component {
       await reader.addEventListener(
         "load",
         () => {
-          // array.push(reader.result);
           this.setState({
             ...this.state,
             photoArray: [...this.state.photoArray, reader.result]
@@ -137,18 +139,15 @@ class AddPhoto extends Component {
         false
       );
     }
+  };
 
-    // this.props.addPhoto(this.props.match.params.id, this.state.photoArray);
+  onDeleteHandler = i => e => {
+    let arr = this.state.photoArray;
+    arr.splice(i, 1);
+    this.setState({ ...this.state, photoArray: arr });
   };
 
   componentDidMount() {
-    // this.setState({
-    //   ...this.state,
-    //   gameId: this.props.id
-    //     ? this.props.id
-    //     : this.props.match.url.replace(/\D/g, "")
-    // });
-
     this.props.getPhotoes(this.props.match.params.id);
   }
 
@@ -198,9 +197,14 @@ class AddPhoto extends Component {
         {this.state.photoArray && this.state.photoArray.length > 0 ? (
           <div className={classes.flexWrap}>
             {this.state.photoArray.map((photo, i) => (
-              <div className={classes.imgWrap}>
+              <div className={classes.imgWrap} key={i}>
                 <img src={photo} alt="" />
-                <IconButton className={classes.delete}>&#x2716;</IconButton>
+                <IconButton
+                  className={classes.delete}
+                  onClick={this.onDeleteHandler(i)}
+                >
+                  &#x2716;
+                </IconButton>
               </div>
             ))}
             <Button
@@ -224,9 +228,19 @@ class AddPhoto extends Component {
         <div className={classes.flexWrap}>
           {this.state.photoes && this.state.photoes.length > 0
             ? this.state.photoes.map((photo, i) => (
-                <div className={classes.imgWrap}>
+                <div className={classes.imgWrap} key={photo.pId}>
                   <img src={photo} alt="" />
-                  <IconButton className={classes.delete}>&#x2716;</IconButton>
+                  <IconButton
+                    className={classes.delete}
+                    onClick={e =>
+                      this.props.deletePhoto(
+                        this.props.match.params.id,
+                        photo.pId
+                      )
+                    }
+                  >
+                    &#x2716;
+                  </IconButton>
                 </div>
               ))
             : ""}
@@ -246,6 +260,6 @@ export default compose(
   withStyles(styles),
   connect(
     mapStateToProps,
-    { addPhoto, getPhotoes }
+    { addPhoto, getPhotoes, deletePhoto }
   )
 )(AddPhoto);
