@@ -7,7 +7,7 @@ import {
   GET_GAME_INFO,
   GET_EVENT_SETTINGS,
   GET_EVENT,
-  GET_GRAPHIC,
+  GET_PHOTOES,
   GET_ERRORS,
   GET_MESSAGES
 } from "../actions/types";
@@ -79,6 +79,72 @@ export const addGamesPlayers = (id, array) => dispatch => {
         dispatch({
           type: GET_MESSAGES,
           payload: res.data.message
+        });
+      }
+    });
+};
+
+export const addPhoto = (id, array) => dispatch => {
+  axios
+    .post(`http://api.mygame4u.com/game/addphoto/${id}`, array, {
+      headers: {
+        Authorization: `G4User ${
+          JSON.parse(localStorage.getItem("user")).token
+        }`
+      }
+    })
+    .then(res => {
+      if (res.data.error) {
+        dispatch({
+          type: GET_ERRORS,
+          payload: res.data.message
+        });
+      } else {
+        dispatch(getPhotoes(id));
+      }
+    });
+};
+
+export const deletePhoto = (id, array) => dispatch => {
+  axios
+    .post(`http://api.mygame4u.com/game/addphoto/${id}`, array, {
+      headers: {
+        Authorization: `G4User ${
+          JSON.parse(localStorage.getItem("user")).token
+        }`
+      }
+    })
+    .then(res => {
+      if (res.data.error) {
+        dispatch({
+          type: GET_ERRORS,
+          payload: res.data.message
+        });
+      } else {
+        dispatch(getPhotoes(id));
+      }
+    });
+};
+
+export const getPhotoes = id => dispatch => {
+  axios
+    .get(`http://api.mygame4u.com/game/getmedia/${id}?type=photo`, {
+      headers: {
+        Authorization: `G4User ${
+          JSON.parse(localStorage.getItem("user")).token
+        }`
+      }
+    })
+    .then(res => {
+      if (res.data.error) {
+        dispatch({
+          type: GET_ERRORS,
+          payload: res.data.message
+        });
+      } else {
+        dispatch({
+          type: GET_PHOTOES,
+          payload: res.data.answer
         });
       }
     });

@@ -6,7 +6,7 @@ import {
   GET_GAME_INFO,
   GET_EVENT_SETTINGS,
   GET_EVENT,
-  GET_GRAPHIC
+  GET_PHOTOES
 } from "../actions/types";
 
 const initialState = {
@@ -17,7 +17,7 @@ const initialState = {
   gameInfo: null,
   settings: null,
   event: null,
-  graphic: null
+  photoes: null
 };
 
 export default function(state = initialState, action) {
@@ -57,10 +57,10 @@ export default function(state = initialState, action) {
         ...state,
         gameInfo: action.payload
       };
-    case GET_GRAPHIC:
+    case GET_PHOTOES:
       return {
         ...state,
-        graphic: action.payload
+        photoes: action.payload
       };
     default:
       return state;

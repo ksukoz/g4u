@@ -7,7 +7,7 @@ import "react-image-crop/dist/ReactCrop.css";
 
 import Messages from "../common/Messages";
 
-// import { getCommandPlayer, getPositions, updateCommandPlayer, separatePlayer } from '../../actions/playerActions';
+import { addPhoto, deletePhoto, getPhotoes } from "../../actions/gameActions";
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -18,6 +18,7 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import InputFile from "../common/InputFile";
+import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 
 const styles = theme => ({
@@ -114,25 +115,51 @@ const styles = theme => ({
 class AddPhoto extends Component {
   state = {
     photoArray: [],
+    photoes: [],
     photo: ""
   };
 
-  onChangeFileHandler = e => {
-    const reader = new FileReader();
-    let photoes = this.state.photoArray;
-    if (e.target.files[0]) {
-      // this.setState({ ...this.state, openCrop: true });
-      reader.readAsDataURL(e.target.files[0]);
-      reader.addEventListener(
+  onChangeFileHandler = async e => {
+    const files = e.target.files;
+
+    for (let i = 0; i < files.length; i++) {
+      const reader = new FileReader();
+      reader.readAsDataURL(files[i]);
+      await reader.addEventListener(
         "load",
         () => {
-          photoes.push(reader.result);
+          // array.push(reader.result);
           this.setState({
-            photoArray: photoes
+            ...this.state,
+            photoArray: [...this.state.photoArray, reader.result]
           });
         },
         false
       );
+    }
+
+    // this.props.addPhoto(this.props.match.params.id, this.state.photoArray);
+  };
+
+  componentDidMount() {
+    // this.setState({
+    //   ...this.state,
+    //   gameId: this.props.id
+    //     ? this.props.id
+    //     : this.props.match.url.replace(/\D/g, "")
+    // });
+
+    this.props.getPhotoes(this.props.match.params.id);
+  }
+
+  componentWillReceiveProps = nextProps => {
+    if (nextProps.errors || nextProps.messages) {
+      this.setState({ ...this.state, open: true });
+    } else if (nextProps.games.photoes !== null) {
+      this.setState({
+        ...this.state,
+        photoes: nextProps.games.photoes.photo
+      });
     }
   };
 
@@ -140,32 +167,85 @@ class AddPhoto extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.container}>
+        {this.props.errors ? (
+          <Messages
+            open={this.state.open}
+            message={this.props.errors}
+            onClose={this.handleClose}
+            classes={classes.error}
+          />
+        ) : this.props.messages ? (
+          <Messages
+            open={this.state.open}
+            message={this.props.messages}
+            onClose={this.handleClose}
+            classes={classes.success}
+          />
+        ) : (
+          ""
+        )}
         <div>
           <InputFile
             type="image"
             className={classes.input}
             name="photo"
             onChange={this.onChangeFileHandler}
+            multiple={true}
           />
           Добавить изображение
         </div>
+
+        {this.state.photoArray && this.state.photoArray.length > 0 ? (
+          <div className={classes.flexWrap}>
+            {this.state.photoArray.map((photo, i) => (
+              <div className={classes.imgWrap}>
+                <img src={photo} alt="" />
+                <IconButton className={classes.delete}>&#x2716;</IconButton>
+              </div>
+            ))}
+            <Button
+              size="large"
+              className={classes.button}
+              style={{ marginBottom: "1rem" }}
+              onClick={e => {
+                this.props.addPhoto(this.props.match.params.id, {
+                  photo: this.state.photoArray
+                });
+                this.setState({ ...this.state, photoArray: [] });
+              }}
+            >
+              Сохранить
+            </Button>
+          </div>
+        ) : (
+          ""
+        )}
+
         <div className={classes.flexWrap}>
-          {this.state.photoArray.map((photo, i) => (
-            <div className={classes.imgWrap}>
-              <img src={photo} alt="" />
-              <IconButton className={classes.delete}>&#x2716;</IconButton>
-            </div>
-          ))}
+          {this.state.photoes && this.state.photoes.length > 0
+            ? this.state.photoes.map((photo, i) => (
+                <div className={classes.imgWrap}>
+                  <img src={photo} alt="" />
+                  <IconButton className={classes.delete}>&#x2716;</IconButton>
+                </div>
+              ))
+            : ""}
         </div>
       </div>
     );
   }
 }
 
+const mapStateToProps = state => ({
+  games: state.games,
+  errors: state.errors,
+  messages: state.messages
+});
+
 export default compose(
-  withStyles(styles)
-  // connect(
-  //   mapStateToProps,
-  //   { getCommandPlayer, getPositions, updateCommandPlayer, separatePlayer }
-  // )
+  withStyles(styles),
+  connect(
+    mapStateToProps,
+    { addPhoto, getPhotoes }
+  )
 )(AddPhoto);

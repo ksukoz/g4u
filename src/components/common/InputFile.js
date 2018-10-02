@@ -20,7 +20,7 @@ const styles = theme => ({
   }
 });
 
-const InputFile = ({ type, classes, name, onChange }) => {
+const InputFile = ({ type, classes, name, onChange, multiple }) => {
   let icon;
   let accept;
   if (type === "image") {
@@ -40,6 +40,7 @@ const InputFile = ({ type, classes, name, onChange }) => {
         id={type}
         className={classes.hide}
         onChange={onChange}
+        multiple={multiple ? multiple : false}
       />
     </div>
   );
