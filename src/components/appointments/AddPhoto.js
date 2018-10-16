@@ -128,7 +128,16 @@ class AddPhoto extends Component {
   state = {
     open: false,
     photoes: [],
-    photo: ""
+    photoArray: [],
+    photo: "",
+    photoesLink: ""
+  };
+
+  onChangeHandler = e => {
+    this.setState({
+      ...this.state,
+      [e.target.name]: e.target.value
+    });
   };
 
   onChangeFileHandler = async e => {
@@ -209,14 +218,36 @@ class AddPhoto extends Component {
           >
             Назад
           </Button>
-          <InputFile
+          {/* <InputFile
             type="image"
             className={classes.input}
             name="photo"
             onChange={this.onChangeFileHandler}
             multiple={true}
           />
-          <span style={{ marginLeft: "1rem" }}>Добавить изображение</span>
+          <span style={{ marginLeft: "1rem" }}>Добавить изображение</span> */}
+          <TextField
+            label="Ссылка на альбом из fb"
+            name="photoesLink"
+            className={classes.input}
+            value={this.state.photoesLink}
+            onChange={this.onChangeHandler}
+            // type="number"
+            margin="normal"
+          />
+          <Button
+            size="large"
+            className={classes.button}
+            style={{ marginBottom: "1rem" }}
+            onClick={e => {
+              this.props.addPhoto(this.props.match.params.id, {
+                photo: this.state.photoesLink
+              });
+              this.setState({ ...this.state, photoesLink: "" });
+            }}
+          >
+            Сохранить
+          </Button>
         </div>
 
         {this.state.photoArray && this.state.photoArray.length > 0 ? (
