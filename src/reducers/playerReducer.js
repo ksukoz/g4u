@@ -1,9 +1,15 @@
-import { GET_POSITIONS, GET_PLAYER, GET_PLAYERS } from "../actions/types";
+import {
+  GET_POSITIONS,
+  GET_PLAYER,
+  GET_PLAYERS,
+  GET_PLAYER_INFO
+} from "../actions/types";
 
 const initialState = {
   positions: null,
   player: null,
-  players: null
+  players: null,
+  playerInfo: null
 };
 
 export default function(state = initialState, action) {
@@ -22,6 +28,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         players: action.payload
+      };
+    case GET_PLAYER_INFO:
+      return {
+        ...state,
+        playerInfo: action.payload
       };
     default:
       return state;
