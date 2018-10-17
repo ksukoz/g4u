@@ -41,6 +41,23 @@ export const getPlayers = () => dispatch => {
     });
 };
 
+export const getPlayersByName = name => dispatch => {
+  axios
+    .get(`http://api.mygame4u.com/players/list?name=${name}`, {
+      headers: {
+        Authorization: `G4User ${
+          JSON.parse(localStorage.getItem("user")).token
+        }`
+      }
+    })
+    .then(res => {
+      dispatch({
+        type: GET_PLAYERS,
+        payload: res.data.answer
+      });
+    });
+};
+
 export const addPlayer = (stuffData, history) => dispatch => {
   axios
     .post("http://api.mygame4u.com/players/add", stuffData, {
