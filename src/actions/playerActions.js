@@ -3,6 +3,7 @@ import {
   GET_ERRORS,
   GET_POSITIONS,
   GET_PLAYER,
+  GET_PLAYERS,
   GET_MESSAGES
 } from "../actions/types";
 
@@ -18,6 +19,23 @@ export const getPositions = () => dispatch => {
     .then(res => {
       dispatch({
         type: GET_POSITIONS,
+        payload: res.data.answer
+      });
+    });
+};
+
+export const getPlayers = () => dispatch => {
+  axios
+    .get("http://api.mygame4u.com/players/list", {
+      headers: {
+        Authorization: `G4User ${
+          JSON.parse(localStorage.getItem("user")).token
+        }`
+      }
+    })
+    .then(res => {
+      dispatch({
+        type: GET_PLAYERS,
         payload: res.data.answer
       });
     });

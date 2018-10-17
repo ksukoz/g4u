@@ -41,6 +41,7 @@ import MyGames from "./components/games/MyGames";
 import EditEvent from "./components/appointments/EditEvent";
 import AddPhoto from "./components/appointments/AddPhoto";
 import AddVideo from "./components/appointments/AddVideo";
+import Players from "./components/players/Players";
 
 if (localStorage.user) {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -120,6 +121,9 @@ class App extends Component {
                     path="/edit-player"
                     component={EditPlayer}
                   />
+                </Switch>
+                <Switch>
+                  <PrivateRoute exact path="/players" component={Players} />
                 </Switch>
                 <Switch>
                   <PrivateRoute

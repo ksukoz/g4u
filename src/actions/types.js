@@ -20,6 +20,7 @@ export const SET_LIKE = "SET_LIKE";
 
 export const GET_POSITIONS = "GET_POSITIONS";
 export const GET_PLAYER = "GET_PLAYER";
+export const GET_PLAYERS = "GET_PLAYERS";
 
 export const GET_APPOINT = "GET_APPOINT";
 export const GET_CITIES = "GET_CITIES";
