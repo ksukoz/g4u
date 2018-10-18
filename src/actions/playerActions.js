@@ -25,9 +25,9 @@ export const getPositions = () => dispatch => {
     });
 };
 
-export const getPlayers = () => dispatch => {
+export const getPlayers = offset => dispatch => {
   axios
-    .get("http://api.mygame4u.com/players/list", {
+    .get(`http://api.mygame4u.com/players/list?offset=${offset}`, {
       headers: {
         Authorization: `G4User ${
           JSON.parse(localStorage.getItem("user")).token

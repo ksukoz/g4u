@@ -14,6 +14,9 @@ import MenuItem from "@material-ui/core/MenuItem";
 
 import SearchIcon from "@material-ui/icons/Search";
 import { Paper } from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
+import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
+import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 
 const styles = theme => ({
   root: {
@@ -81,6 +84,21 @@ const styles = theme => ({
   playerName: {
     display: "flex",
     flexDirection: "column"
+  },
+  arrowButton: {
+    "&:hover": {
+      backgroundColor: "transparent",
+      color: "#43A047"
+    }
+  },
+  listHeader: {
+    display: "flex",
+    justifyContent: "space-between"
+  },
+  pagination: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center"
   }
 });
 
@@ -99,8 +117,12 @@ class Players extends Component {
     });
   };
 
+  onClickHandler = offset => e => {
+    this.props.getCommands(offset);
+  };
+
   componentDidMount = () => {
-    this.props.getPlayers();
+    this.props.getPlayers(0);
   };
 
   render() {
@@ -178,7 +200,33 @@ class Players extends Component {
           <List className={classes.list}>{favoritePlayersList}</List>
         </Paper>
         <Paper className={classes.paper}>
-          <h2>Игроки</h2>
+          <div className={classes.listHeader}>
+            <h2>Игроки</h2>
+            {this.props.players && players ? (
+              <div className={classes.pagination}>
+                <IconButton
+                  className={classes.arrowButton}
+                  disabled={players.filters.prev === null}
+                  onClick={this.onClickHandler(players.filters.prev)}
+                >
+                  <ArrowBackIosIcon />
+                </IconButton>
+
+                <span style={{ fontSize: "2rem", color: "#43A047" }}>
+                  {+players.filters.current + 1}
+                </span>
+                <IconButton
+                  className={classes.arrowButton}
+                  disabled={!players.filters.next}
+                  onClick={this.onClickHandler(players.filters.next)}
+                >
+                  <ArrowForwardIosIcon />
+                </IconButton>
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
           <List className={classes.list}>{allPlayersList}</List>
         </Paper>
       </div>
