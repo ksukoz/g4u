@@ -6,9 +6,33 @@ import {
   GET_FREE_NUMBERS
 } from "./types";
 
-export const getCommands = () => dispatch => {
+export const getCommands = offset => dispatch => {
   axios
-    .get("http://api.mygame4u.com/command", {
+    .get(`http://api.mygame4u.com/command?offset=${offset}`, {
+      headers: {
+        Authorization: `G4User ${
+          JSON.parse(localStorage.getItem("user")).token
+        }`
+      }
+    })
+    .then(res => {
+      if (res.data.error) {
+        dispatch({
+          type: GET_ERRORS,
+          payload: res.data.message
+        });
+      } else {
+        dispatch({
+          type: GET_COMMANDS,
+          payload: res.data.answer
+        });
+      }
+    });
+};
+
+export const getCommandsByName = name => dispatch => {
+  axios
+    .get(`http://api.mygame4u.com/command?name=${name}`, {
       headers: {
         Authorization: `G4User ${
           JSON.parse(localStorage.getItem("user")).token
