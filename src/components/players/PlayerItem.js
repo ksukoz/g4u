@@ -4,7 +4,7 @@ import compose from "recompose/compose";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 
-import { getPlayerInfo } from "../../actions/playerActions";
+import { getPlayerInfo, likePlayer } from "../../actions/playerActions";
 
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -20,6 +20,10 @@ import { TableBody } from "@material-ui/core";
 import { TableRow } from "@material-ui/core";
 import { TableCell } from "@material-ui/core";
 import ListItem from "@material-ui/core/ListItem";
+import StarBorderIcon from "@material-ui/icons/StarBorder";
+import StarIcon from "@material-ui/icons/Star";
+
+import { IconButton } from "@material-ui/core";
 
 const styles = theme => ({
   root: {
@@ -108,6 +112,30 @@ const styles = theme => ({
   },
   hr: {
     borderColor: "#43A047"
+  },
+  playerHeader: {
+    display: "flex",
+    alignItems: "center"
+  },
+  playerInfo: {
+    display: "flex",
+    flexDirection: "column",
+    fontSize: "1.6rem",
+    "& *": { margin: "0 1rem" },
+    "& a": {
+      display: "inline-block",
+      textDecoration: "none",
+      color: "#fff",
+      backgroundColor: "#4b79bb",
+      padding: "1rem",
+      borderRadius: "50%",
+      "&:hover": {
+        opacity: 0.5
+      }
+    }
+  },
+  star: {
+    color: "#fce654"
   }
 });
 
@@ -158,25 +186,54 @@ class PlayerItem extends Component {
 
     return (
       <div className={classes.container}>
-        <TextField
-          className={classes.input}
-          type="text"
-          name="search"
-          value={this.state.search}
-          onChange={this.onChange}
-          onInput={e => {
-            e.target.value = e.target.value;
-          }}
-          label="Поиск"
-          autoComplete="off"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon />
-              </InputAdornment>
-            )
-          }}
-        />
+        <div className={classes.playerHeader}>
+          <img
+            src={playerInfo ? playerInfo.info.photo : ""}
+            alt=""
+            style={{
+              maxWidth: 200,
+              maxHeight: 200,
+              borderRadius: "50%",
+              marginRight: "2rem"
+            }}
+          />
+          <div className={classes.playerInfo}>
+            {playerInfo ? (
+              <h1>
+                {playerInfo.info.name} {playerInfo.info.surename}{" "}
+                {playerInfo.info.patronymic}
+              </h1>
+            ) : (
+              ""
+            )}
+            <div>
+              <span> {playerInfo ? playerInfo.info.phone : ""}</span>
+
+              <a
+                href={`//vk.com/${playerInfo ? playerInfo.info.VK : ""}`}
+                target="_blank"
+              >
+                VK
+              </a>
+              <a
+                href={`//facebook.com/${playerInfo ? playerInfo.info.FB : ""}`}
+                target="_blank"
+              >
+                FB
+              </a>
+              <IconButton
+                className={classes.star}
+                onClick={e => this.props.likePlayer(this.props.match.params.id)}
+              >
+                {playerInfo && playerInfo.liked ? (
+                  <StarIcon />
+                ) : (
+                  <StarBorderIcon />
+                )}
+              </IconButton>
+            </div>
+          </div>
+        </div>
         <div className={classes.playerData}>
           <List className={classes.playerList}>
             <ListItem className={classes.playerItem}>
@@ -247,6 +304,6 @@ export default compose(
   withStyles(styles),
   connect(
     mapStateToProps,
-    { getPlayerInfo }
+    { getPlayerInfo, likePlayer }
   )
 )(PlayerItem);

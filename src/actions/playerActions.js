@@ -221,3 +221,17 @@ export const separatePlayer = history => dispatch => {
       }
     });
 };
+
+export const likePlayer = id => dispatch => {
+  axios
+    .get(`http://api.mygame4u.com/players/like/${id}`, {
+      headers: {
+        Authorization: `G4User ${
+          JSON.parse(localStorage.getItem("user")).token
+        }`
+      }
+    })
+    .then(res => {
+      dispatch(getPlayerInfo(id));
+    });
+};

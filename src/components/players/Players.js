@@ -118,7 +118,7 @@ class Players extends Component {
   };
 
   onClickHandler = offset => e => {
-    this.props.getCommands(offset);
+    this.props.getPlayers(offset);
   };
 
   componentDidMount = () => {
