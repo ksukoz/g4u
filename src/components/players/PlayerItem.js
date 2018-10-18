@@ -20,6 +20,7 @@ import { TableBody } from "@material-ui/core";
 import { TableRow } from "@material-ui/core";
 import { TableCell } from "@material-ui/core";
 import ListItem from "@material-ui/core/ListItem";
+import Button from "@material-ui/core/Button";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import StarIcon from "@material-ui/icons/Star";
 
@@ -49,13 +50,27 @@ const styles = theme => ({
     }
   },
   button: {
-    margin: theme.spacing.unit,
-    background: "transparent",
-    color: "rgba(0,0,0,.5)",
-    transition: ".3s",
-    "&:hover, &:active": {
-      backgroundColor: "#43A047",
+    display: "block",
+    marginBottom: "2rem",
+    padding: "1rem 5rem",
+    background: "#fff",
+    border: "1px solid #55a462",
+    borderRadius: 40,
+    boxShadow: "none",
+    fontSize: "1.5rem",
+    height: "auto",
+    "&:hover,&:active": {
+      background: "#55a462"
+    },
+
+    "&:hover a,&:active": {
       color: "#fff"
+    },
+    [theme.breakpoints.up("xs")]: {
+      width: "100%"
+    },
+    [theme.breakpoints.up("md")]: {
+      width: "23%"
     }
   },
   submit: {
@@ -186,6 +201,14 @@ class PlayerItem extends Component {
 
     return (
       <div className={classes.container}>
+        <Button
+          size="large"
+          className={classes.button}
+          style={{ marginBottom: "1rem" }}
+          onClick={() => this.props.history.goBack()}
+        >
+          Назад
+        </Button>
         <div className={classes.playerHeader}>
           <img
             src={playerInfo ? playerInfo.info.photo : ""}
