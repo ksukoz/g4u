@@ -6,6 +6,7 @@ export const GET_USER = "GET_USER";
 export const SET_USER = "SET_USER";
 export const LOGOUT_USER = "LOGOUT_USER";
 export const GET_CURRENT_USER = "GET_CURRENT_USER";
+export const GET_SPORT_TYPE = "GET_SPORT_TYPE";
 export const OPEN_NAV = "OPEN_NAV";
 export const CLOSE_NAV = "CLOSE_NAV";
 export const SET_ACTIVE_LINK = "SET_ACTIVE_LINK";

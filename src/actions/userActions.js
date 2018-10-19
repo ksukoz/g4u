@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_ERRORS, GET_CURRENT_USER } from "./types";
+import { GET_ERRORS, GET_CURRENT_USER, GET_SPORT_TYPE } from "./types";
 
 // Register User
 export const editUser = userData => dispatch => {
@@ -35,6 +35,23 @@ export const getUser = () => dispatch => {
     .then(res => {
       dispatch({
         type: GET_CURRENT_USER,
+        payload: res.data.answer
+      });
+    });
+};
+
+export const getSportType = () => dispatch => {
+  axios
+    .get("http://api.mygame4u.com/user/getsporttype", {
+      headers: {
+        Authorization: `G4User ${
+          JSON.parse(localStorage.getItem("user")).token
+        }`
+      }
+    })
+    .then(res => {
+      dispatch({
+        type: GET_SPORT_TYPE,
         payload: res.data.answer
       });
     });

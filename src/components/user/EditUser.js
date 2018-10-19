@@ -3,7 +3,7 @@ import compose from "recompose/compose";
 import { connect } from "react-redux";
 import { FormattedMessage } from "react-intl";
 import "react-image-crop/dist/ReactCrop.css";
-import { editUser, getUser } from "../../actions/userActions";
+import { editUser, getUser, getSportType } from "../../actions/userActions";
 import { getCountries } from "../../actions/commonActions";
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
@@ -18,8 +18,8 @@ import { getLeagues } from "../../actions/leagueActions";
 
 const styles = theme => ({
   root: {
-    display: "flex",
-    justifyContent: "space-between"
+    width: 250,
+    margin: "0 auto"
   },
   // form: {
   //   width: "49%"
@@ -35,7 +35,8 @@ const styles = theme => ({
   // },
   input_wrap: {
     display: "flex",
-    justifyContent: "space-between",
+
+    flexDirection: "column",
     marginBottom: "1rem"
   },
   select: {
@@ -101,6 +102,7 @@ class EditUser extends Component {
   componentDidMount() {
     this.props.getUser();
     this.props.getCountries();
+    this.props.getSportType();
 
     const league = JSON.parse(localStorage.getItem("user")).league;
     this.setState({
@@ -177,40 +179,23 @@ class EditUser extends Component {
         <div className={classes.form}>
           <form className="player__form" onSubmit={this.onSubmitHandler}>
             <div className={classes.input_wrap}>
-              <TextField
-                label={<FormattedMessage id="user.nickLabel" />}
-                name="nickname"
-                className={classes.input}
-                value={this.state.nickname}
-                onChange={this.onChangeHandler}
-                margin="normal"
-              />
-              <TextField
-                label={<FormattedMessage id="user.emailLabel" />}
-                name="email"
-                className={classes.input}
-                value={this.state.email}
-                onChange={this.onChangeHandler}
-                margin="normal"
-              />
               <FormControl className={classes.input}>
-                <InputLabel htmlFor="league_id" className={classes.select}>
-                  <FormattedMessage id="user.leagueLabel" />
+                <InputLabel htmlFor="lang" className={classes.select}>
+                  <FormattedMessage id="user.langLabel" />
                 </InputLabel>
                 <Select
                   className={classes.select}
-                  value={this.state.league_id}
+                  value={this.state.lang}
                   onChange={this.onChangeHandler}
                   displayEmpty
                   inputProps={{
-                    name: "league_id",
-                    id: "league_id"
+                    name: "lang",
+                    id: "lang"
                   }}
                 >
-                  <MenuItem value={this.state.league_id} disabled>
-                    {this.state.league}
-                  </MenuItem>
-                  {leaguesOptions}
+                  <MenuItem value="en">English</MenuItem>
+                  <MenuItem value="ru">Русский</MenuItem>
+                  <MenuItem value="uk">Українська</MenuItem>
                 </Select>
               </FormControl>
               <FormControl className={classes.input}>
@@ -234,24 +219,41 @@ class EditUser extends Component {
                 </Select>
               </FormControl>
               <FormControl className={classes.input}>
-                <InputLabel htmlFor="lang" className={classes.select}>
-                  <FormattedMessage id="user.langLabel" />
+                <InputLabel htmlFor="league_id" className={classes.select}>
+                  <FormattedMessage id="user.leagueLabel" />
                 </InputLabel>
                 <Select
                   className={classes.select}
-                  value={this.state.lang}
+                  value={this.state.league_id}
                   onChange={this.onChangeHandler}
                   displayEmpty
                   inputProps={{
-                    name: "lang",
-                    id: "lang"
+                    name: "league_id",
+                    id: "league_id"
                   }}
                 >
-                  <MenuItem value="en-US">English</MenuItem>
-                  <MenuItem value="ru-RU">Русский</MenuItem>
-                  <MenuItem value="uk">Українська</MenuItem>
+                  <MenuItem value={this.state.league_id} disabled>
+                    {this.state.league}
+                  </MenuItem>
+                  {leaguesOptions}
                 </Select>
               </FormControl>
+              <TextField
+                label={<FormattedMessage id="user.nickLabel" />}
+                name="nickname"
+                className={classes.input}
+                value={this.state.nickname}
+                onChange={this.onChangeHandler}
+                margin="normal"
+              />
+              <TextField
+                label={<FormattedMessage id="user.emailLabel" />}
+                name="email"
+                className={classes.input}
+                value={this.state.email}
+                onChange={this.onChangeHandler}
+                margin="normal"
+              />
             </div>
             <Button
               variant="contained"
@@ -281,6 +283,6 @@ export default compose(
   withStyles(styles),
   connect(
     mapStateToProps,
-    { editUser, getLeagues, getUser, getCountries }
+    { editUser, getLeagues, getUser, getCountries, getSportType }
   )
 )(EditUser);
