@@ -43,6 +43,7 @@ import AddPhoto from "./components/appointments/AddPhoto";
 import AddVideo from "./components/appointments/AddVideo";
 import Players from "./components/players/Players";
 import PlayerItem from "./components/players/PlayerItem";
+import Merge from "./components/user/Merge";
 
 if (localStorage.user) {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -169,6 +170,9 @@ class App extends Component {
                 </Switch>
                 <Switch>
                   <PrivateRoute exact path="/edit-user" component={EditUser} />
+                </Switch>
+                <Switch>
+                  <PrivateRoute exact path="/merge" component={Merge} />
                 </Switch>
                 <Switch>
                   <PrivateRoute

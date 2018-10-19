@@ -4,7 +4,10 @@ import compose from "recompose/compose";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 
-import { getPlayers, getPlayersByName } from "../../actions/playerActions";
+import { getPlayersByName } from "../../actions/playerActions";
+import { mergeUser } from "../../actions/userActions";
+
+import Messages from "../common/Messages";
 
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -14,8 +17,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 
 import SearchIcon from "@material-ui/icons/Search";
 import { Paper } from "@material-ui/core";
-import { Button } from "@material-ui/core";
 import { IconButton } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 
@@ -100,17 +103,33 @@ const styles = theme => ({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center"
+  },
+  none: {
+    display: "none"
+  },
+  success: {
+    backgroundColor: "#43A047"
+  },
+  error: {
+    backgroundColor: "#ff5e5e"
   }
 });
 
-class Players extends Component {
+class Merge extends Component {
   state = {
-    search: ""
+    search: "",
+    open: false
+  };
+
+  onClickHandler = id => e => {
+    this.props.mergeUser(id);
   };
 
   onChange = e => {
     if (e.target.value.replace(/[а-я]+/gi, "").length >= 3) {
-      this.props.getPlayersByName(e.target.value.replace(/[а-я]+/gi, ""));
+      this.props.getPlayersByName(
+        `${e.target.value.replace(/[а-я]+/gi, "")}&tied=0`
+      );
     }
     this.setState({
       ...this.state,
@@ -118,73 +137,59 @@ class Players extends Component {
     });
   };
 
-  onClickHandler = offset => e => {
-    this.props.getPlayers(offset);
+  handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    if (this.props.messages) {
+      this.props.history.goBack();
+    }
+
+    this.setState({ open: false });
   };
 
-  componentDidMount = () => {
-    this.props.getPlayers(0);
+  componentWillReceiveProps = nextProps => {
+    if (nextProps.errors || nextProps.messages) {
+      this.setState({ ...this.state, open: true });
+    }
   };
 
   render() {
     const { classes } = this.props;
     const { players } = this.props.players;
 
-    let favoritePlayersList;
     let allPlayersList;
 
     if (this.props.players && players) {
-      favoritePlayersList = players.liked.map(player => (
-        <Link to={`/players/${player.player_id}`} key={player.player_id}>
-          <MenuItem className={classes.listItem}>
-            <img
-              src={player.photo}
-              alt=""
-              style={{ width: 50, marginRight: 8, maxHeight: 50 }}
-            />
-            <span className={classes.playerName}>
-              <b>
-                {player.name} {player.patronymic} {player.surename}
-              </b>
-              <span>
-                {player.desc}, {player.comTitle}
-              </span>
-            </span>
-          </MenuItem>
-        </Link>
-      ));
-
       allPlayersList = players.all.map(player => (
-        <Link to={`/players/${player.player_id}`} key={player.player_id}>
-          <MenuItem className={classes.listItem}>
-            <img
-              src={player.photo}
-              alt=""
-              style={{ width: 50, marginRight: 8, maxHeight: 50 }}
-            />
-            <span className={classes.playerName}>
-              <b>
-                {player.name} {player.patronymic} {player.surename}
-              </b>
-              <span>
-                {player.desc}, {player.comTitle}
-              </span>
+        <MenuItem className={classes.listItem} key={player.player_id}>
+          <img
+            src={player.photo}
+            alt=""
+            style={{ width: 50, marginRight: 8, maxHeight: 50 }}
+          />
+          <span className={classes.playerName}>
+            <b>
+              {player.name} {player.patronymic} {player.surename}
+            </b>
+            <span>
+              {player.desc}, {player.comTitle}
             </span>
-          </MenuItem>
-        </Link>
+          </span>
+          <Button
+            onClick={this.onClickHandler(player.player_id)}
+            className={classes.button}
+            style={{ marginLeft: "auto" }}
+          >
+            Привязать
+          </Button>
+        </MenuItem>
       ));
     }
 
     return (
       <div className={classes.container}>
-        <Button
-          size="large"
-          className={classes.button}
-          style={{ marginBottom: "1rem" }}
-          onClick={() => this.props.history.goBack()}
-        >
-          Назад
-        </Button>
         <TextField
           className={classes.input}
           type="text"
@@ -204,53 +209,46 @@ class Players extends Component {
             )
           }}
         />
-        <Paper className={classes.paper}>
-          <h2>Любимые игроки</h2>
-          <List className={classes.list}>{favoritePlayersList}</List>
-        </Paper>
-        <Paper className={classes.paper}>
-          <div className={classes.listHeader}>
-            <h2>Игроки</h2>
-            {this.props.players && players ? (
-              <div className={classes.pagination}>
-                <IconButton
-                  className={classes.arrowButton}
-                  disabled={players.filters.prev === null}
-                  onClick={this.onClickHandler(players.filters.prev)}
-                >
-                  <ArrowBackIosIcon />
-                </IconButton>
-
-                <span style={{ fontSize: "2rem", color: "#43A047" }}>
-                  {+players.filters.current + 1}
-                </span>
-                <IconButton
-                  className={classes.arrowButton}
-                  disabled={!players.filters.next}
-                  onClick={this.onClickHandler(players.filters.next)}
-                >
-                  <ArrowForwardIosIcon />
-                </IconButton>
-              </div>
-            ) : (
-              ""
-            )}
-          </div>
+        <Paper
+          className={
+            this.props.players && players ? classes.paper : classes.none
+          }
+        >
+          <div className={classes.listHeader} />
           <List className={classes.list}>{allPlayersList}</List>
         </Paper>
+        {this.props.errors ? (
+          <Messages
+            open={this.state.open}
+            message={this.props.errors}
+            onClose={this.handleClose}
+            classes={classes.error}
+          />
+        ) : this.props.messages ? (
+          <Messages
+            open={this.state.open}
+            message={this.props.messages}
+            onClose={this.handleClose}
+            classes={classes.success}
+          />
+        ) : (
+          ""
+        )}
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  players: state.players
+  players: state.players,
+  errors: state.errors,
+  messages: state.messages
 });
 
 export default compose(
   withStyles(styles),
   connect(
     mapStateToProps,
-    { getPlayers, getPlayersByName }
+    { getPlayersByName, mergeUser }
   )
-)(Players);
+)(Merge);

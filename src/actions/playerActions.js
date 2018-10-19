@@ -217,7 +217,7 @@ export const separatePlayer = history => dispatch => {
           payload: res.data.message
         });
       } else {
-        history.push("/add-player");
+        history.goBack();
       }
     });
 };

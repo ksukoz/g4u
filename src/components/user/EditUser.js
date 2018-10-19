@@ -322,7 +322,7 @@ class EditUser extends Component {
             </Button>
           </form>
           <div>
-            {user && user.utpId ? (
+            {user && user.status ? (
               <Link to="/edit-player" className={classes.playerLink}>
                 <img className={classes.img} src={user.photo} alt="" />
                 <div>
@@ -339,7 +339,14 @@ class EditUser extends Component {
                 </div>
               </Link>
             ) : (
-              ""
+              <div>
+                <Link to="/merge" className={classes.playerLink}>
+                  Привязать существующий профиль
+                </Link>
+                <Link to="/add-player" className={classes.playerLink}>
+                  Создать нового игрока
+                </Link>
+              </div>
             )}
           </div>
           <ExpansionPanel>
@@ -347,9 +354,33 @@ class EditUser extends Component {
               Сменить пароль
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
+              <form onSubmit={this.onPasswordSubmit}>
+                <TextField
+                  label="Новый пароль"
+                  name="password"
+                  className={classes.input}
+                  value={this.state.password}
+                  onChange={this.onChangeHandler}
+                  margin="normal"
+                />
+                <TextField
+                  label="Подтвердите пароль"
+                  name="password2"
+                  className={classes.input}
+                  value={this.state.password2}
+                  onChange={this.onChangeHandler}
+                  margin="normal"
+                />
+                <Button
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                  type="submit"
+                  className={classes.submit}
+                >
+                  {<FormattedMessage id="user.save" />}
+                </Button>
+              </form>
             </ExpansionPanelDetails>
           </ExpansionPanel>
         </div>
