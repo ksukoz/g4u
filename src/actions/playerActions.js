@@ -235,3 +235,10 @@ export const likePlayer = id => dispatch => {
       dispatch(getPlayerInfo(id));
     });
 };
+
+export const clearPlayers = () => dispatch => {
+  dispatch({
+    type: GET_PLAYERS,
+    payload: null
+  });
+};

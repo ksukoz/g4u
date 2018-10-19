@@ -4,7 +4,7 @@ import compose from "recompose/compose";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 
-import { getPlayersByName } from "../../actions/playerActions";
+import { getPlayersByName, clearPlayers } from "../../actions/playerActions";
 import { mergeUser } from "../../actions/userActions";
 
 import Messages from "../common/Messages";
@@ -149,6 +149,10 @@ class Merge extends Component {
     this.setState({ open: false });
   };
 
+  componentDidMount = () => {
+    this.props.clearPlayers();
+  };
+
   componentWillReceiveProps = nextProps => {
     if (nextProps.errors || nextProps.messages) {
       this.setState({ ...this.state, open: true });
@@ -249,6 +253,6 @@ export default compose(
   withStyles(styles),
   connect(
     mapStateToProps,
-    { getPlayersByName, mergeUser }
+    { getPlayersByName, mergeUser, clearPlayers }
   )
 )(Merge);
