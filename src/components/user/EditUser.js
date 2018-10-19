@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import compose from "recompose/compose";
 import { connect } from "react-redux";
 import { FormattedMessage } from "react-intl";
@@ -24,14 +25,27 @@ const styles = theme => ({
     width: 250,
     margin: "0 auto"
   },
-  // form: {
-  //   width: "49%"
-  // },
-  media: {
-    width: "49%"
+  playerLink: {
+    display: "flex",
+    alignItems: "center",
+    textDecoration: "none",
+    color: "#000",
+    margin: "2rem 0"
+  },
+  playerTitle: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    "& small": {
+      paddingTop: "2rem",
+      fontWeight: 500
+    }
   },
   img: {
-    width: "100%"
+    width: 100,
+    height: 100,
+    borderRadius: "50%",
+    marginRight: "1rem"
   },
   // input: {
   //   width: "24%"
@@ -309,14 +323,21 @@ class EditUser extends Component {
           </form>
           <div>
             {user && user.utpId ? (
-              <div>
-                <img src={user.photo} alt="" />
+              <Link to="/edit-player" className={classes.playerLink}>
+                <img className={classes.img} src={user.photo} alt="" />
                 <div>
-                  <h2>
-                    {user.name} {user.surename}
+                  <h2 className={classes.playerTitle}>
+                    <span>
+                      {user.name} {user.surename}
+                    </span>
+                    <small>
+                      {user.status === "1"
+                        ? "Подтвержден"
+                        : "Запрос на привязку профиля подан"}
+                    </small>
                   </h2>
                 </div>
-              </div>
+              </Link>
             ) : (
               ""
             )}
