@@ -124,9 +124,9 @@ class EditUser extends Component {
 
     if (
       nextProps.users.user !== null &&
+      nextProps.users.sport !== null &&
       nextProps.common.countries !== null &&
-      nextProps.lang.locale !== null &&
-      nextProps.users.sport !== null
+      nextProps.lang.locale !== null
     ) {
       user = nextProps.users.user;
       countries = nextProps.common.countries;
@@ -141,7 +141,10 @@ class EditUser extends Component {
         nickname: user.nickname,
         email: user.email,
         league: user.league,
-        sportId: nextProps.users.sport.sportId,
+        sportId: user.sportId,
+        sport: nextProps.users.sport.filter(
+          item => item.sport_type_id === user.sportId
+        )[0].title,
         locale: user.locale,
         country: countries.filter(
           countryItem => countryItem.iso === user.locale.toUpperCase()
@@ -271,6 +274,9 @@ class EditUser extends Component {
                     id: "sportId"
                   }}
                 >
+                  <MenuItem value={this.state.sportId} disabled>
+                    {this.state.sport}
+                  </MenuItem>
                   {sportOptions}
                 </Select>
               </FormControl>
