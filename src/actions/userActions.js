@@ -41,18 +41,10 @@ export const getUser = () => dispatch => {
 };
 
 export const getSportType = () => dispatch => {
-  axios
-    .get("http://api.mygame4u.com/user/getsporttype", {
-      headers: {
-        Authorization: `G4User ${
-          JSON.parse(localStorage.getItem("user")).token
-        }`
-      }
-    })
-    .then(res => {
-      dispatch({
-        type: GET_SPORT_TYPE,
-        payload: res.data.answer
-      });
+  axios.get("http://api.mygame4u.com/user/getsporttype").then(res => {
+    dispatch({
+      type: GET_SPORT_TYPE,
+      payload: res.data.answer
     });
+  });
 };

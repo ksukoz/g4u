@@ -93,7 +93,7 @@ class EditUser extends Component {
       email: this.state.email,
       league_id: this.state.league_id,
       locale: this.state.locale,
-      sportId: this.state.sportId
+      sport_type_id: this.state.sportId
     };
 
     this.props.editUser(editUser);

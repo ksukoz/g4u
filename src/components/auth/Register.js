@@ -7,6 +7,7 @@ import { FormattedMessage } from "react-intl";
 import { withStyles } from "@material-ui/core/styles";
 import { registerUser } from "../../actions/authActions";
 import { getCountries } from "../../actions/commonActions";
+import { getSportType } from "../../actions/userActions";
 
 import Button from "@material-ui/core/Button";
 import { TextField } from "@material-ui/core";
@@ -67,6 +68,7 @@ class Register extends Component {
     password: "",
     password2: "",
     locale: "",
+    sportId: "",
     error: ""
   };
 
@@ -77,7 +79,8 @@ class Register extends Component {
       nickname: this.state.nickname,
       email: this.state.email,
       password: this.state.password,
-      locale: this.state.locale
+      locale: this.state.locale,
+      sport_type_id: this.state.this.state.sportId
     };
 
     if (this.state.password !== this.state.password2)
@@ -85,8 +88,14 @@ class Register extends Component {
         ...this.state,
         error: "Пароли не совпадают"
       });
-
-    this.props.registerUser(newUser, this.props.history);
+    if (this.state.this.state.sportId) {
+      this.props.registerUser(newUser, this.props.history);
+    } else {
+      this.setState({
+        ...this.state,
+        error: "Выберите вид спорта"
+      });
+    }
   };
 
   onChangeHandler = e => {
@@ -101,17 +110,26 @@ class Register extends Component {
         ...this.state,
         error: nextProps.errors
       });
+    } else if (nextProps.users.sport !== null) {
+      this.setState({
+        ...this.state,
+        sportId: nextProps.users.sport.sportId
+      });
     }
   }
 
   componentDidMount() {
     this.props.getCountries();
+    this.props.getSportType();
   }
 
   render() {
     const { classes } = this.props;
     const { countries } = this.props.common;
+    const { sport } = this.props.users;
+
     let countriesOptions;
+    let sportOptions;
 
     if (countries !== null) {
       countriesOptions = countries.map(country => {
@@ -121,6 +139,14 @@ class Register extends Component {
           </MenuItem>
         );
       });
+    }
+
+    if (sport !== null) {
+      sportOptions = sport.map(item => (
+        <MenuItem key={item.sport_type_id} value={item.sport_type_id}>
+          {item.title}
+        </MenuItem>
+      ));
     }
 
     return (
@@ -191,6 +217,25 @@ class Register extends Component {
               </Select>
             </FormControl>
           </div>
+          <div>
+            <FormControl className={classes.input}>
+              <InputLabel htmlFor="sportId" className={classes.select}>
+                Вид спорта
+              </InputLabel>
+              <Select
+                className={classes.select}
+                value={this.state.sportId}
+                onChange={this.onChangeHandler}
+                displayEmpty
+                inputProps={{
+                  name: "sportId",
+                  id: "sportId"
+                }}
+              >
+                {sportOptions}
+              </Select>
+            </FormControl>
+          </div>
           <Button variant="contained" type="submit" className={classes.submit}>
             <FormattedMessage id="registration.submit" />
           </Button>
@@ -212,13 +257,14 @@ class Register extends Component {
 const mapStateToProps = state => ({
   auth: state.auth,
   errors: state.errors,
-  common: state.common
+  common: state.common,
+  users: state.users
 });
 
 export default compose(
   withStyles(styles),
   connect(
     mapStateToProps,
-    { registerUser, getCountries }
+    { registerUser, getCountries, getSportType }
   )
 )(withRouter(Register));
