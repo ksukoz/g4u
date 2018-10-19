@@ -11,7 +11,10 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-
+import ExpansionPanel from "@material-ui/core/ExpansionPanel";
+import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
+import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Button from "@material-ui/core/Button";
 
 import { getLeagues } from "../../actions/leagueActions";
@@ -67,6 +70,8 @@ class EditUser extends Component {
     email: "",
     league_id: "",
     league: "",
+    sportId: "",
+    sport: "",
     locale: "",
     country: "",
     lang: ""
@@ -87,7 +92,8 @@ class EditUser extends Component {
       nickname: this.state.nickname,
       email: this.state.email,
       league_id: this.state.league_id,
-      locale: this.state.locale
+      locale: this.state.locale,
+      sportId: this.state.sportId
     };
 
     this.props.editUser(editUser);
@@ -119,7 +125,8 @@ class EditUser extends Component {
     if (
       nextProps.users.user !== null &&
       nextProps.common.countries !== null &&
-      nextProps.lang.locale !== null
+      nextProps.lang.locale !== null &&
+      nextProps.users.sport !== null
     ) {
       user = nextProps.users.user;
       countries = nextProps.common.countries;
@@ -134,6 +141,7 @@ class EditUser extends Component {
         nickname: user.nickname,
         email: user.email,
         league: user.league,
+        sportId: nextProps.users.sport.sportId,
         locale: user.locale,
         country: countries.filter(
           countryItem => countryItem.iso === user.locale.toUpperCase()
@@ -147,9 +155,10 @@ class EditUser extends Component {
     const { classes } = this.props;
     const { leaguesList } = this.props.leagues;
     const { countries } = this.props.common;
+    const { user, sport } = this.props.users;
     let leaguesOptions;
     let countriesOptions;
-    // let countryName;
+    let sportOptions;
 
     if (leaguesList !== null) {
       leaguesOptions = leaguesList.map(league => {
@@ -169,6 +178,16 @@ class EditUser extends Component {
           </MenuItem>
         );
       });
+    }
+    // countryName = countries.filter(
+    //   country => country.iso === this.state.locale.toUpperCase()
+    // );
+    if (sport !== null) {
+      sportOptions = sport.map(item => (
+        <MenuItem key={item.sport_type_id} value={item.sport_type_id}>
+          {item.title}
+        </MenuItem>
+      ));
       // countryName = countries.filter(
       //   country => country.iso === this.state.locale.toUpperCase()
       // );
@@ -238,6 +257,23 @@ class EditUser extends Component {
                   {leaguesOptions}
                 </Select>
               </FormControl>
+              <FormControl className={classes.input}>
+                <InputLabel htmlFor="sportId" className={classes.select}>
+                  Вид спорта
+                </InputLabel>
+                <Select
+                  className={classes.select}
+                  value={this.state.sportId}
+                  onChange={this.onChangeHandler}
+                  displayEmpty
+                  inputProps={{
+                    name: "sportId",
+                    id: "sportId"
+                  }}
+                >
+                  {sportOptions}
+                </Select>
+              </FormControl>
               <TextField
                 label={<FormattedMessage id="user.nickLabel" />}
                 name="nickname"
@@ -265,6 +301,30 @@ class EditUser extends Component {
               {<FormattedMessage id="user.save" />}
             </Button>
           </form>
+          <div>
+            {user && user.utpId ? (
+              <div>
+                <img src={user.photo} alt="" />
+                <div>
+                  <h2>
+                    {user.name} {user.surename}
+                  </h2>
+                </div>
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
+          <ExpansionPanel>
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+              Сменить пароль
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
+              eget.
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
         </div>
       </div>
     );
